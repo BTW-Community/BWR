@@ -1,8 +1,6 @@
 BTW=BTWMod4-30.zip
 MCP=mcp72.zip
 
-build: bwrmodded.jar
-
 bwrmodded.jar: src/* hooks.pl mcp
 	cp -R src/* mcp/src/minecraft_server/net/minecraft/src/
 	perl -w hooks.pl
