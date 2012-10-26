@@ -16,6 +16,7 @@ mcp: btwmodded.jar ${MCP}
 	cd mcp &&\
 	7z x ../${MCP} &&\
 	cp ../btwmodded.jar jars/minecraft_server.jar &&\
+	perl -w ../mcppatch.pl &&\
 	python runtime/decompile.py
 
 btwmodded.jar: ${BTW} minecraft_server.jar
@@ -26,7 +27,7 @@ btwmodded.jar: ${BTW} minecraft_server.jar
 	cd tmp/jar &&\
 	7z x ../../minecraft_server.jar &&\
 	cp -fR ../btw/MINECRAFT_SERVER-JAR/* . &&\
-	7z a -tzip -mx=9 ../../btwmodded.jar *
+	7z a -tzip -mx=1 ../../btwmodded.jar *
 	
 clean:
 	rm -rf mcp btwmodded.jar tmp
