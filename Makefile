@@ -2,34 +2,48 @@ BTW=BTWMod4-30.zip
 MCP=mcp72.zip
 SVR=minecraft_server.jar
 
-bwr_btw_${SVR}: src/* hooks.pl mcp
-	cp -R src/* mcp/src/minecraft_server/net/minecraft/src/
+bwr_btw_${SVR}: src/* hooks.pl mcp tmp/jar tmp/btw
+	cp -fR src/* mcp/src/minecraft_server/net/minecraft/src/
 	perl -w hooks.pl
 	cd mcp &&\
 	python runtime/recompile.py &&\
 	python runtime/reobfuscate.py
-	cp mcp/temp/server_reobf.jar bwr_btw_${SVR}
+	mkdir -p tmp/bwrjar
+	cd tmp/bwrjar &&\
+	cp -fR ../jar/* . &&\
+	cp -fR ../btw/MINECRAFT_SERVER-JAR/* . &&\
+	cp -fR ../../mcp/reobf/minecraft_server/* . &&\
+	7z a -y -tzip -mx=9 ../../bwr_btw_${SVR} *
 
-mcp: btw_${SVR} ${MCP}
+mcp: tmp/btw_${SVR} ${MCP}
 	mkdir -p mcp
 	cd mcp &&\
-	7z x ../${MCP} &&\
-	cp ../btw_${SVR} jars/minecraft_server.jar &&\
+	7z x -y ../${MCP} &&\
+	cp -fR ../tmp/btw_${SVR} jars/minecraft_server.jar &&\
 	perl -w ../mcppatch.pl &&\
 	python runtime/decompile.py
 
-btw_${SVR}: ${BTW} ${SVR}
+tmp/btw_${SVR}: tmp/btw tmp/jar
+	mkdir -p tmp/btwjar
+	cd tmp/btwjar &&\
+	cp -fR ../jar/* . &&\
+	cp -fR ../btw/MINECRAFT_SERVER-JAR/* . &&\
+	7z a -y -tzip -mx=1 ../btw_${SVR} *
+
+tmp/btw: ${BTW}
+	rm -rf tmp/btw
 	mkdir -p tmp/btw
 	cd tmp/btw &&\
-	7z x ../../${BTW}
+	7z x -y ../../${BTW}
+
+tmp/jar: ${SVR}
+	rm -rf tmp/jar
 	mkdir -p tmp/jar
 	cd tmp/jar &&\
-	7z x ../../${SVR} &&\
-	cp -fR ../btw/MINECRAFT_SERVER-JAR/* . &&\
-	7z a -tzip -mx=1 ../../btw_${SVR} *
+	7z x -y ../../${SVR}
 	
 clean:
-	rm -rf mcp tmp btw_${SVR} bwr_btw_${SVR}
+	rm -rf mcp tmp bwr_btw_${SVR}
 
 ${SVR}:
 	#------------------------------------------------------------------------ 
