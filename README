@@ -69,9 +69,9 @@ Diamond		DONE
 	For shovels, 1/2 diamond is lost (2 shovels -> 1 diamond)
 
 Netherrack	DONE		Mossy + wart + souls
-	Stew 1 mossy + 1 netherwart + 1 souldust
+	Stew 1 cobble + 1 netherwart + 1 souldust
 		-> 1 netherrack + 1 sawdust
-	Step 8 mossy + 8 netherwart + 1 soul urn
+	Step 8 cobble + 8 netherwart + 1 soul urn
 		-> 8 netherrack
 	Latter recipe is faster, but consumes clay
 
@@ -80,9 +80,10 @@ Lilypads	DONE
 	Empty blocks w/ water source below, and >50% light or sky
 	Stop spreading if there is already a lilypad adjacent
 
-Soul Sand	PENDING
-	Should require, minimally, souls and sand
-	Instead of souls, maybe an in-world process using dragon orbs?
+Soul Sand	DONE
+	Trap dragon orbs inside a sand block, surrounded by solid blocks
+	Use a mechanism involving timed pistons
+	All trapped XP is consumed, 2% chance per xp point of transforming
 
 Water		PENDING
 	Place pump output next to an existing water spring
