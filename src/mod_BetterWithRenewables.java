@@ -85,6 +85,9 @@ public class mod_BetterWithRenewables {
 					}
 				}
 
+			// Add mapping for custom Dragon Orb entities.
+			EntityList.addMapping(BWREntityXPOrb.class, "XPOrb", 2);
+
 			// Add recipes to the stoked pot for recovering diamond from equipment
 			// that can be purchased from villagers.
 			DiamondRecoveryRecipe(Item.plateDiamond, 8);
@@ -137,7 +140,7 @@ public class mod_BetterWithRenewables {
 	public Entity TransformEntityOnSpawn(Entity original)
 		{
 		// Replace Dragon Orbs with custom BWR variety.
-		if((original instanceof EntityXPOrb) && ((EntityXPOrb)original).m_bNotPlayerOwned)
+		if(original instanceof EntityXPOrb)
 			{
 			BWREntityXPOrb New = new BWREntityXPOrb(original.worldObj);
 			NBTTagCompound Tag = new NBTTagCompound();

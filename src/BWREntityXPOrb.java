@@ -37,7 +37,7 @@ public class BWREntityXPOrb extends EntityXPOrb
 		int bx = MathHelper.floor_double(x);
 		int by = MathHelper.floor_double(y);
 		int bz = MathHelper.floor_double(z);
-		if(isDead
+		if(isDead || !m_bNotPlayerOwned
 			|| (this.worldObj.getBlockId(bx, by, bz) != Block.sand.blockID)
 			|| !soulPressBlocksAllowed[this.worldObj.getBlockId(bx - 1, by, bz)]
 			|| !soulPressBlocksAllowed[this.worldObj.getBlockId(bx + 1, by, bz)]
