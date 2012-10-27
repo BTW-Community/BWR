@@ -1,0 +1,71 @@
+v0.15
+	- Press for making soul sand must now be built out of
+	  sufficiently hard materials.
+
+	- Added risk to soul sand fabrication: the process is
+	  now highly exothermic.
+
+
+v0.14
+	- Soul sand is now renewable.  Infuse sand with souls.
+	  However, instead of souls of the damned, only fresh
+	  souls, untouched by human hands, can be used.  They
+	  must be forced into the sand under pressure.
+
+	- Replaced mossy stone with cobblestone in netherrack
+	  recipe, as moss stone is too expensive compared to
+	  netherrack.
+
+
+v0.13
+	- First publicly-available version of BWR, distributed
+	  in source form, with MCP, BTW, and Minecraft as
+	  external dependencies.  Requires perl, python (for mcp),
+	  and a unix-like programming environment with a bsd-
+	  or gnu-like make.
+
+	- Make diamond recycling recipe lossless, as it already
+	  consumes a lot of other resources, and diamonds are not
+	  very useful for tool applications, being inferior to
+	  steel in many ways.
+
+	- Made Neterrack renewable.  Stew mossy cobblestone with
+	  nether wart, and infuse one soul of the damned.
+
+
+v0.12
+	- Added risk to lapis recovery recipe: lapis is now just
+	  destroyed if you forget to add a bonding agent.
+
+	- Reduced amount of heat needed in clay/dirt farms for max
+	  speed, to reduce the number of block checks needed and
+	  avoid performance issues with very large farms
+
+
+v0.11
+	- Added some audible effects to clay/dirt farms.
+
+
+v0.10
+	- First private test release.
+
+	- Dirt is now renewable.  There is a block in BTW that is
+	  dirt-like and nutrient-rich, but unsuitable for planting
+	  due to a low pH; rinse the acid out to leave dirt behind.
+	  Added heat speeds up the process.
+
+	- Clay is now renewable.  Sand rinsed in acid is etched
+	  into finer clay particles.  Heat speeds up the process.
+
+	- Diamonds are renewable.  Diamond equipment is tradable
+	  from villagers; dissolve them in a strong alkaline to
+	  destroy bonding agents and leave raw diamonds behind.
+
+	- Lapis is now renewable.  It can be washed from the
+	  products of the genetic mutants that create it.  A fine
+	  mineral powder will bond to the lapis and make it settle
+	  out of suspension.
+
+	- Lilypads are now renewable.  They spread to adjacent
+	  blocks, though their growth is limited, to avoid them
+	  taking over existing worlds.
