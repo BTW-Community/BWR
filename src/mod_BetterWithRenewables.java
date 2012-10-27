@@ -4,7 +4,7 @@ import net.minecraft.server.MinecraftServer;
 public class mod_BetterWithRenewables {
 	public static final String bwrProductString = "Better With Renewables";
 	public static final String bwrAbbrString = "BWR";
-	public static final String bwrVersionString = "0.14.0430";
+	public static final String bwrVersionString = "0.15.0430";
 	public static boolean HasInitialized = false;
 	public static mod_BetterWithRenewables m_instance = new mod_BetterWithRenewables();
 

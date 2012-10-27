@@ -82,8 +82,10 @@ Lilypads	DONE
 
 Soul Sand	DONE
 	Trap dragon orbs inside a sand block, surrounded by solid blocks
+	Surrounding blocks must be at least as hard as iron
 	Use a mechanism involving timed pistons
 	All trapped XP is consumed, 2% chance per xp point of transforming
+	Reaction is exothermic, can set nearby blocks/entities on fire
 
 Water		PENDING
 	Place pump output next to an existing water spring
