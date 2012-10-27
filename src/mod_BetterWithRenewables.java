@@ -53,13 +53,20 @@ public class mod_BetterWithRenewables {
 				});
 		}
 
+	public void Log(String msg)
+		{
+		MinecraftServer.getServer();
+		MinecraftServer.logger.info(bwrAbbrString + ": " + msg);
+		}
+
 	public void load()
 		{
 		if(!HasInitialized)
 			{
-			MinecraftServer.getServer();
-			MinecraftServer.logger.info(bwrProductString + " v" + this.getVersion() + " Initializing...");
+			Log(bwrProductString + " v" + this.getVersion() + " Initializing...");
 
+			// Replace some upstream block definitions with our custom ones, so our
+			// custom logic is run for these blocks.
 			for(int i = 0; i < Block.blocksList.length; i++)
 				{
 				Block old = Block.blocksList[i];
@@ -67,17 +74,19 @@ public class mod_BetterWithRenewables {
 					{
 					Block.blocksList[i] = null;
 					mod_FCBetterThanWolves.fcAestheticOpaque = new BWRBlockAestheticOpaque(i);
-					MinecraftServer.logger.info("BWRBlockAestheticOpaque installed @ " + i);
+					Log("BWRBlockAestheticOpaque installed @ " + i);
 					}
 				if((old instanceof BlockLilyPad) && !(old instanceof BWRBlockLilyPad))
 					{
 					int blockIndexInTexture = Block.blocksList[i].blockIndexInTexture;
 					Block.blocksList[i] = null;
 					new BWRBlockLilyPad(i, blockIndexInTexture);
-					MinecraftServer.logger.info("BWRBlockLilyPad installed @ " + i);
+					Log("BWRBlockLilyPad installed @ " + i);
 					}
 				}
-			
+
+			// Add recipes to the stoked pot for recovering diamond from equipment
+			// that can be purchased from villagers.
 			DiamondRecoveryRecipe(Item.plateDiamond, 8);
 			DiamondRecoveryRecipe(Item.legsDiamond, 7);
 			DiamondRecoveryRecipe(Item.helmetDiamond, 5);
@@ -88,12 +97,16 @@ public class mod_BetterWithRenewables {
 			DiamondRecoveryRecipe(Item.hoeDiamond, 2);
 			DiamondRecoveryRecipe(Item.shovelDiamond, 1);
 
+			// Add recipes for recovering lapis from various colored wools that
+			// can be made via sheep breeding.
 			LapisRecoveryRecipe(11, 0, 0, 1);
 			LapisRecoveryRecipe(3, 0, 0, 2);
 			LapisRecoveryRecipe(9, 13, 13, 2);
 			LapisRecoveryRecipe(10, 14, 14, 2);
 			LapisRecoveryRecipe(2, 6, 14, 4);
-			
+
+			// Netherrack can be created by mixing netherwart, cobblestone,
+			// and a source of souls (of which soul dust is renewable).
 			FCRecipes.AddCauldronRecipe(
 				new ItemStack[]
 					{
@@ -102,7 +115,7 @@ public class mod_BetterWithRenewables {
 					},
 				new ItemStack[]
 					{
-					new ItemStack(Block.cobblestoneMossy, 1, -1),
+					new ItemStack(Block.cobblestone, 1, -1),
 					new ItemStack(Item.netherStalkSeeds, 1, -1),
 					new ItemStack(mod_FCBetterThanWolves.fcSoulDust, 1, -1)
 					});
@@ -110,47 +123,30 @@ public class mod_BetterWithRenewables {
 				new ItemStack(Block.netherrack, 8),
 				new ItemStack[]
 					{
-					new ItemStack(Block.cobblestoneMossy, 8, -1),
+					new ItemStack(Block.cobblestone, 8, -1),
 					new ItemStack(Item.netherStalkSeeds, 8, -1),
 					new ItemStack(mod_FCBetterThanWolves.fcSoulUrn, 1, -1)
 					});
 
-//			FCRecipes.AddStokedCauldronRecipe(
-//				new ItemStack[]
-//					{
-//					new ItemStack(Block.dragonEgg, 1),
-//					new ItemStack(Block.whiteStone, 8)
-//					},
-//				new ItemStack[]
-//					{
-//					new ItemStack(Block.dragonEgg, 1, -1),
-//					new ItemStack(Block.cobblestoneMossy, 8, -1),
-//					new ItemStack(Item.enderPearl, 1, -1)
-//					});
-//			FCRecipes.AddStokedCauldronRecipe(
-//				new ItemStack[]
-//					{
-//					new ItemStack(Block.dragonEgg, 1),
-//					new ItemStack(Block.whiteStone, 1)
-//					},
-//				new ItemStack[]
-//					{
-//					new ItemStack(Block.dragonEgg, 1, -1),
-//					new ItemStack(Block.cobblestoneMossy, 1, -1)
-//					});
-
-//			FCRecipes.AddCauldronRecipe(
-//				new ItemStack(Block.slowSand, 1),
-//				new ItemStack[]
-//					{
-//					new ItemStack(Block.sand, 1, -1),
-//					new ItemStack(mod_FCBetterThanWolves.fcSoulUrn, 1, -1)
-//					});
-
-			MinecraftServer.logger.info(bwrProductString + " Initialization Complete.");
+			Log(bwrProductString + " Initialization Complete.");
 			}
 
 		HasInitialized = true;
+		}
+
+	public Entity TransformEntityOnSpawn(Entity original)
+		{
+		// Replace Dragon Orbs with custom BWR variety.
+		if((original instanceof EntityXPOrb) && ((EntityXPOrb)original).m_bNotPlayerOwned)
+			{
+			BWREntityXPOrb New = new BWREntityXPOrb(original.worldObj);
+			NBTTagCompound Tag = new NBTTagCompound();
+			original.writeToNBT(Tag);
+			New.readFromNBT(Tag);
+			return New;
+			}
+
+		return original;
 		}
 
 	public void ServerPlayerConnectionInitialized(NetServerHandler net, EntityPlayerMP player)
