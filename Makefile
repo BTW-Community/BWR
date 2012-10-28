@@ -13,7 +13,8 @@ bwr_btw_${SVR}: src/* hooks.pl mcp tmp/jar tmp/btw
 	cp -fR ../jar/* . &&\
 	cp -fR ../btw/MINECRAFT_SERVER-JAR/* . &&\
 	cp -fR ../../mcp/reobf/minecraft_server/* . &&\
-	7z a -y -tzip -mx=9 ../../bwr_btw_${SVR} *
+	7z a -y -tzip -mx=9 ../../bwr_btw_${SVR}.new *
+	mv -f bwr_btw_${SVR}.new bwr_btw_${SVR}
 
 mcp: tmp/btw_${SVR} ${MCP}
 	mkdir -p mcp
@@ -43,7 +44,7 @@ tmp/jar: ${SVR}
 	7z x -y ../../${SVR}
 	
 clean:
-	rm -rf mcp tmp bwr_btw_${SVR}
+	rm -rf mcp tmp bwr_btw_${SVR} bwr_btw_${SVR}.new
 
 ${SVR}:
 	#------------------------------------------------------------------------ 
