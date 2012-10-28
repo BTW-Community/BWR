@@ -35,8 +35,7 @@ public class BWRBlockLilyPad extends BlockLilyPad
 
 		// Flowing water must be the deepest type, i.e the immediate
 		// output of a stable-running screw pump, to work.
-		if((id == Block.waterStill.blockID)
-			&& (world.getBlockMetadata(x, y - 1, z) > 1))
+		if(world.getBlockMetadata(x, y - 1, z) > 1)
 			return false;
 
 		return true;
