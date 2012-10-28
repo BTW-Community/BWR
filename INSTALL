@@ -1,0 +1,94 @@
+========================================================================
+Multiplayer Server Installation
+------------------------------------------------------------------------
+
+1. Prerequisites:
+	- BWR requires a unix-like environment to build, tested on
+	  Debian 6 and OpenBSD 5.  Other Linux/BSD operating systems
+	  may work as well.
+	- Python is required by MCP, tested with v2.6 and v2.7.
+	- Perl is required to install the hooks, tested with v5.10
+	  and v5.12.
+	- Make is required (part of OS or build-essential); tested
+	  with GNU and BSD make.
+	- Git is recommended to obtain source and pull updates.
+
+2. Download Better With Renewables:
+	- Official site: https://gitorious.org/bwrenewables
+	- Git clone: https://git.gitorious.org/bwrenewables/bwr.git
+	- For users not using git, downloads of latest
+	  development version are at:
+	    https://gitorious.org/bwrenewables/bwr/trees/master
+	
+3. Download Better Than Wolves:
+	- Check the Makefile to determine the version of BTW that BWR
+	  depends on.
+	- Obtain correct version of BTW from forums on sargunster.com
+	  http://sargunster.com/btwforum/viewforum.php?f=3
+	- If a newer version is available, you can try downloading it
+	  and changing the expected version in the Makefile, but results
+	  are not guaranteed.
+	- Place the BTWMod*.zip file in the root of the project.
+
+4. Download Minecraft Server JAR:
+	- You need the appropriate version of Minecraft on which Better
+	  Than Wolves depends.
+	- Latest version of Minecraft Server can be obtained from:
+	    https://minecraft.net/download
+	  You will need the jar, not the exe, near the bottom of the
+	  page.
+	- Links to download older versions are on the Minecraft wiki:
+	    http://www.minecraftwiki.net/wiki/Version_history/Development_versions
+	- Place minecraft_server.jar in the root of the project.
+
+5. Download Minecraft Coder's Pack:
+	- Check the Makefile to determine the version of MCP that BWR
+	  depends on; this will also correspond to the Minecraft and
+	  BTW versions.
+	- Obtain correct vesion of MCP from the MCP wiki, at either:
+	    http://mcp.ocean-labs.de/index.php/MCP_Releases#Releases
+	    http://mcp.ocean-labs.de/index.php/MCP_Old_Releases#History
+	- If a newer version is available, you can try downloading it
+	  and changing the expected version in the Makefile, but results
+	  are not guaranteed.
+	- Place the mcp*.zip file in the root of the project.
+
+6. Run make clean:
+	- In a shell in the root of the BWR project, run "make clean".
+	- This will clean up any intermediate/output files from any
+	  previous builds.
+
+7. Run make:
+	- In a shell in the root of the BWR project, run "make".
+	- Minecraft server will be patched with BTW, then decompiled,
+	  the source code will be patched with BWR, then recompiled.
+
+8. Install bwr_btw_minecraft_server.jar:
+	- The bwr_btw_minecraft_server.jar file is the final output.
+	- Install this wherever you want your multiplayer server to be
+	  (or update and restart your existing server).
+	- Note that this file contains code that is copyright by third
+	  parties, and thus is NOT redistributable under the terms of
+	  the BWR license.
+
+
+
+========================================================================
+Multiplayer Client Installation
+------------------------------------------------------------------------
+
+No client installation is necessary.  Clients modded with Better Than
+Wolves are able to play on Better With Renewables servers with no
+additional changes.
+
+
+
+========================================================================
+Singleplayer Installation
+------------------------------------------------------------------------
+
+1. Follow the multiplayer server install process above.
+
+2. Run a whitelisted multiplayer server.
+
+3. Don't invite your friends.
