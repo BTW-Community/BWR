@@ -1,12 +1,15 @@
-Clay		DONE
-Dirt		DONE
-Lapis		DONE
-Diamond		DONE
-Netherrack	DONE
-Lilypads	DONE
-Soul Sand	DONE
-Water		PENDING
-Lava		PENDING
-End Portal	TBD
-Mob Spawners	TBD
-Dragon Egg	TBD
+Water
+	Instead of making water renewable, find all applications
+	for source blocks and try to make them work with flowing.
+
+End Portal
+	Endstone as a prereq, as it can now be gathered from
+	endermen in the overworld.
+
+Mob Spawners
+	Need to be able to make these in custom maps, minimally
+	for mossy cobble gen.
+
+Dragon Egg
+	This is supposed to be unique, but what if it is lost, or
+	custom maps lack a dragon?

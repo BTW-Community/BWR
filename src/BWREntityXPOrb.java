@@ -95,9 +95,9 @@ public class BWREntityXPOrb extends EntityXPOrb
 			for(int dx = -1; dx <= 1; dx += 2)
 				for(int dy = -1; dy <= 1; dy += 2)
 					for(int dz = -1; dz <= 1; dz += 2)
-						this.worldObj.playSoundEffect(x + dx, y + dy, z + dz, "fire.ignite", 1.0F,
+						this.worldObj.playSoundEffect(x + dx, y + dy, z + dz, "fire.ignite", 2.0F,
 				(this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.8F);
-			this.worldObj.setBlockWithNotify(bx, by, bz, Block.slowSand.blockID);
+			this.worldObj.setBlockAndMetadataWithNotify(bx, by, bz, Block.slowSand.blockID, 0);
 			}
 		
 		return true;

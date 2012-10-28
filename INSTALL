@@ -11,6 +11,7 @@ Multiplayer Server Installation
 	  and v5.12.
 	- Make is required (part of OS or build-essential); tested
 	  with GNU and BSD make.
+	- 7-zip or p7zip is required.
 	- Git is recommended to obtain source and pull updates.
 
 2. Download Better With Renewables:

@@ -10,6 +10,24 @@ public class BWRBlockLilyPad extends BlockLilyPad
 		this.setRequiresSelfNotify();
 		}
 
+	protected boolean canThisPlantGrowOnThisBlockID(int id)
+		{
+		return (id == Block.waterStill.blockID)
+			|| (id == Block.waterMoving.blockID);
+		}
+
+	public boolean canBlockStay(World world, int x, int y, int z)
+		{
+		if((z < 0) || (z > 255))
+			return false;
+		int id = world.getBlockId(x, y - 1, z);
+		if(id == Block.waterStill.blockID)
+			return true;
+		if(id == Block.waterMoving.blockID)
+			return world.getBlockMetadata(x, y - 1, z) < 2;
+		return false;
+		}
+
 	public void updateTick(World world, int x, int y, int z, Random r)
 		{
 		super.updateTick(world, x, y, z, r);

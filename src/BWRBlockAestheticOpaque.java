@@ -20,28 +20,59 @@ public class BWRBlockAestheticOpaque extends FCBlockAestheticOpaque
 			if((above == Block.waterStill.blockID) || (above == Block.waterMoving.blockID))
 				{
 				int heat = 10;
-				for(int dy = 0; dy <= 3; dy++)
+				for(int dy = 1; dy <= 3; dy++)
 					{
-					int b = world.getBlockId(x, y - dy, z);
-					if(b == mod_FCBetterThanWolves.fcStokedFire.blockID)
-						heat += 27;
-					else if(b == Block.fire.blockID)
-						heat += 9;
+					if(!world.isBlockNormalCube(x, y - dy, z))
+						{
+						for(int dx = -1; dx < 1; dx++)
+							for(int dz = -1; dz < 1; dz++)
+								{
+								int b = world.getBlockId(x + dy, y - dy, z);
+								if(b == mod_FCBetterThanWolves.fcStokedFire.blockID)
+									heat += 3;
+								else if(b == Block.fire.blockID)
+									heat += 1;
+								}
+						break;
+						}
 					}
 
-				if((heat > 0) && (r.nextInt(3200) < heat))
+				if((heat > 0) && (r.nextInt(4800) < heat))
 					{
-					world.setBlockWithNotify(x, y, z, Block.dirt.blockID);
+					world.setBlockAndMetadataWithNotify(x, y, z, Block.dirt.blockID, 0);
 
 					int b = world.getBlockId(x, y - 1, z);
 					if(b == Block.sand.blockID)
 						{
-						world.playAuxSFX(1004, x, y - 1, z, 0);
-						world.setBlockWithNotify(x, y - 1, z, Block.blockClay.blockID);
+						world.playSoundEffect(x, y, z, "random.fizz", 1.0F,
+							1.0F + world.rand.nextFloat() * 0.5F);
+						world.setBlockAndMetadataWithNotify(x, y - 1, z, Block.blockClay.blockID, 0);
 						}
-
-					world.markBlocksDirty(x, y, z, x, y - 1, z);
 					}
+				}
+			}
+		else if(type == m_iSubtypeHellfire)
+			{
+			int nearby = 0;
+			int sources = 0;
+			for(int dx = -1; dx < 1; dx++)
+				for(int dy = -1; dy < 1; dy++)
+					for(int dz = -1; dz < 1; dz++)
+						{
+						int id = world.getBlockId(x + dx, y + dy, z + dz);
+						if((id == Block.lavaStill.blockID) || (id == Block.lavaMoving.blockID))
+							{
+							if(id == Block.lavaStill.blockID)
+								sources++;
+							nearby++;
+							}
+						}
+			if((sources > 0) && (r.nextInt(1200) < nearby))
+				{
+				for(int i = 0; i < 3; i++)
+					world.playAuxSFX(2004, x, y, z, 0);
+				world.playSoundEffect(x, y, z, "fire.ignite", 1.0F, world.rand.nextFloat() * 0.5F);
+				world.setBlockAndMetadataWithNotify(x, y, z, Block.lavaStill.blockID, 0);
 				}
 			}
 		}

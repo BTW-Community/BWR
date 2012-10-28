@@ -1,3 +1,17 @@
+	- Lava source blocks are now renewable.  Lava will
+	  melt nearby blocks of hellfire.
+
+	- Lilypads can now grow on the highest level of flowing
+	  water, as well as source blocks, so lilypad farming
+	  will work with HCB even when water is extremely scarce.
+
+	- Restored old pre-v0.12 heat logic for dirt/clay
+	  farms, to be consistent with BTW pattern of using
+	  a 3x3 fire source for max efficiency.
+
+	- Improvements to clay/dirt farming SFX.
+
+
 v0.15
 	- Press for making soul sand must now be built out of
 	  sufficiently hard materials.
