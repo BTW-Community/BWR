@@ -1,7 +1,3 @@
-Water
-	Instead of making water renewable, find all applications
-	for source blocks and try to make them work with flowing.
-
 End Portal
 	Endstone as a prereq, as it can now be gathered from
 	endermen in the overworld.
@@ -13,3 +9,13 @@ Mob Spawners
 Dragon Egg
 	This is supposed to be unique, but what if it is lost, or
 	custom maps lack a dragon?
+
+Plant Mutating/Cross-Breeding
+	A way to obtain various plant crops on challenge maps
+	when exploration is not viable.
+	- Plant 2 or more different types of plant in a 3x3
+	- Additional plants may grow between them, depending on
+	  survival requirements being met
+	- Certain combinations will encourag certain mutations
+
+	
