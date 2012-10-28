@@ -12,6 +12,7 @@ public class BWRBlockLilyPad extends BlockLilyPad
 
 	protected boolean canThisPlantGrowOnThisBlockID(int id)
 		{
+		// Lilypads can survive on either flowing or still water.
 		return (id == Block.waterStill.blockID)
 			|| (id == Block.waterMoving.blockID);
 		}
@@ -20,18 +21,32 @@ public class BWRBlockLilyPad extends BlockLilyPad
 		{
 		if((z < 0) || (z > 255))
 			return false;
+
+		// Lilypads can survive on either flowing or still water.
 		int id = world.getBlockId(x, y - 1, z);
-		if(id == Block.waterStill.blockID)
-			return true;
-		if(id == Block.waterMoving.blockID)
-			return world.getBlockMetadata(x, y - 1, z) < 2;
-		return false;
+		if((id != Block.waterStill.blockID)
+			&& (id != Block.waterMoving.blockID))
+			return false;
+
+		// Lilypads require standard (>= 8) light level.
+		if((world.getFullBlockLightValue(x, y, z) < 8)
+			&& !world.canBlockSeeTheSky(x, y, z))
+			return false;
+
+		// Flowing water must be the deepest type, i.e the immediate
+		// output of a stable-running screw pump, to work.
+		if((id == Block.waterStill.blockID)
+			&& (world.getBlockMetadata(x, y - 1, z) > 1))
+			return false;
+
+		return true;
 		}
 
 	public void updateTick(World world, int x, int y, int z, Random r)
 		{
 		super.updateTick(world, x, y, z, r);
 
+		// Count the number of lilypads surrounding.
 		int neighbors = 0;
 		for(int dx = -1; dx <= 1; dx++)
 			for(int dz = -1; dz <= 1; dz++)
@@ -41,8 +56,15 @@ public class BWRBlockLilyPad extends BlockLilyPad
 					neighbors++;
 				}
 
-		if((neighbors < 2) && (r.nextInt(4) == 0))
+		// Only spread if there are no other neighboring pads, to prevent
+		// lilypads from filling up long-lived swamp chunks (even though this
+		// would be closer to IRL behavior, it would be out of balance).
+		// Growth rate is dependent on light level, so naturally-lit lilypads
+		// will not grow at night.
+		int ll = world.getFullBlockLightValue(x, y, z);
+		if((neighbors < 2) && (r.nextInt(32) < ll))
 			{
+			// Try to place a lilypad block in a randomly-chosen adjacent spot.
 			int rx = x + r.nextInt(3) - 1;
 			int rz = z + r.nextInt(3) - 1;
 			if((world.getBlockId(rx, y, rz) == 0) && canBlockStay(world, rx, y, rz))

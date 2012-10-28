@@ -5,11 +5,17 @@
 	  water, as well as source blocks, so lilypad farming
 	  will work with HCB even when water is extremely scarce.
 
+	- Lilypad growth rate is now dependent on actual immediate
+	  light level, even though they will remain in place as
+	  long as they have a view of the sky.
+
 	- Restored old pre-v0.12 heat logic for dirt/clay
 	  farms, to be consistent with BTW pattern of using
 	  a 3x3 fire source for max efficiency.
 
 	- Improvements to clay/dirt farming SFX.
+
+	- Slightly nerfed clay/dirt farming speed.
 
 
 v0.15
