@@ -19,7 +19,7 @@ public class BWRBlockLilyPad extends BlockLilyPad
 
 	public boolean canBlockStay(World world, int x, int y, int z)
 		{
-		if((z < 0) || (z > 255))
+		if((y < 0) || (y > 255))
 			return false;
 
 		// Lilypads can survive on either flowing or still water.
