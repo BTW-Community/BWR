@@ -15,11 +15,11 @@ Multiplayer Server Installation
 	- Git is recommended to obtain source and pull updates.
 
 2. Download Better With Renewables:
-	- Official site: https://gitorious.org/bwrenewables
-	- Git clone: https://git.gitorious.org/bwrenewables/bwr.git
+	- Official site: https://gitorious.org/bwr
+	- Git clone: https://git.gitorious.org/bwr/bwr.git
 	- For users not using git, downloads of latest
 	  development version are at:
-	    https://gitorious.org/bwrenewables/bwr/trees/master
+	    https://gitorious.org/bwr/bwr/trees/master
 	
 3. Download Better Than Wolves:
 	- Check the Makefile to determine the version of BTW that BWR
