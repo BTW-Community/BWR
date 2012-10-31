@@ -5,8 +5,11 @@ SVR=minecraft_server.jar
 bwr_btw_${SVR}: src/* hooks.pl mcp tmp/jar tmp/btw
 	cp -fR src/* mcp/src/minecraft_server/net/minecraft/src/
 	perl -w hooks.pl
+	rm -rf mcp/bin
 	cd mcp &&\
-	python runtime/recompile.py &&\
+	python runtime/recompile.py
+	perl -w checkbin.pl
+	cd mcp &&\
 	python runtime/reobfuscate.py
 	mkdir -p tmp/bwrjar
 	cd tmp/bwrjar &&\
