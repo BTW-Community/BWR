@@ -13,8 +13,8 @@ public class BWREntityXPOrb extends EntityXPOrb
 
 		if(soulPressBlocksAllowed == null)
 			{
-			boolean[] A = new boolean[4096];
-			for(int I = 0; I < 4096; I++)
+			boolean[] A = new boolean[Block.blocksList.length];
+			for(int I = 0; I < Block.blocksList.length; I++)
 				{
 				Block B = Block.blocksList[I];
 				A[I] = (B != null)
