@@ -80,12 +80,11 @@ public class BWRPlantBreedEngine {
 				for(int dz = -1; dz <= 1; dz++)
 					{
 					int B = world.getBlockId(x + dx, y + dy, z + dz);
-					if((B == CreateID) && (world.rand.nextInt(20) != 0))
-						return false;
-					if(ids[B])
+					if((B != CreateID) && ids[B])
 						NearIDs.add(B);
 					}
-		if(NearIDs.size() < 2)
+		int Neighbors = NearIDs.size();
+		if((Neighbors < 2) || (world.rand.nextInt(12) < Neighbors))
 			return false;
 
 		world.setBlockAndMetadata(x, y, z, CreateID, CreateMeta);
@@ -152,7 +151,7 @@ public class BWRPlantBreedEngine {
 			return false;
 		if(world.getFullBlockLightValue(x, y, z) < 14)
 			return false;
-		if(world.rand.nextInt(1200) != 0)
+		if(world.rand.nextInt(100) != 0)
 			return false;
 		return Grow(world, x, y, z, PlantTypes, PlantBlockIDs);
 		}
@@ -163,7 +162,7 @@ public class BWRPlantBreedEngine {
 			return false;
 		if(world.getFullBlockLightValue(x, y, z) > 1)
 			return false;
-		if(world.rand.nextInt(1200) != 0)
+		if(world.rand.nextInt(100) != 0)
 			return false;
 		return Grow(world, x, y, z, FungusTypes, FungusBlockIDs);
 		}
