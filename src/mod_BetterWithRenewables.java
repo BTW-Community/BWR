@@ -7,7 +7,7 @@ import net.minecraft.server.MinecraftServer;
 public class mod_BetterWithRenewables {
 	public static final String bwrProductString = "Better With Renewables";
 	public static final String bwrAbbrString = "BWR";
-	public static final String bwrVersionString = "0.16.0430";
+	public static final String bwrVersionString = "0.17.0430";
 	public static boolean HasInitialized = false;
 	public static mod_BetterWithRenewables m_instance = new mod_BetterWithRenewables();
 
@@ -85,7 +85,10 @@ public class mod_BetterWithRenewables {
 			// Replace some upstream block definitions with our custom ones, so our
 			// custom logic is run for these blocks.
 			mod_FCBetterThanWolves.fcAestheticOpaque = ReplaceBlock(FCBlockAestheticOpaque.class, BWRBlockAestheticOpaque.class);
+			mod_FCBetterThanWolves.fcBlockFarmlandFertilized = ReplaceBlock(FCBlockFarmlandFertilized.class, BWRBlockFarmlandFertilized.class);
+			mod_FCBetterThanWolves.fcPlanter = ReplaceBlock(FCBlockPlanter.class, BWRBlockPlanter.class);
 			ReplaceBlock(BlockLilyPad.class, BWRBlockLilyPad.class);
+			ReplaceBlock(BlockSoulSand.class, BWRBlockSoulSand.class);
 
 			// Add mapping for custom Dragon Orb entities.
 			EntityList.addMapping(BWREntityXPOrb.class, "XPOrb", 2);
@@ -93,8 +96,8 @@ public class mod_BetterWithRenewables {
 			// Add custom BWR recipes.
 			BWRRecipes.m_instance.AddRecipes();
 
-//			// Initialize the plant/fungus cross-breeding engine.
-//			BWRPlantBreedEngine.m_instance.Initialize();
+			// Initialize the plant/fungus cross-breeding engine.
+			BWRPlantBreedEngine.m_instance.Initialize();
 
 			Log(bwrProductString + " Initialization Complete.");
 			}

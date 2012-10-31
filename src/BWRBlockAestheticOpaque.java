@@ -13,6 +13,7 @@ public class BWRBlockAestheticOpaque extends FCBlockAestheticOpaque
 	public void updateTick(World world, int x, int y, int z, Random r)
 		{
 		super.updateTick(world, x, y, z, r);
+
 		int type = world.getBlockMetadata(x, y, z);
 		if(type == FCBlockAestheticOpaque.m_iSubtypeDung)
 			{

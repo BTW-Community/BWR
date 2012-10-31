@@ -1,3 +1,13 @@
+v0.17
+	- Most plants/fungi now obtainable, given dirt,
+	  bonemeal, and a hoe.  Plants and fungi exposed to
+	  other species will spread mutant strains into nearby
+	  fertile spaces.
+
+	- Dead shrubs are now renewable: boil the leaves off
+	  an oak sapling.
+
+
 v0.16
 	- Lava source blocks are now renewable.  Lava will
 	  melt nearby blocks of hellfire.
