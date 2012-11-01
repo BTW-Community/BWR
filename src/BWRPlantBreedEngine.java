@@ -56,11 +56,11 @@ public class BWRPlantBreedEngine {
 	public void Initialize()
 		{
 		// Define plant/fungus lookup tables, separated by kingdom.
-		// The first column is the blockID of the plant that would be created.
-		//  The second is its metadata value, with -1 meaning "choose a
-		// random value."
-		// The third is the probability weight, out of the total weights
-		// for that kingdom.
+		// - The first column is the blockID of the plant that would be created.
+		// - The second is its metadata value, with -1 meaning "choose a
+		//   random value."
+		// - The third is the probability weight, out of the total weights
+		//   for that kingdom.
 		PlantTypes = new int[][]
 			{
 			new int[] { Block.tallGrass.blockID, 1, 100 },
