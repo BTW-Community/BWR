@@ -52,42 +52,42 @@ Renewable Clay:
 	Sand rinsed in acid is etched into finer clay particles.
 	Added heat speeds up the process.
 
-Lilypads:
+Renewable Lilypads:
 	Lilypads will spread (very limited) to adjacent spaces that
 	meet their living requirements.  They can now grow and survive
 	on deep enough flowing water, so they can be farmed using pumps
 	with Hardcore Buckets, when water sources are scarce.
 
-Diamond:
+Renewable Diamonds:
 	Diamond equipment is obtainable by trading with villagers.
 	These can be broken down into raw diamonds (for uses in lenses
 	and other tools) by dissolving the agents that bond them in a
 	very strong alkaline.
 
-Lapis Lazuli:
+Renewable Lapis Lazuli:
 	Lapis particles can be washed from the products of the genetic
 	mutants that create it. A fine mineral powder will bond to the
 	lapis and make it settle out of suspension.
 
-Soul Sand:
+Renewable Soul Sand:
 	Fresh souls, harvested without human violence, can be forced
 	under high pressure into sand by machinery made of sufficiently
 	hard materials.  The reaction is highly exothermic.
 
-Netherrack:
+Renewable Netherrack:
 	The essence of hellfire is distilled from the nether by
 	organisms that have evolved in that most hostile of
 	environments.  Combined with the requisite Souls of the Damned,
 	these can be infused into an appropriate medium.
 
-Lava Source:
+Renewable Lava Sources:
 	A block of a certain very hot solid can be melted into lava from
 	the added heat of nearby lava.
+
+Renewable Dead Shrubs:
+	Render the leaves off a living plant of similar shape.
 
 Plant Crossbreeding:
 	A highly fertile space, left unplanted, will encourage the
 	growth of mutations from nearby species.  This process is sped
 	up by added genetic diversity.
-
-Dead Shrubs:
-	Render the leaves off a living plant of similar shape.
