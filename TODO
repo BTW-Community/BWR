@@ -1,21 +1,32 @@
+Obtainable Wolves
+	Need a way to get wolves in superflat (limited biomes).
+	Ideas:
+	- Terraform an area with sufficient spruce trees, and
+	  they'll spawn (or change the biome to forest/tundra).
+	- Wolves spawn in spaces with enough sheep and low
+	  enough light level.
+	- Cross-breed animals.
+
 End Portal
 	Endstone as a prereq, as it can now be gathered from
-	endermen in the overworld.
+	endermen, even in the overworld.
 
 Mob Spawners
 	Need to be able to make these in custom maps, minimally
-	for mossy cobble gen.
+	for mossy cobble gen, or BD's are out.
+	Ideas:
+	- Trap sufficient number of target mobs in a space, in-
+	  world build.
+	- Complex in-world build of expensive materials, type of
+	  mob spawned is random or evolves based on nearby.
+	- Make user-made spawners spawn useless mobs, e.g. ones
+	  that die immediately with no drops, so they're ONLY
+	  useable for cobblegen.
+	- Create an alternative to spawners for mossygen...?
 
 Dragon Egg
 	This is supposed to be unique, but what if it is lost, or
 	custom maps lack a dragon?
-
-Plant Mutating/Cross-Breeding
-	A way to obtain various plant crops on challenge maps
-	when exploration is not viable.
-	- Plant 2 or more different types of plant in a 3x3
-	- Additional plants may grow between them, depending on
-	  survival requirements being met
-	- Certain combinations will encourag certain mutations
-
-	
+	Ideas:
+	- Create replacement ender crystals; placing enough of these
+	  close to each other in the end will summon the dragon.

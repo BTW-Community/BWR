@@ -1,36 +1,93 @@
-PURPOSE
+========================================================================
+SUMMARY
+------------------------------------------------------------------------
 
-RENEWABILITY
+Better With Renewables is an add-on for the Better Than Wolves mod for
+Minecraft that makes more resources renewable, obtainable, and/or
+available to extend engame play, especially on custom "challenge" maps
+that are resource-scarce.
 
-Make all existing resources renewable, given at least a
-finite starting supply of all normally-obtainable
-resources.
-
-This allows challenge maps such as skyblock/skygrid
-to enjoy extended playability with minor or no changes,
-by ensuring that no resource is finite, and thus the
-play experience can scale out as necessary.
-
-OBTAINABILITY
-
-Make most resources that are less likely to be included
-in custom challenge maps obtainable, given a basic set of
-starting materials necessary for reasonable vanilla
-gameplay.
-
-Minimize the need for changes in custom challenge maps
-to enjoy full extended gameplay.
+Programming by Warr1024.
+Design by DaveYanakov and Warr1024.
+BTW Community Relations and Support by DaveYanakov.
+Testing by DaveYanakov and Benanov.
 
 
+
+========================================================================
 DESIGN GOALS
+------------------------------------------------------------------------
 
-Do not make any materials easier to obtain.
-Challenge/expense of renewable techniques should be
-higher than existing methods.
+- Make all existing resources renewable, given a reasonable supply
+  of starting resources.
 
-Run entirely on SMP server, require no client changes.
+- Make most resources that are likely not to be included in custom
+  "challenge" maps obtainable using other resources that are likely
+  to be included.
 
-Follow design goals of Better Than Wolves.
+- Seamless integration with Better Than Wolves, retaining spirit and
+  challenge of Better Than Wolves game design.  New alternative sources
+  for resources will be less desirable than existing BTW methods
+  when BTW methods are available.
 
-Work with any existing vanilla and/or BTW map, i.e. do
-not break builds.
+- Do not break existing BTW or Vanilla builds or maps, do not modify
+  world generation.
+
+- Run entirely on SMP server, require no further changes to the
+  Minecraft client with BTW mod installed.
+
+
+
+========================================================================
+FEATURES
+------------------------------------------------------------------------
+
+Renewable Dirt:
+	There is a block introduced by BTW that is dirt-like and
+	nutrient-rich, but unsuitable for planting due to a low pH;
+	rinse the acid out to leave dirt behind.  Added heat speeds up
+	the process.
+
+Renewable Clay:
+	Sand rinsed in acid is etched into finer clay particles.
+	Added heat speeds up the process.
+
+Lilypads:
+	Lilypads will spread (very limited) to adjacent spaces that
+	meet their living requirements.  They can now grow and survive
+	on deep enough flowing water, so they can be farmed using pumps
+	with Hardcore Buckets, when water sources are scarce.
+
+Diamond:
+	Diamond equipment is obtainable by trading with villagers.
+	These can be broken down into raw diamonds (for uses in lenses
+	and other tools) by dissolving the agents that bond them in a
+	very strong alkaline.
+
+Lapis Lazuli:
+	Lapis particles can be washed from the products of the genetic
+	mutants that create it. A fine mineral powder will bond to the
+	lapis and make it settle out of suspension.
+
+Soul Sand:
+	Fresh souls, harvested without human violence, can be forced
+	under high pressure into sand by machinery made of sufficiently
+	hard materials.  The reaction is highly exothermic.
+
+Netherrack:
+	The essence of hellfire is distilled from the nether by
+	organisms that have evolved in that most hostile of
+	environments.  Combined with the requisite Souls of the Damned,
+	these can be infused into an appropriate medium.
+
+Lava Source:
+	A block of a certain very hot solid can be melted into lava from
+	the added heat of nearby lava.
+
+Plant Crossbreeding:
+	A highly fertile space, left unplanted, will encourage the
+	growth of mutations from nearby species.  This process is sped
+	up by added genetic diversity.
+
+Dead Shrubs:
+	Render the leaves off a living plant of similar shape.
