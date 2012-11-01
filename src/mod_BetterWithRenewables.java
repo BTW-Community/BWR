@@ -9,8 +9,7 @@ public class mod_BetterWithRenewables {
 	public static final String bwrProductString = "Better With Renewables";
 	public static final String bwrAbbrString = "BWR";
 	public static final String bwrVersionString = "0.17.0430";
-	public static final String bwrCopyrightString = "(C)2012 by Warr1024, MIT License.";
-	public static final String bwrWebsiteString = "https://gitorious.org/bwr";
+	public static final String bwrCopyrightString = "(C)2012, MIT License.  https://gitorious.org/bwr";
 
 	// Singleton variables.
 	public static boolean HasInitialized = false;
@@ -149,12 +148,18 @@ public class mod_BetterWithRenewables {
 		return original;
 		}
 
+	// Send a standard-formatted message to the user.
+	public void Announce(NetServerHandler net, String msg)
+		{
+		net.sendPacket(new Packet3Chat("\u00a7a" + bwrAbbrString + ": " + msg));
+		}
+
 	// Called by a custom hook in ServerConfigurationManager when a new player logs in.
 	public void ServerPlayerConnectionInitialized(NetServerHandler net, EntityPlayerMP player)
 		{
 		// Let the player know of the add-on.  We don't have to do any version checks here
 		// beyond those already done by BTW, as we're compatible with the BTW client.
-		net.sendPacket(new Packet3Chat("\u00a7aBTW Add-On: " + bwrProductString + " v" + bwrVersionString));
-		net.sendPacket(new Packet3Chat("\u00a7a" + bwrCopyrightString + "  " + bwrWebsiteString));
+		Announce(net, bwrProductString + " BTW Add-On v" + bwrVersionString);
+		Announce(net, bwrCopyrightString);
 		}
 	}
