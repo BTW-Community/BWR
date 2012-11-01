@@ -19,7 +19,7 @@ Multiplayer Server Installation
 	- Git clone: https://git.gitorious.org/bwr/bwr.git
 	- For users not using git, downloads of latest
 	  development version are at:
-	    https://gitorious.org/bwr/bwr/trees/master
+	    https://gitorious.org/bwr/bwr/trees/release
 	
 3. Download Better Than Wolves:
 	- Check the Makefile to determine the version of BTW that BWR
