@@ -4,6 +4,10 @@ import net.minecraft.server.MinecraftServer;
 public class BWRRecipes {
 	public static BWRRecipes m_instance = new BWRRecipes();
 
+	// Adds a recipe to the stoked cauldron to recover the specified number of diamonds
+	// from the specified item.  Calculates the amount of potash and hellfire that
+	// would be required.  Potash + hellfire are kind of like "Drano Crystals" that
+	// form a strong alkaline, sufficient to destroy sticks and other bonding materials.
 	public void AddDiamondRecoveryRecipe(Item tool, int qty)
 		{
 		FCRecipes.AddStokedCauldronRecipe(
@@ -16,6 +20,11 @@ public class BWRRecipes {
 				});
 		}
 
+	// Add a recipe to the stoked cauldron to recover lapis from dyed wool.  Lapis is the
+	// only mineral dye, thus can be extracted with soap, leaving the other organic dyes
+	// behind.  Up to 2 different colors of wool can be left behind, to preserve the
+	// other organic dyes; magenta wool needs this to leave behind pink and red.  Also adds
+	// a recipe to destroy lapis if you forget to add enough clay to the pot.
 	public void AddLapisRecoveryRecipe(int indmg, int outdmg1, int outdmg2, int qty)
 		{
 		FCRecipes.AddStokedCauldronRecipe(
@@ -44,6 +53,8 @@ public class BWRRecipes {
 				});
 		}
 
+	// Add all BWR recipes to the BTW/Vanilla crafting managers.  Called on
+	// add-on initialization.
 	public void AddRecipes()
 		{
 		// Add recipes to the stoked pot for recovering diamond from equipment
@@ -90,6 +101,8 @@ public class BWRRecipes {
 				});
 
 		// Dead bushes can be trivially created from oak saplings.
+		// Birch is the wrong color (and horizontally reversed), and pine
+		// and jungle are clearly the wrong shape.
 		FCRecipes.AddStokedCauldronRecipe(
 			new ItemStack(Block.deadBush, 1),
 			new ItemStack[]

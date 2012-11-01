@@ -10,6 +10,8 @@ public class BWRBlockLilyPad extends BlockLilyPad
 		this.setRequiresSelfNotify();
 		}
 
+	// Used by BlockFlower superclass code as a quick check if the
+	// plant should pop off.
 	protected boolean canThisPlantGrowOnThisBlockID(int id)
 		{
 		// Lilypads can survive on either flowing or still water.
@@ -17,6 +19,8 @@ public class BWRBlockLilyPad extends BlockLilyPad
 			|| (id == Block.waterMoving.blockID);
 		}
 
+	// A more thorough check, called on block update, to determine
+	// if the block should pop off.
 	public boolean canBlockStay(World world, int x, int y, int z)
 		{
 		if((y < 0) || (y > 255))
@@ -41,6 +45,7 @@ public class BWRBlockLilyPad extends BlockLilyPad
 		return true;
 		}
 
+	// Called randomly by World.
 	public void updateTick(World world, int x, int y, int z, Random r)
 		{
 		super.updateTick(world, x, y, z, r);

@@ -11,6 +11,9 @@ public class BWREntityXPOrb extends EntityXPOrb
 		{
 		super(world);
 
+		// On first instance, create, and cache, a list of all
+		// block ID's that are allowed as materials in the press
+		// mechanism.
 		if(soulPressBlocksAllowed == null)
 			{
 			boolean[] A = new boolean[Block.blocksList.length];
@@ -25,6 +28,9 @@ public class BWREntityXPOrb extends EntityXPOrb
 			}
 		}
 
+	// Called by Entity superclass on each update cycle to determine
+	// if the entity is trapped inside solid blocks, and should be
+	// pushed out in any direction.
 	protected boolean pushOutOfBlocks(double x, double y, double z)
 		{
 		// Run normal check; if not in a solid block, do nothing.
@@ -96,7 +102,9 @@ public class BWREntityXPOrb extends EntityXPOrb
 				for(int dy = -1; dy <= 1; dy += 2)
 					for(int dz = -1; dz <= 1; dz += 2)
 						this.worldObj.playSoundEffect(x + dx, y + dy, z + dz, "fire.ignite", 2.0F,
-				(this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.8F);
+							(this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.8F);
+
+			// Replace sand with soulsand.
 			this.worldObj.setBlockAndMetadataWithNotify(bx, by, bz, Block.slowSand.blockID, 0);
 			}
 	
