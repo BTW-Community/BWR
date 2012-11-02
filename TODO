@@ -7,6 +7,27 @@ Obtainable Wolves
 	  enough light level.
 	- Cross-breed animals.
 
+SoulSand Catch-22
+	Soulsand currently requires sand, which requires gravel,
+	which may require using mining charges on cobble.  Mining
+	charges require hellfire, which requires a hopper w/
+	soulsand filter.  We may need some way to bootstrap this
+	process without hellfire or gravel.
+
+Plant Crossbreeding Refinements
+	- Fine-tune speed of cross-breeding
+	- Fine-tune base probabilities of plants
+	Right now the entire science of plant crossbreeding is
+	in designing a layout with maximum production rate.
+	There is a pretty basic trade-off between using more
+	space for more species vs. more open plots, i.e. rate
+	of production goes up linearly for both.  Instead, it
+	would be better to have the player have to "target" a
+	species by making probabilities of each specific plant
+	dependent on its neighbors (but you still need to be
+	able to get any plant from any others, in case maps
+	lack certain resources).
+
 End Portal
 	Endstone as a prereq, as it can now be gathered from
 	endermen, even in the overworld.
