@@ -156,6 +156,8 @@ public class BWRPlantBreedEngine {
 		// Check if the block can stay, i.e. the blocks surrounding the florum
 		// are suitable for its survival.
 		int BelowID = world.getBlockId(x, y - 1, z);
+		int NewBelowID = BelowID;
+		boolean UpdateBelow = true;
 		if(!Block.blocksList[CreateID].canBlockStay(world, x, y, z))
 			{
 			// If the block below is farmland, try converting it back to dirt
@@ -175,11 +177,12 @@ public class BWRPlantBreedEngine {
 				// Tall grass and ferns will convert blocks below to grass.  All
 				// other blocks will change the farmland to dirt.
 				if(FungusBlockIDs[CreateID] && (world.rand.nextInt(50) == 0))
-					world.setBlockWithNotify(x, y - 1, z, Block.mycelium.blockID);
+					NewBelowID = Block.mycelium.blockID;
 				else if(CreateID == Block.tallGrass.blockID)
-					world.setBlockAndMetadata(x, y - 1, z, Block.grass.blockID, 0);
+					NewBelowID = Block.grass.blockID;
 				else
-					world.setBlockAndMetadata(x, y - 1, z, Block.dirt.blockID, 0);
+					NewBelowID = Block.dirt.blockID;
+				world.setBlockAndMetadata(x, y - 1, z, NewBelowID, 0);
 
 				// Replace the florum and check if it can stay on the new solid block.
 				world.setBlockAndMetadata(x, y, z, CreateID, CreateMeta);
@@ -207,11 +210,12 @@ public class BWRPlantBreedEngine {
 			// into mycelium 2% of the time, and tall grass / ferns will convert
 			// the farmland below into grass blocks.
 			if(FungusBlockIDs[CreateID] && (world.rand.nextInt(50) == 0))
-				world.setBlockWithNotify(x, y - 1, z, Block.mycelium.blockID);
+				NewBelowID = Block.mycelium.blockID;
 			else if(CreateID == Block.tallGrass.blockID)
-				world.setBlockWithNotify(x, y - 1, z, Block.grass.blockID);
+				NewBelowID = Block.grass.blockID;
 			else
-				world.setBlockWithNotify(x, y - 1, z, Block.tilledField.blockID);
+				NewBelowID = Block.dirt.blockID;
+			world.setBlockAndMetadata(x, y - 1, z, NewBelowID, 0);
 			}
 		else if(BelowID ==  mod_FCBetterThanWolves.fcPlanter.blockID)
 			{
@@ -227,6 +231,14 @@ public class BWRPlantBreedEngine {
 					world.setBlockMetadata(x, y - 1, z, FCBlockPlanter.m_iTypeSoil);
 				}
 			}
+		else
+			UpdateBelow = false;
+
+		// Trigger appropriate block update notifications, to ensure that Buddy
+		// Block based builds function as expected.
+		world.notifyBlockChange(x, y, z, CreateID);
+		if(UpdateBelow)
+			world.notifyBlockChange(x, y - 1, z, NewBelowID);
 
 		return true;
 		}
