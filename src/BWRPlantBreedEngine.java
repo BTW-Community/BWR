@@ -196,7 +196,7 @@ public class BWRPlantBreedEngine {
 		// Only small chance of continuing; this slows down cross-breeding,
 		// making it more important to plan, and cuts down on the performance
 		// cost cross-breed checks.
-		if(world.rand.nextInt(20) != 0)
+		if(world.rand.nextInt(100) != 0)
 			return false;
 
 		// Look at neighboring blocks and determine the probabilities of each type
