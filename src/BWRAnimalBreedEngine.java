@@ -126,7 +126,8 @@ public class BWRAnimalBreedEngine {
 
 		// Setup to create new child creature.  Figure
 		// out where the child creature would be created.
-		Entity Child = null;
+		EntityLiving Child = null;
+		EntityLiving Target = null;
 		double CX = (self.posX + Found.posX) / 2.0D;
 		double CY = (self.posY + Found.posY) / 2.0D;
 		double CZ = (self.posZ + Found.posZ) / 2.0D;
@@ -135,9 +136,9 @@ public class BWRAnimalBreedEngine {
 		// is highly dominant, and no mutation occurs.
 		int P = self.rand.nextInt(100);
 		if(P < 40)
-			Child = EntityList.createEntityByName(self.getEntityName(), world);
+			Child = (EntityLiving)EntityList.createEntityByName(self.getEntityName(), world);
 		else if(P < 80)
-			Child = EntityList.createEntityByName(Found.getEntityName(), world);
+			Child = (EntityLiving)EntityList.createEntityByName(Found.getEntityName(), world);
 
 		// Most mutations will be other farm animals that would normally be
 		// found by trivial exploration.  Chickens have a reduced probability
@@ -229,9 +230,19 @@ public class BWRAnimalBreedEngine {
 
 			// The absolute maximum number of pine leaves that can see the sky that
 			// can be in the 9x9x9 volume is 81, which would give about 80% chance
-			// of spawning a wolf.
+			// of spawning a wolf.  A wolf must have at least one sheep parent, and
+			// will attack that parent upon birth.
 			else if(self.rand.nextInt(100) < PineQty)
-				Child = new EntityWolf(world);
+				{
+				EntityLiving Sheep = (self instanceof EntitySheep) ? self
+					: (Found instanceof EntitySheep) ? Found
+					: null;
+				if(Sheep != null)
+					{
+					Child = new EntityWolf(world);
+					Target = Sheep;
+					}
+				}
 
 			// The absolute maximum number of jungle leaves that can see the sky that
 			// can be in the 9x9x9 volume is 81, which would give about 80% chance
@@ -247,13 +258,21 @@ public class BWRAnimalBreedEngine {
 				Child = new EntitySlime(world);
 			else
 				Child = new EntitySilverfish(world);
+
+			// Abominations attack a random parent initially.
+			Target = self.rand.nextInt(2) == 0 ? self : Found;
 			}
 
-		// Set child age/size and position and place in world.
+		// Setup some parameters of the child.  Children always spawn
+		// between parents.  Slimes are always smallest size, and ageable
+		// mobs are always children.  Set child AI to attack the selected
+		// target if one defined above.
 		if(Child instanceof EntitySlime)
 			((EntitySlime)Child).setSlimeSize(1);
 		if(Child instanceof EntityAgeable)
 			((EntityAgeable)Child).setGrowingAge(-24000);
+		if(Target != null)
+			Child.setAttackTarget(Target);
 		Child.setLocationAndAngles((self.posX + Found.posX) / 2.0D, (self.posY + Found.posY) / 2.0D,
 			(self.posZ + Found.posZ) / 2.0D, self.rotationYaw, self.rotationPitch);
 		world.spawnEntityInWorld(Child);

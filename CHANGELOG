@@ -1,3 +1,12 @@
+v0.19
+	- Added cross-breeding of animals.
+
+	- It is now theoretically possible to access most of the tech
+	  tree in a Classic Superflat Challenge map, whereas without
+	  the ability to tan leather, players were stuck on Tier 2
+	  without being able to make sawmills.
+
+
 v0.18
 	- Plant cross-breeding is now more of a science than
 	  just blind luck.  The species of plants/fungi you

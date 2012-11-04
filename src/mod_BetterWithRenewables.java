@@ -35,7 +35,7 @@ public class mod_BetterWithRenewables {
 	// Central mod meta-info strings, easily changeable for updates.
 	public static final String bwrProductString = "Better With Renewables";
 	public static final String bwrAbbrString = "BWR";
-	public static final String bwrVersionString = "0.18.0430";
+	public static final String bwrVersionString = "0.19.0430";
 	public static final String bwrCopyrightString = "(C)2012, MIT License.  https://gitorious.org/bwr";
 
 	// Singleton variables.
@@ -176,7 +176,7 @@ public class mod_BetterWithRenewables {
 			MapEntityReplacement(EntityPig.class, BWREntityPig.class, "Pig", 90);
 			MapEntityReplacement(EntityCow.class, BWREntityCow.class, "Cow", 92);
 			MapEntityReplacement(EntityWolf.class, BWREntityWolf.class, "Wolf", 95);
-			MapEntityReplacement(EntityMooshroom.class, BWREntityMooshroom.class, "MushroomCow", 95);
+			MapEntityReplacement(EntityMooshroom.class, BWREntityMooshroom.class, "MushroomCow", 96);
 			MapEntityReplacement(EntityOcelot.class, BWREntityOcelot.class, "Ozelot", 98);
 
 			// Add custom BWR recipes.
