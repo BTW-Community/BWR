@@ -172,7 +172,12 @@ public class mod_BetterWithRenewables {
 
 			// Add mapping for custom Dragon Orb entities.
 			MapEntityReplacement(EntityXPOrb.class, BWREntityXPOrb.class, "XPOrb", 2);
+			MapEntityReplacement(EntitySheep.class, BWREntitySheep.class, "Sheep", 91);
+			MapEntityReplacement(EntityPig.class, BWREntityPig.class, "Pig", 90);
 			MapEntityReplacement(EntityCow.class, BWREntityCow.class, "Cow", 92);
+			MapEntityReplacement(EntityWolf.class, BWREntityWolf.class, "Wolf", 95);
+			MapEntityReplacement(EntityMooshroom.class, BWREntityMooshroom.class, "MushroomCow", 95);
+			MapEntityReplacement(EntityOcelot.class, BWREntityOcelot.class, "Ozelot", 98);
 
 			// Add custom BWR recipes.
 			BWRRecipes.m_instance.AddRecipes();

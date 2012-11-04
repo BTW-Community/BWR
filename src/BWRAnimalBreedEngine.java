@@ -39,6 +39,12 @@ public class BWRAnimalBreedEngine {
 		if(!self.isInLove())
 			return false;
 
+		// Cross-breeding only happens in low-light conditions.  Maybe the animals
+		// are embarrassed about it, or maybe they wouldn't do it if they could see...
+		if(self.worldObj.getBlockLightValue(MathHelper.floor_double(self.posX),
+			MathHelper.floor_double(self.posY), MathHelper.floor_double(self.posZ)) > 4)
+			return false;
+
 		// Search all possible candidates for mating or cross-breeding.
 		List Mates = self.worldObj.getEntitiesWithinAABB(EntityAnimal.class, self.boundingBox.expand(8F, 8F, 8F));
 		EntityAnimal Found = null;
@@ -48,21 +54,10 @@ public class BWRAnimalBreedEngine {
 				EntityAnimal Ent = (EntityAnimal)Mates.get(I);
 
 				// To cross-breed, partner must be in love, and unrelated.
-				if(Ent.getClass().isAssignableFrom(self.getClass()))
-					{
-					mod_BetterWithRenewables.m_instance.Log("reject 1");
+				if(Ent.getClass().isAssignableFrom(self.getClass())
+					|| self.getClass().isAssignableFrom(Ent.getClass())
+					|| !Ent.isInLove())
 					continue;
-					}
-				if(self.getClass().isAssignableFrom(Ent.getClass()))
-					{
-					mod_BetterWithRenewables.m_instance.Log("reject 2");
-					continue;
-					}
-				if(!Ent.isInLove())
-					{
-					mod_BetterWithRenewables.m_instance.Log("reject 3");
-					continue;
-					}
 
 				// To cross-breed, animals must be in close proximity.  AI is
 				// not modified, so they will not move together voluntarily,
@@ -73,16 +68,63 @@ public class BWRAnimalBreedEngine {
 				double DZ = Ent.posZ - self.posZ;
 				double DS = (DX * DX) + (DY * DY) + (DZ * DZ);
 				if(DS > (3.5D * 3.5D))
-					{
-					mod_BetterWithRenewables.m_instance.Log("reject 4");
 					continue;
+
+				// Tamable animals must be tamed and not sitting to cross-breed.
+				if(Ent instanceof EntityTameable)
+					{
+					EntityTameable Tame = (EntityTameable)Ent;
+					if(!Tame.isTamed() || Tame.isSitting())
+						continue;
 					}
+
+				// Cross-breeding partner must also be in low light conditions.
+				if(Ent.worldObj.getBlockLightValue(MathHelper.floor_double(Ent.posX),
+					MathHelper.floor_double(Ent.posY), MathHelper.floor_double(Ent.posZ)) > 4)
+					continue;
 
 				Found = Ent;
 				break;
 				}
 		if(Found == null)
 			return false;
+
+		// Cross-breeding happens randomly, but takes longer on average
+		// than normal breeding.
+		if(self.rand.nextInt(600) != 0)
+			return false;
+
+		// Use up the parents' "in love" status, and make them not breed
+		// again for the normal refractory period.
+		self.resetInLove();
+		self.setGrowingAge(6000);
+		Found.resetInLove();
+		Found.setGrowingAge(6000);
+
+		// Create a new child creature.
+		// TODO: DEFINE LOGIC FOR DETERMINING CHILD SPECIES.
+		Entity Child = new EntitySlime(self.worldObj);
+		Child.setLocationAndAngles((self.posX + Found.posX) / 2.0D, (self.posY + Found.posY) / 2.0D,
+			(self.posZ + Found.posZ) / 2.0D, self.rotationYaw, self.rotationPitch);
+		self.worldObj.spawnEntityInWorld(Child);
+
+		// Create heart particles.
+		for(int X = 0; X < 7; X++)
+			self.worldObj.spawnParticle("heart", self.posX + (double)(self.rand.nextFloat() * self.width * 2.0F),
+				self.posY + 0.5D + (double)(self.rand.nextFloat() * self.height),
+				self.posZ + (double)(self.rand.nextFloat() * self.width * 2.0F) - (double)self.width,
+				self.rand.nextGaussian() * 0.02D, self.rand.nextGaussian() * 0.02D, self.rand.nextGaussian() * 0.02D);
+
+		// Play breeding sounds for both parents.  Normally we only play one, but since the parents
+		// are different species, they'll have different sounds which both need representation.
+		self.worldObj.playSoundAtEntity(self, self.getDeathSound(), self.getSoundVolume(),
+			(self.rand.nextFloat() - self.rand.nextFloat()) * 0.2F + 1.0F);
+		Found.worldObj.playSoundAtEntity(Found, Found.getDeathSound(), Found.getSoundVolume(),
+			(Found.rand.nextFloat() - Found.rand.nextFloat()) * 0.2F + 1.0F);
+
+		// Create placenta.
+		self.worldObj.playAuxSFX(2222, MathHelper.floor_double(Child.posX), MathHelper.floor_double(Child.posY),
+			MathHelper.floor_double(Child.posZ), 0);
 
 		return true;
 		}

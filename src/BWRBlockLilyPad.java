@@ -57,7 +57,7 @@ public class BWRBlockLilyPad extends BlockLilyPad
 			return false;
 
 		// Lilypads require standard (>= 8) light level.
-		if((world.getFullBlockLightValue(x, y, z) < 8)
+		if((world.getBlockLightValue(x, y, z) < 8)
 			&& !world.canBlockSeeTheSky(x, y, z))
 			return false;
 
@@ -89,7 +89,7 @@ public class BWRBlockLilyPad extends BlockLilyPad
 		// would be closer to IRL behavior, it would be out of balance).
 		// Growth rate is dependent on light level, so naturally-lit lilypads
 		// will not grow at night.
-		int ll = world.getFullBlockLightValue(x, y, z);
+		int ll = world.getBlockLightValue(x, y, z);
 		if((neighbors < 2) && (r.nextInt(32) < ll))
 			{
 			// Try to place a lilypad block in a randomly-chosen adjacent spot.

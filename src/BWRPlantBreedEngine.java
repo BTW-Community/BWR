@@ -178,7 +178,7 @@ public class BWRPlantBreedEngine {
 		int[][] BlockTypes = null;
 		List<int[]>[] EvoTree = null;
 		boolean IsFungus = false;
-		int Light = world.getFullBlockLightValue(x, y, z);
+		int Light = world.getBlockLightValue(x, y, z);
 		if(Light >= 14)
 			{
 			BlockTypes = PlantTypes;
