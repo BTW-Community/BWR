@@ -1,3 +1,14 @@
+v0.18
+	- Plant cross-breeding is now more of a science than
+	  just blind luck.  The species of plants/fungi you
+	  breed will depend on the donor species surrounding
+	  them.
+
+	- Plants that differ by metadata but not block ID,
+	  such as saplings, are now correctly recognized by
+	  the cross-breeding system as different species.
+
+
 v0.17
 	- Most plants/fungi now obtainable, given dirt,
 	  bonemeal, and a hoe.  Plants and fungi exposed to

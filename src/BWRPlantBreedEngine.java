@@ -69,6 +69,7 @@ public class BWRPlantBreedEngine {
 		AddEvoCore(table[child], parent, 3);
 		}
 
+	// Called once on add-on initialization.
 	public void Initialize()
 		{
 		// Define plant/fungus lookup tables, separated by kingdom.
@@ -161,9 +162,9 @@ public class BWRPlantBreedEngine {
 		AddEvo(FungusEvolve, 1, 2);
 		}
 
-	// Attempt to grow flora of the specified type, plant or fungus.  The determination
-	// of plant/fungus is already made by the caller, and the appropriate type definitions
-	// are passed in.  Called by GrowPlant and GrowFungus.
+	// Attempt to grow a plant/fungus in the specified space.  Called by
+	// blocks above which plants can cross-breed, i.e. planters, soulsand,
+	// and fertilized farmland on world UpdateTick.
 	public boolean Grow(World world, int x, int y, int z)
 		{
 		// The space into which the plant is to grow must be air.
@@ -195,7 +196,7 @@ public class BWRPlantBreedEngine {
 		// Only small chance of continuing; this slows down cross-breeding,
 		// making it more important to plan, and cuts down on the performance
 		// cost cross-breed checks.
-		if(world.rand.nextInt(50) != 0)
+		if(world.rand.nextInt(20) != 0)
 			return false;
 
 		// Look at neighboring blocks and determine the probabilities of each type
@@ -336,7 +337,7 @@ public class BWRPlantBreedEngine {
 			else if(CreateID == Block.tallGrass.blockID)
 				NewBelowID = Block.grass.blockID;
 			else
-				NewBelowID = Block.dirt.blockID;
+				NewBelowID = Block.tilledField.blockID;
 			world.setBlockAndMetadata(x, y - 1, z, NewBelowID, 0);
 			}
 		else if(BelowID ==  mod_FCBetterThanWolves.fcPlanter.blockID)
