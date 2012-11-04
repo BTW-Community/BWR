@@ -22,6 +22,8 @@
 
 package net.minecraft.src;
 
+import java.util.Map;
+import java.util.HashMap;
 import java.lang.reflect.Type;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -39,6 +41,9 @@ public class mod_BetterWithRenewables {
 	// Singleton variables.
 	public static boolean HasInitialized = false;
 	public static mod_BetterWithRenewables m_instance = new mod_BetterWithRenewables();
+
+	// Mappings for entity replacements.
+	private Map EntityTypeMap = new HashMap();
 
 	// Log a message to the server console log.
 	public void Log(String msg)
@@ -122,6 +127,33 @@ public class mod_BetterWithRenewables {
 		throw new RuntimeException("FAILED Install " + newType.toString());
 		}
 
+	// Helper to register Entity replacements with the two places where they need
+	// to be done: on chunk loading by EntityList, and on spawn by this mod.
+	public void MapEntityReplacement(Class<?> orig, Class<?> repl, String name, int id)
+		{
+		// Register replacement class with EntityList, so that the correct class is
+		// instantiated when loading chunks.
+		EntityList.addMapping(repl, name, id);
+
+		// Register replacement class mapping with this mod, so that entities that
+		// are transformed upon being added to the world get replaced with the correct
+		// custom subclass.  New class must have a constructor that takes just
+		// the world as a parameter.
+		try
+			{
+			Constructor Found = repl.getConstructor(new Class[] { World.class });
+			if(Found == null)
+				throw new RuntimeException("Unable to find constructor "
+					+ repl.toString() + "(World)");
+			EntityTypeMap.put(orig, Found);
+			}
+		catch(NoSuchMethodException ex)
+			{
+			throw new RuntimeException(ex);
+			}
+		Log("Install " + repl.toString() + " over " + orig.toString());
+		}
+
 	// Initialize the mod; called by a custom SMP server hook in World.
 	public void load()
 		{
@@ -139,7 +171,8 @@ public class mod_BetterWithRenewables {
 			ReplaceBlock(BlockSoulSand.class, BWRBlockSoulSand.class);
 
 			// Add mapping for custom Dragon Orb entities.
-			EntityList.addMapping(BWREntityXPOrb.class, "XPOrb", 2);
+			MapEntityReplacement(EntityXPOrb.class, BWREntityXPOrb.class, "XPOrb", 2);
+			MapEntityReplacement(EntityCow.class, BWREntityCow.class, "Cow", 92);
 
 			// Add custom BWR recipes.
 			BWRRecipes.m_instance.AddRecipes();
@@ -153,21 +186,49 @@ public class mod_BetterWithRenewables {
 		HasInitialized = true;
 		}
 
+	// Helper for TransformEntityOnSpawn to replace entities with BWR-specific-subclassed
+	// ones.  Uses NBT as a cheap serialization hack to copy all relevant properties.
+	public Entity ReplaceEntity(Entity original, Entity replacement)
+		{
+		NBTTagCompound Tag = new NBTTagCompound();
+		original.writeToNBT(Tag);
+		replacement.readFromNBT(Tag);
+		return replacement;
+		}
+
 	// Called by a custom hook World upon an entity being spawned.  This gives
 	// the mod an opportunity to replace existing Entity class types with its
 	// own subclasses.  Note that we cannot intercept entity creation, and we have
 	// to replace existing entities later, when they're added to the world.
 	public Entity TransformEntityOnSpawn(Entity original)
 		{
-		// Replace Dragon Orbs with custom BWR variety.  Use NBT serialization
-		// to copy all appropriate properties from the original to the replacement.
-		if(original instanceof EntityXPOrb)
+		// See if the type of this entity is mapped to a replacement.
+		// If it is, use NBT to copy properties from the original to a
+		// new instance of the replacement class, and return it instead.
+		Constructor ctor = (Constructor)EntityTypeMap.get(original.getClass());
+		if(ctor != null)
 			{
-			BWREntityXPOrb New = new BWREntityXPOrb(original.worldObj);
+			Entity Repl = null;
+			try
+				{
+				Repl = (Entity)ctor.newInstance(new Object[] { original.worldObj });
+				}
+			catch(InvocationTargetException ex)
+				{
+				throw new RuntimeException(ex);
+				}
+			catch(IllegalAccessException ex)
+				{
+				throw new RuntimeException(ex);
+				}
+			catch(InstantiationException ex)
+				{
+				throw new RuntimeException(ex);
+				}
 			NBTTagCompound Tag = new NBTTagCompound();
 			original.writeToNBT(Tag);
-			New.readFromNBT(Tag);
-			return New;
+			Repl.readFromNBT(Tag);
+			return Repl;
 			}
 
 		return original;
