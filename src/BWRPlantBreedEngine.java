@@ -22,6 +22,8 @@
 
 package net.minecraft.src;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 // Singleton that provides some utility functions for plant and fungus cross-
@@ -32,112 +34,232 @@ public class BWRPlantBreedEngine {
 	public static BWRPlantBreedEngine m_instance = new BWRPlantBreedEngine();
 
 	// Tables of information about plant and fungus types that can be bred.
-	private static int[][] PlantTypes;
-	private static int[][] FungusTypes;
+	private int[][] PlantTypes;
+	private int[][] FungusTypes;
 
-	// Lookup tables to determine if a block is a plant/fungus, for cross-breeding
-	// neighbor checks, based on blockID.  Note that metadata is not taken into
-	// account for performance reasons.
-	private static boolean[] PlantBlockIDs;
-	private static boolean[] FungusBlockIDs;
+	// Tables about evolutionary paths relating plant/fungi varieties.
+	private List[] PlantEvolve;
+	private List[] FungusEvolve;
 
-	// Called by Initialize to convert PlantTypes/FungusTypes data to
-	// PlantBlockIDs/FungusBlockIDs lookup tables.
-	private boolean[] CreateBlockIDLookup(int[][] specs)
+	// Some miscelaneous helper functions for constructing
+	// the flora evolutionary tree data.
+	private static List[] CreateEvoTable(int[][] floraTypes)
 		{
-		// Create a lookup table with a boolean for each
-		// block ID and set to true those in the list.
-		boolean[] IDs = new boolean[Block.blocksList.length];
-		for(int I = 0; I < specs.length; I++)
-			IDs[specs[I][0]] = true;
-		return IDs;
+		List[] Table = new List[floraTypes.length];
+		for(int I = 0; I < floraTypes.length; I++)
+			{
+			Table[I] = new ArrayList<int[]>();
+			Table[I].add(new int[] { I, 5 });
+			}
+		return Table;
+		}
+	private static void AddEvoCore(List parent, int child, int val)
+		{
+		for(Object Entry : parent)
+			if(((int[])Entry)[0] == child)
+				{
+				((int[])Entry)[1] += val;
+				return;
+				}
+		parent.add(new int[] { child, val });
+		}
+	private static void AddEvo(List[] table, int parent, int child)
+		{
+		AddEvoCore(table[parent], child, 1);
+		AddEvoCore(table[child], parent, 3);
 		}
 
 	public void Initialize()
 		{
 		// Define plant/fungus lookup tables, separated by kingdom.
 		// - The first column is the blockID of the plant that would be created.
-		// - The second is its metadata value, with -1 meaning "choose a
-		//   random value."
-		// - The third is the probability weight, out of the total weights
-		//   for that kingdom.
+		// - The second is its metadata value.
+		//   - -1 means that any metadata matches this plant, but 0 should be
+		//     used when creating a new one.
+		//   - -2 means that any metadata matches this plant, and a random
+		//     value should be used when creating a new one.
+		// - The first (index 0) entry is special; it's the one one that's
+		//   considered the "root" of the evolution tree, and gets an automatic
+		//   probability boost.
 		PlantTypes = new int[][]
 			{
-			new int[] { Block.tallGrass.blockID, 1, 100 },
-			new int[] { Block.tallGrass.blockID, 2, 5 },
-			new int[] { Block.plantYellow.blockID, -1, 20 },
-			new int[] { Block.plantRed.blockID, 0, 10 },
-			new int[] { Block.sapling.blockID, 0, 5 },
-			new int[] { Block.sapling.blockID, 1, 2 },
-			new int[] { Block.sapling.blockID, 2, 2 },
-			new int[] { Block.sapling.blockID, 3, 1 },
-			new int[] { Block.reed.blockID, 0, 3 },
-			new int[] { Block.cactus.blockID, 0, 2 },
-			new int[] { mod_FCBetterThanWolves.fcHempCrop.blockID, 0, 5 },
-			new int[] { Block.melonStem.blockID, 0, 2 },
-			new int[] { Block.pumpkinStem.blockID, 0, 2 },
-			new int[] { Block.crops.blockID, 0, 10 },
-			new int[] { Block.vine.blockID, -1, 1 },
-			new int[] { Block.waterlily.blockID, 0, 1 },
-			new int[] { Block.cocoaPlant.blockID, -1, 1 },
-			// new int[] { Block.carrot.blockID, 0, 10 },
-			// new int[] { Block.potato.blockID, 0, 10 },
+			// 0: Tall Grass
+			new int[] { Block.tallGrass.blockID, 1 },
+
+			// 1: Wheat
+			new int[] { Block.crops.blockID, -1 },
+			// 2: Hemp
+			new int[] { mod_FCBetterThanWolves.fcHempCrop.blockID, -1 },
+			// 3: Dandelion
+			new int[] { Block.plantYellow.blockID, -1 },
+
+			// 4: Pumpkin
+			new int[] { Block.pumpkinStem.blockID, -1 },
+			// 5: Melon
+			new int[] { Block.melonStem.blockID, -1 },
+
+			// 6: Sugarcane
+			new int[] { Block.reed.blockID, -1 },
+			// 7: Cactus
+			new int[] { Block.cactus.blockID, -1 },
+
+			// 8: Rose
+			new int[] { Block.plantRed.blockID, -1 },
+			// 9: Fern
+			new int[] { Block.tallGrass.blockID, 2 },
+			// 10: Lilypad
+			new int[] { Block.waterlily.blockID, -1 },
+			// 11: Vines
+			new int[] { Block.vine.blockID, -2 },
+			// 12: Cocoa
+			new int[] { Block.cocoaPlant.blockID, -2 },
+
+			// 13: Oak
+			new int[] { Block.sapling.blockID, 0 },
+			// 14: Birch
+			new int[] { Block.sapling.blockID, 2 },
+			// 15: Spruce
+			new int[] { Block.sapling.blockID, 1 },
+			// 16: Jungle
+			new int[] { Block.sapling.blockID, 3 },
+
+			// new int[] { Block.carrot.blockID, -1 },
+			// new int[] { Block.potato.blockID, -1 },
 			};
 		FungusTypes = new int[][]
 			{
-			new int[] { Block.mushroomBrown.blockID, 0, 1 },
-			new int[] { Block.mushroomRed.blockID, 0, 1 },
-			new int[] { Block.netherStalk.blockID, 0, 1 },
+			// 0: Brown Mushroom
+			new int[] { Block.mushroomBrown.blockID, -1 },
+			// 1: Red Mushroom
+			new int[] { Block.mushroomRed.blockID, -1 },
+			// 2: Nether Wart
+			new int[] { Block.netherStalk.blockID, -1 },
 			};
 
-		// Create is-plant/fungus lookup tables.
-		PlantBlockIDs = CreateBlockIDLookup(PlantTypes);
-		FungusBlockIDs = CreateBlockIDLookup(FungusTypes);
+		// Define evolutionary paths for plants.
+		PlantEvolve = CreateEvoTable(PlantTypes);
+		AddEvo(PlantEvolve, 0, 1);
+		AddEvo(PlantEvolve, 0, 2);
+		AddEvo(PlantEvolve, 0, 3);
+		AddEvo(PlantEvolve, 2, 4);
+		AddEvo(PlantEvolve, 4, 5);
+		AddEvo(PlantEvolve, 2, 6);
+		AddEvo(PlantEvolve, 6, 7);
+		AddEvo(PlantEvolve, 3, 8);
+		AddEvo(PlantEvolve, 8, 9);
+		AddEvo(PlantEvolve, 9, 10);
+		AddEvo(PlantEvolve, 10, 11);
+		AddEvo(PlantEvolve, 11, 12);
+		AddEvo(PlantEvolve, 3, 13);
+		AddEvo(PlantEvolve, 13, 14);
+		AddEvo(PlantEvolve, 14, 15);
+		AddEvo(PlantEvolve, 15, 16);
+
+		// Define evolutionary paths for fungi.
+		FungusEvolve = CreateEvoTable(FungusTypes);
+		AddEvo(FungusEvolve, 0, 1);
+		AddEvo(FungusEvolve, 1, 2);
 		}
 
 	// Attempt to grow flora of the specified type, plant or fungus.  The determination
 	// of plant/fungus is already made by the caller, and the appropriate type definitions
 	// are passed in.  Called by GrowPlant and GrowFungus.
-	private boolean Grow(World world, int x, int y, int z, int[][] blockTypes, boolean[] ids)
+	public boolean Grow(World world, int x, int y, int z)
 		{
-		// Select a random flora definition based on probability weights.
-		int Max = 0;
-		for(int[] T : blockTypes)
-			Max += T[2];
-		int Pick = world.rand.nextInt(Max);
-		Max = 0;
-		int[] Sel = null;
-		for(int[] T : blockTypes)
+		// The space into which the plant is to grow must be air.
+		if(world.getBlockId(x, y, z) > 0)
+			return false;
+
+		// Plants need very high immediate light levels.  Fungus needs
+		// very low immediate light levels.  These will be stricter than
+		// the requirements necessary for normal survival, and will
+		// determine whether we try to grow plants or fungi.
+		int[][] BlockTypes = null;
+		List<int[]>[] EvoTree = null;
+		boolean IsFungus = false;
+		int Light = world.getFullBlockLightValue(x, y, z);
+		if(Light >= 14)
 			{
-			Sel = T;
-			Max += T[2];
-			if(Max > Pick)
+			BlockTypes = PlantTypes;
+			EvoTree = PlantEvolve;
+			}
+		else if(Light <= 1)
+			{
+			BlockTypes = FungusTypes;
+			EvoTree = FungusEvolve;
+			IsFungus = true;
+			}
+		else
+			return false;
+
+		// Only small chance of continuing; this slows down cross-breeding,
+		// making it more important to plan, and cuts down on the performance
+		// cost cross-breed checks.
+		if(world.rand.nextInt(50) != 0)
+			return false;
+
+		// Look at neighboring blocks and determine the probabilities of each type
+		// of florum to grow based on its evolutionary neighbors.
+		HashSet Near = new HashSet();
+		int[] Probs = new int[BlockTypes.length];
+		Probs[0] = 10;
+		for(int dx = -1; dx <= 1; dx++)
+			for(int dz = -1; dz <= 1; dz++)
+				{
+				int B = world.getBlockId(x + dx, y, z + dz);
+				int M = -1;
+				for(int I = 0; I < BlockTypes.length; I++)
+					{
+					int[] Def = BlockTypes[I];
+					if(Def[0] != B)
+						continue;
+					if((Def[1] >= 0) && (M < 0))
+						M = world.getBlockMetadata(x + dx, y, z + dz);
+					if((Def[1] < 0) || (Def[1] == M))
+						{
+						Near.add(I);
+						for(int[] P : EvoTree[I])
+							Probs[P[0]] += P[1];
+						break;
+						}
+					}
+				}
+		// There must be at least 2 different types of neighboring plants
+		// for the cross-breed to be allowed.
+		if(Near.size() < 2)
+			return false;
+
+		// Select a random type of plant/fungus to try to grow based
+		// on the weighted probabilities determined.
+		int Max = 0;
+		for(int P : Probs)
+			Max += P;
+		int Pick = world.rand.nextInt(Max) + 1;
+		int[] Sel = null;
+		for(int I = 0; I < BlockTypes.length; I++)
+			{
+			Pick -= Probs[I];
+			if(Pick <= 0)
+				{
+				Sel = BlockTypes[I];
 				break;
+				}
 			}
 
 		// Extract the block ID and metadata value from the definition.
 		// If the metadata is to be random, choose one now.
 		int CreateID = Sel[0];
 		int CreateMeta = Sel[1];
-		if(CreateMeta < 0)
+		if(CreateMeta < -1)
 			CreateMeta = world.rand.nextInt(16);
+		if(CreateMeta < 0)
+			CreateMeta = 0;
 
 		// Count the number of different types of plant/fungus in adjacent
 		// spaces.  Note that this check is fast and sloppy, by block ID only,
 		// so e.g. different types of saplings all count only once.  There
 		// must be at least 2 different species adjacent, and more species
 		// increases the probability of breeding.
-		HashSet NearIDs = new HashSet();
-		for(int dx = -1; dx <= 1; dx++)
-			for(int dz = -1; dz <= 1; dz++)
-				{
-				int B = world.getBlockId(x + dx, y, z + dz);
-				if((B != CreateID) && ids[B])
-					NearIDs.add(B);
-				}
-		int Neighbors = NearIDs.size();
-		if((Neighbors < 2) || (world.rand.nextInt(12) < Neighbors))
-			return false;
 
 		// Attempt to create the block in its target location.
 		world.setBlockAndMetadata(x, y, z, CreateID, CreateMeta);
@@ -176,7 +298,7 @@ public class BWRPlantBreedEngine {
 				// Fungus will convert blocks below it to mycelium 2% of the time.
 				// Tall grass and ferns will convert blocks below to grass.  All
 				// other blocks will change the farmland to dirt.
-				if(FungusBlockIDs[CreateID] && (world.rand.nextInt(50) == 0))
+				if(IsFungus && (world.rand.nextInt(50) == 0))
 					NewBelowID = Block.mycelium.blockID;
 				else if(CreateID == Block.tallGrass.blockID)
 					NewBelowID = Block.grass.blockID;
@@ -209,7 +331,7 @@ public class BWRPlantBreedEngine {
 			// underneath.  Additionally, fungus will convert the block below
 			// into mycelium 2% of the time, and tall grass / ferns will convert
 			// the farmland below into grass blocks.
-			if(FungusBlockIDs[CreateID] && (world.rand.nextInt(50) == 0))
+			if(IsFungus && (world.rand.nextInt(50) == 0))
 				NewBelowID = Block.mycelium.blockID;
 			else if(CreateID == Block.tallGrass.blockID)
 				NewBelowID = Block.grass.blockID;
@@ -241,51 +363,5 @@ public class BWRPlantBreedEngine {
 			world.notifyBlockChange(x, y - 1, z, NewBelowID);
 
 		return true;
-		}
-
-	// Attempt to grow a plant into this space; called on UpdateTick
-	// by various blocks onto which plants can cross-breed.
-	public boolean GrowPlant(World world, int x, int y, int z)
-		{
-		// The space into which the plant is to grow must be air.
-		if(world.getBlockId(x, y, z) > 0)
-			return false;
-
-		// Very high immediate light levels are required for plant
-		// growth; view of sky does not affect this, and the requirement
-		// is stricter than most plants require to survive.
-		if(world.getFullBlockLightValue(x, y, z) < 14)
-			return false;
-
-		// High probability of failure; this reduces the speed
-		// of flora cross-breeding.
-		if(world.rand.nextInt(100) != 0)
-			return false;
-
-		// Pick a plant type and attempt to grow it.
-		return Grow(world, x, y, z, PlantTypes, PlantBlockIDs);
-		}
-
-	// Attempt to grow a fungus into this space; called on UpdateTick
-	// by various blocks onto which fungi can cross-breed.
-	public boolean GrowFungus(World world, int x, int y, int z)
-		{
-		// The space into which the plant is to grow must be air.
-		if(world.getBlockId(x, y, z) > 0)
-			return false;
-
-		// Very low light levels are required for fungus growth.
-		// This is stricter than the requirements for survival would
-		// be once the fungus is grown.
-		if(world.getFullBlockLightValue(x, y, z) > 1)
-			return false;
-
-		// High probability of failure; this reduces the speed
-		// of flora cross-breeding.
-		if(world.rand.nextInt(100) != 0)
-			return false;
-
-		// Pick a fungus type and attempt to grow it.
-		return Grow(world, x, y, z, FungusTypes, FungusBlockIDs);
 		}
 	}

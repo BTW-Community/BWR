@@ -41,6 +41,6 @@ public class BWRBlockSoulSand extends BlockSoulSand
 		// If there is room above, attempt to cross-breed fungus (netherwart)
 		// into the space above.
 		if(y < 255)
-			BWRPlantBreedEngine.m_instance.GrowFungus(world, x, y + 1, z);
+			BWRPlantBreedEngine.m_instance.Grow(world, x, y + 1, z);
 		}
 	}

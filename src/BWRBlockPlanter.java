@@ -37,22 +37,12 @@ public class BWRBlockPlanter extends FCBlockPlanter
 		{
 		super.updateTick(world, x, y, z, r);
 
-		// Do plant/fungus cross-breeding checks if there is room above.
+		// If there is room above, attempt to cross-breed plant/fungus on top.
+		// Also attempt 2 blocks above, so that lilypads can grow on water
+		// above fertile farmland.
 		if(y < 255)
-			{
-			int Meta = world.getBlockMetadata(x, y, z);
-
-			// Soulsand planters can only grow fungus (netherwart), so skip plant checks.
-			if(Meta == FCBlockPlanter.m_iTypeSoulSand)
-				BWRPlantBreedEngine.m_instance.GrowFungus(world, x, y + 1, z);
-
-			// Dirt planters can grow either plants or fungi.  Also attempt to grow
-			// plants 2 blocks above, so that lilypads can grow onto water under which
-			// a fertile planter is submerged.
-			else if(Meta == FCBlockPlanter.m_iTypeSoilFertilized)
-				if(!BWRPlantBreedEngine.m_instance.GrowPlant(world, x, y + 1, z)
-					&& !((y < 254) && BWRPlantBreedEngine.m_instance.GrowPlant(world, x, y + 2, z)))
-					BWRPlantBreedEngine.m_instance.GrowFungus(world, x, y + 1, z);
-			}
+			BWRPlantBreedEngine.m_instance.Grow(world, x, y + 1, z);
+		if(y < 254)
+			BWRPlantBreedEngine.m_instance.Grow(world, x, y + 2, z);
 		}
 	}

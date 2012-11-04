@@ -41,8 +41,8 @@ public class BWRBlockFarmlandFertilized extends FCBlockFarmlandFertilized
 		// Also attempt 2 blocks above, so that lilypads can grow on water
 		// above fertile farmland.
 		if(y < 255)
-			if(!BWRPlantBreedEngine.m_instance.GrowPlant(world, x, y + 1, z)
-				&& !((y < 254) && BWRPlantBreedEngine.m_instance.GrowPlant(world, x, y + 2, z)))
-				BWRPlantBreedEngine.m_instance.GrowFungus(world, x, y + 1, z);
+			BWRPlantBreedEngine.m_instance.Grow(world, x, y + 1, z);
+		if(y < 254)
+			BWRPlantBreedEngine.m_instance.Grow(world, x, y + 2, z);
 		}
 	}
