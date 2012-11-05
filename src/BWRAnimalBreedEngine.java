@@ -74,8 +74,10 @@ public class BWRAnimalBreedEngine {
 			// For wood and leaves, pay attention to the metadata, for others
 			// just treat it as 0 and lump together all blocks with the same ID.
 			int Meta = 0;
-			if((ID == Block.leaves.blockID) || (ID == Block.wood.blockID))
+			if(ID == Block.wood.blockID)
 				Meta = world.getBlockMetadata(x, y, z);
+			if(ID == Block.leaves.blockID)
+				Meta = world.getBlockMetadata(x, y, z) & 3;
 
 			// Increment block count.
 			results[(ID * 16) + Meta]++;
@@ -234,7 +236,7 @@ public class BWRAnimalBreedEngine {
 String DBG = "Habitat:";
 for(int I = 0; I < Habitat.length; I++)
 	if(Habitat[I] > 0)
-		DBG += " " + I + ":" + Habitat[I];
+		DBG += " " + (I / 16) + "[" + (I % 16) + "]:" + Habitat[I];
 mod_BetterWithRenewables.m_instance.Log(DBG);
 
 		// Choose a random child species based on weighted probabilities
