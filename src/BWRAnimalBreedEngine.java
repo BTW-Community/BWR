@@ -25,7 +25,7 @@ package net.minecraft.src;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.HashSet;
+import java.util.HashMap;
 
 // Singleton that provides some utility functions for animal cross-breeding,
 // allowing otherwise unavailable animal species to be obtained in
@@ -33,6 +33,20 @@ import java.util.HashSet;
 // on a Classic SuperFlat world.
 public class BWRAnimalBreedEngine {
 	public static BWRAnimalBreedEngine m_instance = new BWRAnimalBreedEngine();
+
+	// Entity ID constants.
+	private static final int eidSlime = 55;
+	private static final int eidCaveSpider = 59;
+	private static final int eidSilverfish = 60;
+	private static final int eidBlaze = 61;
+	private static final int eidPig = 90;
+	private static final int eidSheep = 91;
+	private static final int eidCow = 92;
+	private static final int eidChicken = 93;
+	private static final int eidSquid = 94;
+	private static final int eidWolf = 95;
+	private static final int eidOcelot = 98;
+	private static final int eidVillager = 120;
 
 	// One-time initialization of the engine, called by the mod startup.
 	public void Initialize()
@@ -45,29 +59,42 @@ public class BWRAnimalBreedEngine {
 	// using a 3D flood-fill algorithm like block lighting.  It adds up the quantities
 	// of all blocks found by ID/metadata.
 	private static final int MaxScanDepth = 10;
-	private void ScanHabitat(World world, int x, int y, int z, int[] results, HashSet seen, int depth)
+	private void ScanHabitat(World world, int x, int y, int z, int[] results, Map<String, Integer> seen, int depth)
 		{
-		// Only visit each space once.
+		// Check to see if the block has been visited before.
 		String Key = x + "," + y + "," + z;
-		if(seen.contains(Key))
+		Integer Prev = seen.get(Key);
+
+		// If the block has not been visited, analyze it.
+		if(Prev == null)
+			{
+			// Get the type of block in this space.
+			int ID = world.getBlockId(x, y, z);
+
+			// For wood and leaves, pay attention to the metadata, for others
+			// just treat it as 0 and lump together all blocks with the same ID.
+			int Meta = 0;
+			if((ID == Block.leaves.blockID) || (ID == Block.wood.blockID))
+				Meta = world.getBlockMetadata(x, y, z);
+
+			// Increment block count.
+			results[(ID * 16) + Meta]++;
+
+			// If the block is passable, record the depth at which we scanned it.
+			// If not, mark it so future passes will know not to continue.
+			if((ID == 0) || !Block.blocksList[ID].blockMaterial.isSolid())
+				seen.put(Key, depth);
+			else
+				seen.put(Key, Prev = MaxScanDepth);
+			}
+
+		// Do not scan further if we've reached the depth limit.
+		if(depth <= 0)
 			return;
-		seen.add(Key);
 
-		// Get the type of block in this space.
-		int ID = world.getBlockId(x, y, z);
-
-		// For wood and leaves, pay attention to the metadata, for others
-		// just treat it as 0 and lump together all blocks with the same ID.
-		int Meta = 0;
-		if((ID == Block.leaves.blockID) || (ID == Block.wood.blockID))
-			Meta = world.getBlockMetadata(x, y, z);
-
-		// Increment block count.
-		results[(ID * 16) + Meta]++;
-
-		// If this block is passable, and we have any distance left to scan,
-		// scan into all 6 adjacent spaces.
-		if((depth > 0) && ((ID == 0) || !Block.blocksList[ID].blockMaterial.isSolid()))
+		// If this block has not been scanned, or if a previous scan was done
+		// at a lower depth, then recurse to neighboring blocks.
+		if((Prev == null) || (Prev < depth))
 			{
 			ScanHabitat(world, x - 1, y, z, results, seen, depth - 1);
 			ScanHabitat(world, x + 1, y, z, results, seen, depth - 1);
@@ -82,14 +109,23 @@ public class BWRAnimalBreedEngine {
 		// Create the results array, seen hashset, and default depth,
 		// and start the scan with default settings.
 		int[] Results = new int[Block.blocksList.length * 16];
-		ScanHabitat(world, x, y, z, Results, new HashSet(), MaxScanDepth);
+		ScanHabitat(world, x, y, z, Results, new HashMap<String, Integer>(), MaxScanDepth);
 		return Results;
+		}
+
+	// Helper function to add probability to a map of weighted probabilties.
+	private void AddProb(Map<Integer, Integer> map, int key, int val)
+		{
+		Integer I = map.get(new Integer(key));
+		map.put(key, (I != null) ? (I + val) : new Integer(val));
 		}
 
 	// Do all cross-breeding checks.  Called by EntityUpdate on all animal
 	// entities that are capable of cross-breeding.
 	public boolean TryBreed(EntityAnimal self)
 		{
+		// ########## STEP 1: DETERMINE IF CROSS-BREEDING HAPPENS
+
 		// Animal trying to cross-breed must be in love, and reaching the
 		// end of the "in love" period (i.e. "desperate").
 		if(!self.isInLove() || (self.getInLove() > 20))
@@ -163,120 +199,121 @@ public class BWRAnimalBreedEngine {
 		if(self.rand.nextInt(50) != 0)
 			return false;
 
+		// ########## STEP 2: DETERMINE CHILD SPECIES
+
+		// Setup a table of probabilities for each creature type.
+		Map<Integer, Integer> Weights = new HashMap<Integer, Integer>();
+
+		// Standard weights: animals that bear live offspring have
+		// a default base probability, while chickens, which reproduce
+		// via egg-laying, are a less likely mutation.
+		AddProb(Weights, eidCow, 100);
+		AddProb(Weights, eidPig, 100);
+		AddProb(Weights, eidSheep, 100);
+		AddProb(Weights, eidChicken, 50);
+
+		// Add high probability that parents' genetic contribution
+		// is completely dominant and no mutation occurs.
+		AddProb(Weights, EntityList.getEntityID(self), 1000);
+		AddProb(Weights, EntityList.getEntityID(Found), 1000);
+
+		// Add base probabilties of certain abominations.
+		AddProb(Weights, eidSilverfish, 100);
+		AddProb(Weights, eidCaveSpider, 50);
+		AddProb(Weights, eidSlime, 10);
+
+		// Calculate child's location, and measure environment there.
+		double CX = (self.posX + Found.posX) / 2.0D;
+		double CY = (self.posY + Found.posY) / 2.0D;
+		double CZ = (self.posZ + Found.posZ) / 2.0D;
+		int CBX = MathHelper.floor_double(CX);
+		int CBY = MathHelper.floor_double(CY);
+		int CBZ = MathHelper.floor_double(CZ);
+		int[] Habitat = ScanHabitat(world, CBX, CBY, CBZ);
+
+String DBG = "Habitat:";
+for(int I = 0; I < Habitat.length; I++)
+	if(Habitat[I] > 0)
+		DBG += " " + I + ":" + Habitat[I];
+mod_BetterWithRenewables.m_instance.Log(DBG);
+
+		// Choose a random child species based on weighted probabilities
+		// If the tile into which the child would spawn is water, then
+		// a squid is possible, and encouraged by nearby water.
+		if(world.getBlockMaterial(CBX, CBY, CBZ) == Material.water)
+			AddProb(Weights, eidSquid, Habitat[Block.waterMoving.blockID * 16]
+				+ Habitat[Block.waterStill.blockID * 16]);
+
+		// Wolves are encouraged by pine trees, made of pine logs and pine
+		// leaves.  These need to be in balance of 8 leaves : 1 log; excess
+		// on either side is not counted.
+		int Logs = Habitat[Block.wood.blockID * 16 + 1] * 8;
+		int Leaves = Habitat[Block.leaves.blockID * 16 + 1];
+		AddProb(Weights, eidWolf, (Logs > Leaves ? Leaves : Logs) / 10);
+
+		// Ocelots are encouraged by jungle trees, similar to how wolves are
+		// encouraged by pine.
+		Logs = Habitat[Block.wood.blockID * 16 + 3] * 8;
+		Leaves = Habitat[Block.leaves.blockID * 16 + 3];
+		AddProb(Weights, eidOcelot, (Logs > Leaves ? Leaves : Logs) / 10);
+
+		// Blazes are rarer, and will occasionally spawn near fire.
+		AddProb(Weights, eidBlaze, (Habitat[Block.fire.blockID] / 100)
+			+ (Habitat[mod_FCBetterThanWolves.fcStokedFire.blockID] / 30));
+
+		// Villagers will rarely spawn if surrounded by blocks they desire.
+		AddProb(Weights, eidVillager, (Habitat[Block.blockEmerald.blockID] / 100)
+			+ (Habitat[Block.blockDiamond.blockID] / 30));
+
+DBG = "Cross-Breeding Weights:";
+for(Map.Entry<Integer, Integer> P : Weights.entrySet())
+	DBG += " " + EntityList.func_75617_a(P.getKey().intValue())
+		+ ":" + P.getValue();
+mod_BetterWithRenewables.m_instance.Log(DBG);
+
+		// Choose a random child species based on weighted probabilities
+		// And create a new instance.
+		EntityLiving Child = null;
+		int Max = 0;
+		for(Map.Entry<Integer, Integer> P : Weights.entrySet())
+			Max += P.getValue();
+		int Pick = self.rand.nextInt(Max);
+		for(Map.Entry<Integer, Integer> P : Weights.entrySet())
+			{
+			Pick -= P.getValue();
+			if(Pick <= 0)
+				{
+				Child = (EntityLiving)EntityList.createEntityByID(
+					P.getKey().intValue(), world);
+				break;
+				}
+			}
+			
+		// ########## STEP 3: COMPLETE BREEDING PROCESs
+
+		// Final setup of child parameters, and place child in the world.
+		if(Child instanceof EntitySlime)
+			((EntitySlime)Child).setSlimeSize(1);
+		if(Child instanceof EntityAgeable)
+			((EntityAgeable)Child).setGrowingAge(-24000);
+		Child.setAttackTarget(self.rand.nextInt(2) == 0 ? self : Found);
+		Child.setLocationAndAngles((self.posX + Found.posX) / 2.0D, (self.posY + Found.posY) / 2.0D,
+			(self.posZ + Found.posZ) / 2.0D, self.rotationYaw, self.rotationPitch);
+		world.spawnEntityInWorld(Child);
+
+		// Special case: blazes set parents on fire upon birth.
+		if(Child instanceof EntityBlaze)
+			{
+			self.setFire(10);
+			Found.setFire(10);
+			}
+
 		// Use up the parents' "in love" status, and make them not breed
 		// again for the normal refractory period.
 		self.resetInLove();
 		self.setGrowingAge(6000);
 		Found.resetInLove();
 		Found.setGrowingAge(6000);
-
-		// Setup to create new child creature.  Figure
-		// out where the child creature would be created.
-		EntityLiving Child = null;
-		EntityLiving Target = null;
-		double CX = (self.posX + Found.posX) / 2.0D;
-		double CY = (self.posY + Found.posY) / 2.0D;
-		double CZ = (self.posZ + Found.posZ) / 2.0D;
-
-		// There's an 80% chance that one or the other of the parent species
-		// is highly dominant, and no mutation occurs.
-		int P = self.rand.nextInt(100);
-		if(P < 40)
-			Child = (EntityLiving)EntityList.createEntityByName(self.getEntityName(), world);
-		else if(P < 80)
-			Child = (EntityLiving)EntityList.createEntityByName(Found.getEntityName(), world);
-
-		// Most mutations will be other farm animals that would normally be
-		// found by trivial exploration.  Chickens have a reduced probability
-		// due to their evolutionary distance from other animals that breed
-		// live offspring.
-		else if(P < 84)
-			Child = new EntityCow(world);
-		else if(P < 88)
-			Child = new EntityPig(world);
-		else if(P < 92)
-			Child = new EntitySheep(world);
-		else if(P < 95)
-			Child = new EntityChicken(world);
-
-		// If a mutation occurs, first check the environment.  Animals will "evolve"
-		// based on their environment, to add a block design/building aspect to
-		// cross-breeding, and to avoid completely bypassing the biome requirements
-		// (players must at least "simulate" the necessary biome).
-		if(Child == null)
-			{
-			// Scan the nearby habitat to find any block types that might
-			// affect probability of certain species.
-			int CBX = MathHelper.floor_double(CX);
-			int CBY = MathHelper.floor_double(CY);
-			int CBZ = MathHelper.floor_double(CZ);
-			int[] Habitat = ScanHabitat(world, CBX, CBY, CBZ);
-
-			// Squid can only spawn inside actual water, so it may be necessary
-			// to flow water between the parents.  Probability of a squid spawning
-			// is about 7/8 if the entire 729 spaces are filled with water, which
-			// is unlikely because parents will need air and something to stand on.
-			if((world.getBlockMaterial(CBX, CBY, CBZ) == Material.water)
-				&& (self.rand.nextInt(1000) < (Habitat[Block.waterMoving.blockID]
-				+ Habitat[Block.waterStill.blockID])))
-				Child = new EntitySquid(world);
-			else
-				{
-				// A wolf must have at least one sheep parent, and will attack that parent
-				// upon birth.  Wolves spawn where spruce trees (logs and leaves) are
-				// plentiful, and in balance.
-				int Logs = Habitat[Block.wood.blockID * 16 + 1] * 8;
-				int Leaves = Habitat[Block.leaves.blockID * 16 + 1];
-				if(self.rand.nextInt(1000) < (Logs > Leaves ? Leaves : Logs))
-					{
-					EntityLiving Sheep = (self instanceof EntitySheep) ? self
-						: (Found instanceof EntitySheep) ? Found
-						: null;
-					if(Sheep != null)
-						{
-						Child = new EntityWolf(world);
-						Target = Sheep;
-						}
-					}
-				else
-					{
-					// Spawning of ocelots is affected by jungle logs and leaves.
-					Logs = Habitat[Block.wood.blockID * 16 + 3] * 8;
-					Leaves = Habitat[Block.leaves.blockID * 16 + 3];
-					if(self.rand.nextInt(1000) < (Logs > Leaves ? Leaves : Logs))
-						Child = new EntityOcelot(world);
-					}
-				}
-			}
-
-		// For all other mutants, produce an abomination of nature.
-		if(Child == null)
-			{
-			P = world.rand.nextInt(8);
-			if(P == 0)
-				Child = new EntitySlime(world);
-			else if(P < 3)
-				Child = new EntityCaveSpider(world);
-			else
-				Child = new EntitySilverfish(world);
-
-			// Abominations attack a random parent initially.
-			Target = self.rand.nextInt(2) == 0 ? self : Found;
-			}
-
-		// Setup some parameters of the child.  Children always spawn
-		// between parents.  Slimes are always smallest size, and ageable
-		// mobs are always children.  Set child AI to attack the selected
-		// target if one defined above.
-		if(Child instanceof EntitySlime)
-			((EntitySlime)Child).setSlimeSize(1);
-		if(Child instanceof EntityAgeable)
-			((EntityAgeable)Child).setGrowingAge(-24000);
-		if(Target != null)
-			Child.setAttackTarget(Target);
-		Child.setLocationAndAngles((self.posX + Found.posX) / 2.0D, (self.posY + Found.posY) / 2.0D,
-			(self.posZ + Found.posZ) / 2.0D, self.rotationYaw, self.rotationPitch);
-		world.spawnEntityInWorld(Child);
 
 		// Play breeding sounds for both parents.  Normally we only play one, but since the parents
 		// are different species, they'll have different sounds which both need representation.
