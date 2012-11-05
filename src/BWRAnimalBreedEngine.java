@@ -254,8 +254,11 @@ public class BWRAnimalBreedEngine {
 		// For all other mutants, produce an abomination of nature.
 		if(Child == null)
 			{
-			if(world.rand.nextInt(5) == 1)
+			P = world.rand.nextInt(8);
+			if(P == 0)
 				Child = new EntitySlime(world);
+			else if(P < 3)
+				Child = new EntityCaveSpider(world);
 			else
 				Child = new EntitySilverfish(world);
 
