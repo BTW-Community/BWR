@@ -233,11 +233,13 @@ public class BWRAnimalBreedEngine {
 		int CBZ = MathHelper.floor_double(CZ);
 		int[] Habitat = ScanHabitat(world, CBX, CBY, CBZ);
 
-String DBG = "Habitat:";
-for(int I = 0; I < Habitat.length; I++)
-	if(Habitat[I] > 0)
-		DBG += " " + (I / 16) + "[" + (I % 16) + "]:" + Habitat[I];
-mod_BetterWithRenewables.m_instance.Log(DBG);
+		//////////////////// DEBUGGING:
+		String HDebug = "Animal Cross-Breed Habitat Data:";
+		for(int I = 0; I < Habitat.length; I++)
+			if(Habitat[I] > 0)
+				HDebug += " " + Block.blocksList[I / 16].getBlockName()
+					+ "[" + (I % 16) + "]:" + Habitat[I];
+		mod_BetterWithRenewables.m_instance.Log(HDebug);
 
 		// Choose a random child species based on weighted probabilities
 		// If the tile into which the child would spawn is water, then
@@ -267,13 +269,6 @@ mod_BetterWithRenewables.m_instance.Log(DBG);
 		AddProb(Weights, eidVillager, (Habitat[Block.blockEmerald.blockID] / 100)
 			+ (Habitat[Block.blockDiamond.blockID] / 30));
 
-DBG = "Cross-Breeding Weights:";
-for(Map.Entry<Integer, Integer> P : Weights.entrySet())
-	DBG += " " + EntityList.func_75617_a(P.getKey().intValue())
-		+ ":" + P.getValue();
-mod_BetterWithRenewables.m_instance.Log(DBG);
-
-		// Choose a random child species based on weighted probabilities
 		// And create a new instance.
 		EntityLiving Child = null;
 		int Max = 0;
@@ -291,6 +286,15 @@ mod_BetterWithRenewables.m_instance.Log(DBG);
 				}
 			}
 			
+		//////////////////// DEBUGGING:
+		String PDebug = "Animal Cross-Breeding Weights:";
+		for(Map.Entry<Integer, Integer> P : Weights.entrySet())
+			PDebug += " " + EntityList.func_75617_a(P.getKey().intValue())
+				+ ":" + P.getValue();
+		PDebug += " TOTAL:" + Max;
+		mod_BetterWithRenewables.m_instance.Log(PDebug);
+
+		// Choose a random child species based on weighted probabilities
 		// ########## STEP 3: COMPLETE BREEDING PROCESs
 
 		// Final setup of child parameters, and place child in the world.

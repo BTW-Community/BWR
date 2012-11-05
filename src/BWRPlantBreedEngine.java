@@ -229,6 +229,7 @@ public class BWRPlantBreedEngine {
 						}
 					}
 				}
+
 		// There must be at least 2 different types of neighboring plants
 		// for the cross-breed to be allowed.
 		if(Near.size() < 2)
@@ -250,6 +251,14 @@ public class BWRPlantBreedEngine {
 				break;
 				}
 			}
+
+		//////////////////// DEBUGGING:
+		String PDebug = "Plant Cross-Breeding Weights:";
+		for(int I = 0; I < BlockTypes.length; I++)
+			PDebug += " " + Block.blocksList[BlockTypes[I][0]].getBlockName()
+				+ "[" + BlockTypes[I][1] + "]:" + Probs[I];
+		PDebug += " TOTAL:" + Max;
+		mod_BetterWithRenewables.m_instance.Log(PDebug);
 
 		// Extract the block ID and metadata value from the definition.
 		// If the metadata is to be random, choose one now.
