@@ -35,7 +35,7 @@ public class mod_BetterWithRenewables {
 	// Central mod meta-info strings, easily changeable for updates.
 	public static final String bwrProductString = "Better With Renewables";
 	public static final String bwrAbbrString = "BWR";
-	public static final String bwrVersionString = "0.19.0431b";
+	public static final String bwrVersionString = "0.19.0431c";
 	public static final String bwrCopyrightString = "(C)2012, MIT License.  https://gitorious.org/bwr";
 
 	// Singleton variables.

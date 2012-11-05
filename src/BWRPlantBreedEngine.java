@@ -124,8 +124,10 @@ public class BWRPlantBreedEngine {
 			// 16: Jungle
 			new int[] { Block.sapling.blockID, 3 },
 
-			// new int[] { Block.carrot.blockID, -1 },
-			// new int[] { Block.potato.blockID, -1 },
+			// 17: Potatoes
+			new int[] { Block.field_82514_ch.blockID, -1 },
+			// 18: Carrots
+			new int[] { Block.field_82513_cg.blockID, -1 },
 			};
 		FungusTypes = new int[][]
 			{
@@ -155,6 +157,8 @@ public class BWRPlantBreedEngine {
 		AddEvo(PlantEvolve, 13, 14);
 		AddEvo(PlantEvolve, 14, 15);
 		AddEvo(PlantEvolve, 15, 16);
+		AddEvo(PlantEvolve, 1, 17);
+		AddEvo(PlantEvolve, 17, 18);
 
 		// Define evolutionary paths for fungi.
 		FungusEvolve = CreateEvoTable(FungusTypes);
