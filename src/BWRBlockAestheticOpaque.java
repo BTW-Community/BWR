@@ -128,7 +128,7 @@ public class BWRBlockAestheticOpaque extends FCBlockAestheticOpaque
 				// the hellfire block with a lava source block.
 				for(int i = 0; i < 3; i++)
 					world.playAuxSFX(2004, x, y, z, 0);
-				world.playSoundEffect(x, y, z, "fire.ignite", 1.0F, world.rand.nextFloat() * 0.5F);
+				world.playSoundEffect(x, y, z, "lava.pop", 1.0F, world.rand.nextFloat() * 0.5F);
 				world.setBlockAndMetadataWithNotify(x, y, z, Block.lavaStill.blockID, 0);
 				}
 			}
