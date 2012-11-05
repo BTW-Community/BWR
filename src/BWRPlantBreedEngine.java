@@ -49,7 +49,7 @@ public class BWRPlantBreedEngine {
 		for(int I = 0; I < floraTypes.length; I++)
 			{
 			Table[I] = new ArrayList<int[]>();
-			Table[I].add(new int[] { I, 5 });
+			Table[I].add(new int[] { I, 25 });
 			}
 		return Table;
 		}
@@ -66,7 +66,7 @@ public class BWRPlantBreedEngine {
 	private static void AddEvo(List[] table, int parent, int child)
 		{
 		AddEvoCore(table[parent], child, 1);
-		AddEvoCore(table[child], parent, 3);
+		AddEvoCore(table[child], parent, 5);
 		}
 
 	// Called once on add-on initialization.
