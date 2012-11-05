@@ -182,8 +182,9 @@ public class mod_BetterWithRenewables {
 			// Add custom BWR recipes.
 			BWRRecipes.m_instance.AddRecipes();
 
-			// Initialize the plant/fungus cross-breeding engine.
+			// Initialize the plant/fungus and animal cross-breeding engines.
 			BWRPlantBreedEngine.m_instance.Initialize();
+			BWRAnimalBreedEngine.m_instance.Initialize();
 
 			Log(bwrProductString + " Initialization Complete.");
 			}
