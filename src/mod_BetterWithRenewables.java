@@ -33,9 +33,10 @@ import net.minecraft.server.MinecraftServer;
 // external hooks and managed overall mod functionality.
 public class mod_BetterWithRenewables {
 	// Central mod meta-info strings, easily changeable for updates.
+	public static final String bwrVersionString = "0.19.0431c";
+	public static final boolean bwrDevVersion = true;
 	public static final String bwrProductString = "Better With Renewables";
 	public static final String bwrAbbrString = "BWR";
-	public static final String bwrVersionString = "0.19.0431c PRERELEASE";
 	public static final String bwrCopyrightString = "(C)2012, MIT License.  https://gitorious.org/bwr";
 
 	// Singleton variables.
@@ -162,6 +163,9 @@ public class mod_BetterWithRenewables {
 			{
 			Log(bwrProductString + " v" + bwrVersionString + " Initializing...");
 
+			if(bwrDevVersion)
+				Log("THIS IS A PRE-RELEASE VERSION, NOT FOR PRODUCTION USE");
+
 			// Replace some upstream block definitions with our custom ones, so our
 			// custom logic is run for these blocks.
 			mod_FCBetterThanWolves.fcAestheticOpaque = ReplaceBlock(FCBlockAestheticOpaque.class, BWRBlockAestheticOpaque.class);
@@ -253,5 +257,10 @@ public class mod_BetterWithRenewables {
 		// beyond those already done by BTW, as we're compatible with the BTW client.
 		Announce(net, bwrProductString + " BTW Add-On v" + bwrVersionString);
 		Announce(net, bwrCopyrightString);
+
+		// If this is a development version, announce a warning to players.
+		if(bwrDevVersion)
+			Announce(net, "\u00a74THIS IS A PRE-RELEASE VERSION OF "
+				+ bwrAbbrString.toUpperCase());
 		}
 	}
