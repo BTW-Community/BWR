@@ -24,6 +24,7 @@ package net.minecraft.src;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.HashSet;
 
 // Singleton that provides some utility functions for animal cross-breeding,
@@ -38,6 +39,51 @@ public class BWRAnimalBreedEngine {
 		{
 		// Stub.  Normally I'd initialize some fast lookup tables or
 		// something here, but the engine doesn't currently use any of that.
+		}
+
+	// Routines for recursively scanning the prospective habitat of a new creature,
+	// using a 3D flood-fill algorithm like block lighting.  It adds up the quantities
+	// of all blocks found by ID/metadata.
+	private static final int MaxScanDepth = 10;
+	private void ScanHabitat(World world, int x, int y, int z, int[] results, HashSet seen, int depth)
+		{
+		// Only visit each space once.
+		String Key = x + "," + y + "," + z;
+		if(seen.contains(Key))
+			return;
+		seen.add(Key);
+
+		// Get the type of block in this space.
+		int ID = world.getBlockId(x, y, z);
+
+		// For wood and leaves, pay attention to the metadata, for others
+		// just treat it as 0 and lump together all blocks with the same ID.
+		int Meta = 0;
+		if((ID == Block.leaves.blockID) || (ID == Block.wood.blockID))
+			Meta = world.getBlockMetadata(x, y, z);
+
+		// Increment block count.
+		results[(ID * 16) + Meta]++;
+
+		// If this block is passable, and we have any distance left to scan,
+		// scan into all 6 adjacent spaces.
+		if((depth > 0) && ((ID == 0) || !Block.blocksList[ID].blockMaterial.isSolid()))
+			{
+			ScanHabitat(world, x - 1, y, z, results, seen, depth - 1);
+			ScanHabitat(world, x + 1, y, z, results, seen, depth - 1);
+			ScanHabitat(world, x, y - 1, z, results, seen, depth - 1);
+			ScanHabitat(world, x, y + 1, z, results, seen, depth - 1);
+			ScanHabitat(world, x, y, z - 1, results, seen, depth - 1);
+			ScanHabitat(world, x, y, z + 1, results, seen, depth - 1);
+			}
+		}
+	private int[] ScanHabitat(World world, int x, int y, int z)
+		{
+		// Create the results array, seen hashset, and default depth,
+		// and start the scan with default settings.
+		int[] Results = new int[Block.blocksList.length * 16];
+		ScanHabitat(world, x, y, z, Results, new HashSet(), MaxScanDepth);
+		return Results;
 		}
 
 	// Do all cross-breeding checks.  Called by EntityUpdate on all animal
@@ -159,96 +205,48 @@ public class BWRAnimalBreedEngine {
 		// (players must at least "simulate" the necessary biome).
 		if(Child == null)
 			{
-			// Count pine and jungle leaves, and water tiles, to affect the
-			// probability of wolves, ocelots, and squid, respectively.
-			int PineQty = 0;
-			int JungleQty = 0;
-			int WaterQty = 0;
-
-			// Search a 9x9 area around where the child would appear.
+			// Scan the nearby habitat to find any block types that might
+			// affect probability of certain species.
 			int CBX = MathHelper.floor_double(CX);
 			int CBY = MathHelper.floor_double(CY);
 			int CBZ = MathHelper.floor_double(CZ);
-			for(int dx = -4; dx <= 4; dx++)
-				for(int dz = -1; dz <= 4; dz++)
-					{
-					int X = CBX + dx;
-					int Z = CBZ + dz;
-
-					// Scan downwards for 9 blocks within each area space,
-					// sweeping out a 9x9x9 area.  This optimizes the sky visibility
-					// check, which can be skipped after our first block that cannot
-					// see the sky.
-					boolean Sky = world.canBlockSeeTheSky(X, CBY + 10, Z);
-					for(int dy = 4; dy >= -4; dy--)
-						{
-						int Y = CBY + dy;
-						int ID = world.getBlockId(X, Y, Z);
-
-						// Count all water tiles in the volume.
-						if((ID > 0) && (Block.blocksList[ID].blockMaterial == Material.water))
-							{
-							WaterQty++;
-							Sky = false;
-							continue;
-							}
-
-						if(Sky)
-							{
-							// Count leaf blocks that can see the sky.  Only
-							// pine and jungle are relevant.
-							if(ID == Block.leaves.blockID)
-								{
-								int Meta = world.getBlockMetadata(X, Y, Z) & 3;
-								switch(Meta)
-									{
-									case 1:
-										PineQty++;
-										break;
-									case 3:
-										JungleQty++;
-										break;
-									}
-								}
-
-							// If any block is blocking our view of the sky,
-							// we no longer have to do leaf checks in this
-							// column.
-							if(!world.canBlockSeeTheSky(X, Y, Z))
-								Sky = false;
-							}
-						}
-					}
+			int[] Habitat = ScanHabitat(world, CBX, CBY, CBZ);
 
 			// Squid can only spawn inside actual water, so it may be necessary
 			// to flow water between the parents.  Probability of a squid spawning
 			// is about 7/8 if the entire 729 spaces are filled with water, which
 			// is unlikely because parents will need air and something to stand on.
 			if((world.getBlockMaterial(CBX, CBY, CBZ) == Material.water)
-				&& (self.rand.nextInt(800) < WaterQty))
+				&& (self.rand.nextInt(1000) < (Habitat[Block.waterMoving.blockID]
+				+ Habitat[Block.waterStill.blockID])))
 				Child = new EntitySquid(world);
-
-			// The absolute maximum number of pine leaves that can see the sky that
-			// can be in the 9x9x9 volume is 81, which would give about 80% chance
-			// of spawning a wolf.  A wolf must have at least one sheep parent, and
-			// will attack that parent upon birth.
-			else if(self.rand.nextInt(100) < PineQty)
+			else
 				{
-				EntityLiving Sheep = (self instanceof EntitySheep) ? self
-					: (Found instanceof EntitySheep) ? Found
-					: null;
-				if(Sheep != null)
+				// A wolf must have at least one sheep parent, and will attack that parent
+				// upon birth.  Wolves spawn where spruce trees (logs and leaves) are
+				// plentiful, and in balance.
+				int Logs = Habitat[Block.wood.blockID * 16 + 1] * 8;
+				int Leaves = Habitat[Block.leaves.blockID * 16 + 1];
+				if(self.rand.nextInt(1000) < (Logs > Leaves ? Leaves : Logs))
 					{
-					Child = new EntityWolf(world);
-					Target = Sheep;
+					EntityLiving Sheep = (self instanceof EntitySheep) ? self
+						: (Found instanceof EntitySheep) ? Found
+						: null;
+					if(Sheep != null)
+						{
+						Child = new EntityWolf(world);
+						Target = Sheep;
+						}
+					}
+				else
+					{
+					// Spawning of ocelots is affected by jungle logs and leaves.
+					Logs = Habitat[Block.wood.blockID * 16 + 3] * 8;
+					Leaves = Habitat[Block.leaves.blockID * 16 + 3];
+					if(self.rand.nextInt(1000) < (Logs > Leaves ? Leaves : Logs))
+						Child = new EntityOcelot(world);
 					}
 				}
-
-			// The absolute maximum number of jungle leaves that can see the sky that
-			// can be in the 9x9x9 volume is 81, which would give about 80% chance
-			// of spawning an ocelot.
-			else if(self.rand.nextInt(100) < JungleQty)
-				Child = new EntityOcelot(world);
 			}
 
 		// For all other mutants, produce an abomination of nature.
