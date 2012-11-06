@@ -69,58 +69,31 @@ public class mod_BetterWithRenewables {
 				if(newType.isAssignableFrom(B.getClass()))
 					return B;
 
-				// Search the new class constructors and try to find one that
-				// takes the block ID, or one that takes block ID and
-				// texture index.
-				Constructor IdOnly = null;
-				Constructor IdTxr = null;
-				for(Constructor ctor : newType.getDeclaredConstructors())
-					{
-					Class<?>[] p = ctor.getParameterTypes();
-					if((p.length == 1) && p[0].toString().equals("int"))
-						IdOnly = ctor;
-					if((p.length == 2) && p[0].toString().equals("int")
-						&& p[1].toString().equals("int"))
-						IdTxr = ctor;
-					}
-
-				// Try to create an instance of the new class using one of
-				// the constructors found, with the original block ID and
-				// texture index.  Rethrow any errors as runtime exceptions;
-				// this will probably cause the server to crash on startup if
-				// there is a failure here.
+				// Search for one of 2 different constructor types and install
+				// the new block.  Any errors are thrown as runtime exceptions
+				// and crash the server on startup.
+				Log("Install " + newType.toString() + " @ " + I);
+				Block.blocksList[I] = null;
 				try
 					{
-					if(IdOnly != null)
+					try
 						{
-						Log("Install " + newType.toString() + " @ " + I);
-						Block.blocksList[I] = null;
-						return (Block)IdOnly.newInstance(new Object[] { I });
+						return (Block)newType
+							.getConstructor(new Class[] { Integer.TYPE })
+							.newInstance(new Object[] { I });
 						}
-					if(IdTxr != null)
+					catch(NoSuchMethodException ex)
 						{
-						Log("Install " + newType.toString() + " @ " + I);
 						int blockIndexInTexture = B.blockIndexInTexture;
-						Block.blocksList[I] = null;
-						return (Block)IdTxr.newInstance(new Object[] { I, blockIndexInTexture });
+						return (Block)newType
+							.getConstructor(new Class[] { Integer.TYPE, Integer.TYPE })
+							.newInstance(new Object[] { I, blockIndexInTexture });
 						}
 					}
-				catch(InvocationTargetException ex)
-					{
-					throw new RuntimeException(ex);
-					}
-				catch(IllegalAccessException ex)
-					{
-					throw new RuntimeException(ex);
-					}
-				catch(InstantiationException ex)
-					{
-					throw new RuntimeException(ex);
-					}
-
-				// If neither constructor type could be found, throw an error and
-				// let the server crash.
-				throw new RuntimeException("FAILED Install " + newType.toString() + " @ " + I);
+				catch(NoSuchMethodException ex) { throw new RuntimeException(ex); }
+				catch(InvocationTargetException ex) { throw new RuntimeException(ex); }
+				catch(IllegalAccessException ex) { throw new RuntimeException(ex); }
+				catch(InstantiationException ex) { throw new RuntimeException(ex); }
 				}
 			}
 
