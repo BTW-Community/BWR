@@ -1,4 +1,3 @@
-// ==========================================================================
 // Copyright (C)2012 by Aaron Suen <warr1024@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -195,10 +194,8 @@ public class BWRAnimalBreedEngine {
 			return false;
 
 		// Cross-breeding happens randomly within the time window, so there's still
-		// a probability that it won't happen at all this attempt.  This works out
-		// to be either a 66% or 45% chance the breed will fail, depending on whether
-		// one or both parents is without intra-species prospects.
-		if(self.rand.nextInt(50) != 0)
+		// a probability that it won't happen at all this attempt.
+		if(self.rand.nextInt(20) != 0)
 			return false;
 
 		// ########## STEP 2: DETERMINE CHILD SPECIES
@@ -216,8 +213,8 @@ public class BWRAnimalBreedEngine {
 
 		// Add high probability that parents' genetic contribution
 		// is completely dominant and no mutation occurs.
-		AddProb(Weights, EntityList.getEntityID(self), 1000);
-		AddProb(Weights, EntityList.getEntityID(Found), 1000);
+		AddProb(Weights, EntityList.getEntityID(self), 500);
+		AddProb(Weights, EntityList.getEntityID(Found), 500);
 
 		// Add base probabilties of certain abominations.
 		AddProb(Weights, eidSilverfish, 100);
@@ -237,7 +234,8 @@ public class BWRAnimalBreedEngine {
 		String HDebug = "Animal Cross-Breed Habitat Data:";
 		for(int I = 0; I < Habitat.length; I++)
 			if(Habitat[I] > 0)
-				HDebug += " " + Block.blocksList[I / 16].getBlockName()
+				HDebug += " " + (((I / 16) == 0) ? "Air"
+					: Block.blocksList[I / 16].getBlockName())
 					+ "[" + (I % 16) + "]:" + Habitat[I];
 		mod_BetterWithRenewables.m_instance.Log(HDebug);
 
@@ -248,22 +246,39 @@ public class BWRAnimalBreedEngine {
 			AddProb(Weights, eidSquid, Habitat[Block.waterMoving.blockID * 16]
 				+ Habitat[Block.waterStill.blockID * 16]);
 
-		// Wolves are encouraged by pine trees, made of pine logs and pine
-		// leaves.  These need to be in balance of 8 leaves : 1 log; excess
-		// on either side is not counted.
-		int Logs = Habitat[Block.wood.blockID * 16 + 1] * 8;
-		int Leaves = Habitat[Block.leaves.blockID * 16 + 1];
-		AddProb(Weights, eidWolf, (Logs > Leaves ? Leaves : Logs) / 10);
+		// Add probabilities for wolves based on ratios of pine
+		// logs, leaves, and snow to simuate a tundra biome.
+		int PineLogs = Habitat[Block.wood.blockID * 16 + 1] * 20;
+		int PineLeaves = Habitat[Block.leaves.blockID * 16 + 1];
+		int Pine = (PineLogs > PineLeaves) ? PineLeaves : PineLogs;
+		AddProb(Weights, eidWolf, Pine / 10);
+		int Snow = Habitat[Block.snow.blockID] + Habitat[Block.blockSnow.blockID] * 2;
+		Snow = (Snow > Pine) ? Pine : Snow;
+		AddProb(Weights, eidWolf, Snow / 10);
 
-		// Ocelots are encouraged by jungle trees, similar to how wolves are
-		// encouraged by pine.
-		Logs = Habitat[Block.wood.blockID * 16 + 3] * 8;
-		Leaves = Habitat[Block.leaves.blockID * 16 + 3];
-		AddProb(Weights, eidOcelot, (Logs > Leaves ? Leaves : Logs) / 10);
+		// Ocelots are encouraged by jungle wood and leaves, vines,
+		// and cocoa pods.
+		int JungLogs = Habitat[Block.wood.blockID * 16 + 3] * 5;
+		int JungLeaves = Habitat[Block.leaves.blockID * 16 + 3];
+		int Jung = (JungLogs > JungLeaves) ? JungLeaves : JungLogs;
+		AddProb(Weights, eidOcelot, Jung / 10);
+		int Vines = Habitat[Block.vine.blockID] * 2;
+		Vines = (Vines > Jung) ? Jung : Vines;
+		AddProb(Weights, eidOcelot, Vines / 20);
+		int Cocoa = Habitat[Block.cocoaPlant.blockID] * 3;
+		Cocoa = (Cocoa > Jung) ? Jung : Cocoa;
+		AddProb(Weights, eidOcelot, Cocoa / 20);
 
-		// Blazes are rarer, and will occasionally spawn near fire.
-		AddProb(Weights, eidBlaze, (Habitat[Block.fire.blockID] / 100)
-			+ (Habitat[mod_FCBetterThanWolves.fcStokedFire.blockID] / 30));
+		// Blazes require nether brick to spawn, plus fire and
+		// lava encourage them.
+		int Brick = Habitat[Block.netherBrick.blockID]
+			+ (Habitat[Block.stairsNetherBrick.blockID] * 3 / 4)
+			+ (Habitat[Block.netherFence.blockID] / 2);
+		AddProb(Weights, eidBlaze, Brick / 50);
+		int Fire = Habitat[Block.fire.blockID]
+			+ Habitat[mod_FCBetterThanWolves.fcStokedFire.blockID] * 3;
+		Fire = (Fire > Brick) ? Brick : Fire;
+		AddProb(Weights, eidBlaze, Fire / 40);
 
 		// Villagers will rarely spawn if surrounded by blocks they desire.
 		AddProb(Weights, eidVillager, (Habitat[Block.blockEmerald.blockID] / 100)
@@ -289,8 +304,9 @@ public class BWRAnimalBreedEngine {
 		//////////////////// DEBUGGING:
 		String PDebug = "Animal Cross-Breeding Weights:";
 		for(Map.Entry<Integer, Integer> P : Weights.entrySet())
-			PDebug += " " + EntityList.func_75617_a(P.getKey().intValue())
-				+ ":" + P.getValue();
+			if(P.getValue() > 0)
+				PDebug += " " + EntityList.func_75617_a(P.getKey().intValue())
+					+ ":" + P.getValue();
 		PDebug += " TOTAL:" + Max;
 		mod_BetterWithRenewables.m_instance.Log(PDebug);
 
