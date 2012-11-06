@@ -27,17 +27,23 @@
 
 use strict;
 use warnings;
-use autodie;
 use Digest::MD5 qw(md5_hex);
 
-my $file = 'runtime/commands.py';
+chdir('mcp');
+chdir('runtime');
+my $file = 'commands.py';
 
-my ($ifh, $ofh);
-open($ifh, '<', $file);
-open($ofh, '>', $file . '.new');
-while(<$ifh>)
+my @lines = ();
+my $fh;
+open($fh, '<', $file) or die($!);
+while(<$fh>)
 	{
 	s#(sys\.platform\.startswith\('linux'\))#($1 or sys.platform.startswith('openbsd'))#;
-	print $ofh $_;
+	push @lines, $_;
 	}
-rename($file . '.new', $file);
+close($fh);
+
+unlink($file) or die($!);
+open($fh, '>', $file) or die($!);
+map { print $fh $_; } @lines;
+close($fh);

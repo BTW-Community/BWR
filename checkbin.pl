@@ -27,7 +27,6 @@
 
 use strict;
 use warnings;
-use autodie;
 
 # Paths for the compiled output, and BWR-specific
 # source, respectively.
@@ -38,7 +37,7 @@ my %classes = ( );
 my $dh;
 
 # Identify all classes defined in source.
-opendir($dh, $srcpath);
+opendir($dh, $srcpath) or die($!);
 while(my $e = readdir($dh))
 	{
 	$e =~ m#(.*)\.java$# and $classes{$1} = 1;
@@ -46,7 +45,7 @@ while(my $e = readdir($dh))
 closedir($dh);
 
 # Mark off all compiled classes.
-opendir($dh, $binpath);
+opendir($dh, $binpath) or die($!);
 while(my $e = readdir($dh))
 	{
 	$e =~ m#(.*)\.class$# or next;

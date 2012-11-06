@@ -31,16 +31,16 @@ bwr_btw_${SVR}: src/* hooks.pl mcp tmp/jar tmp/btw
 	perl -w hooks.pl
 	rm -rf mcp/bin
 	cd mcp &&\
-	python runtime/recompile.py
+	python runtime/recompile.py --server
 	perl -w checkbin.pl
 	cd mcp &&\
-	python runtime/reobfuscate.py
+	python runtime/reobfuscate.py --server
 	mkdir -p tmp/bwrjar
 	cd tmp/bwrjar &&\
 	cp -fR ../jar/* . &&\
 	cp -fR ../btw/MINECRAFT_SERVER-JAR/* . &&\
 	cp -fR ../../mcp/reobf/minecraft_server/* . &&\
-	7z a -y -tzip -mx=9 ../../bwr_btw_${SVR}.new *
+	zip -r -1 ../../bwr_btw_${SVR}.new *
 	mv -f bwr_btw_${SVR}.new bwr_btw_${SVR}
 
 # From a patched BTW server and MCP archive, unpack and patch MCP,
@@ -48,10 +48,11 @@ bwr_btw_${SVR}: src/* hooks.pl mcp tmp/jar tmp/btw
 mcp: tmp/btw_${SVR} ${MCP}
 	mkdir -p mcp
 	cd mcp &&\
-	7z x -y ../${MCP} &&\
-	cp -fR ../tmp/btw_${SVR} jars/minecraft_server.jar &&\
-	perl -w ../mcppatch.pl &&\
-	python runtime/decompile.py
+	unzip -o ../${MCP} &&\
+	cp -fR ../tmp/btw_${SVR} jars/minecraft_server.jar
+	perl -w mcppatch.pl
+	cd mcp &&\
+	python runtime/decompile.py --server --noreformat
 
 # Create a patched BTW server from unpacked Vanilla server and
 # unpacked BTW archive.
@@ -60,21 +61,21 @@ tmp/btw_${SVR}: tmp/btw tmp/jar
 	cd tmp/btwjar &&\
 	cp -fR ../jar/* . &&\
 	cp -fR ../btw/MINECRAFT_SERVER-JAR/* . &&\
-	7z a -y -tzip -mx=1 ../btw_${SVR} *
+	zip -r -1 ../btw_${SVR} *
 
 # Unpack the BTW archive.
 tmp/btw: ${BTW}
 	rm -rf tmp/btw
 	mkdir -p tmp/btw
 	cd tmp/btw &&\
-	7z x -y ../../${BTW}
+	unzip -o ../../${BTW}
 
 # Unpack the Vanilla server.
 tmp/jar: ${SVR}
 	rm -rf tmp/jar
 	mkdir -p tmp/jar
 	cd tmp/jar &&\
-	7z x -y ../../${SVR}
+	unzip -o ../../${SVR}
 
 # Clean up all intermediate and final output.
 clean:

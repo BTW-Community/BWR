@@ -27,7 +27,6 @@
 
 use strict;
 use warnings;
-use autodie;
 use Digest::MD5 qw(md5_hex);
 
 # Subroutine to patch a file, including scanning through it line-by-line,
@@ -42,11 +41,11 @@ sub dopatch
 	my $file = shift();
 	my %hooks = (@_);
 
-	# Open the original file and spool output to a new file.
-	my ($ifh, $ofh);
-	open($ifh, '<', $file);
-	open($ofh, '>', $file . '.new');
-	while(<$ifh>)
+	# Open the original file and spool output to an array.
+	my @lines = ();
+	my $fh;
+	open($fh, '<', $file) or die($!);
+	while(<$fh>)
 		{
 		# Strip off any lines that end in the special
 		# patch tag, thus removing any previous versions
@@ -54,7 +53,7 @@ sub dopatch
 		m#//\s*BWR-PATCH\s*$# and next;
 
 		# Output all original source lines.
-		print $ofh $_;
+		push @lines, $_;
 
 		# Remove trailing newlines, and separate out
 		# any leading whitespace.
@@ -72,31 +71,40 @@ sub dopatch
 		my $val = $hooks{$key};
 		if($val)
 			{
-			print $ofh $pref . $val . " // BWR-PATCH\n";
+			push @lines, $pref . $val . " // BWR-PATCH" . $/;
 			delete $hooks{$key};
 			}
 		}
+	close($fh);
 
 	# Make sure that all expected hooks were installed.  If any is
 	# missing, kick up a fit.  This could happen if upstream code is
 	# updated, and we want to catch this during the build.
-	scalar(keys %hooks) and die('missing hooks: ' . join(' ', values(%hooks)));
+	scalar(keys %hooks) and die($file . ' missing hooks: ' . join(' ', values(%hooks)));
 
-	# Move the new patched file into place over the original.
-	rename($file . '.new', $file);
+	# Write out the new file.
+	unlink($file) or die($!);
+	open($fh, '>', $file) or die($!);
+	map { print $fh $_; } @lines;
+	close($fh);
 	}
 
 # Path to the main decompiled source.
-my $srcpath = 'mcp/src/minecraft_server/net/minecraft/src/';
+chdir('mcp');
+chdir('src');
+chdir('minecraft_server');
+chdir('net');
+chdir('minecraft');
+chdir('src');
 
 # Add all hooks to existing MC/BTW classes.
-dopatch($srcpath . 'World.java',
+dopatch('World.java',
 	'43a2251845cc22fe9c9f213b6f9dad98',
 		'mod_BetterWithRenewables.m_instance.load();',
 	'ac21e31c83bddcfd956fb477b92376ee',
 		'   par1Entity = mod_BetterWithRenewables.m_instance.TransformEntityOnSpawn(par1Entity);'
 	);
-dopatch($srcpath . 'ServerConfigurationManager.java',
+dopatch('ServerConfigurationManager.java',
 	'4e716b9b8fdd574849aa84e8d51335f4',
 		'mod_BetterWithRenewables.m_instance.ServerPlayerConnectionInitialized(var6, par2EntityPlayerMP);'
 	);
