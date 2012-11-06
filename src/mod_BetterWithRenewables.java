@@ -101,6 +101,45 @@ public class mod_BetterWithRenewables {
 		throw new RuntimeException("FAILED Install " + newType.toString());
 		}
 
+	// Find an item definition matching the old class type, and replace it with
+	// the new class type, which can inherit from it, but override selected
+	// methods and add/change functionality.
+	public Item ReplaceItem(Class<?> oldType, Class<?> newType)
+		{
+		// Search the item list and find the first item that matches
+		// the original item class, or a subclass.
+		final int IndexShift = 256;
+		for(int I = IndexShift; I < Item.itemsList.length; I++)
+			{
+			Item B = Item.itemsList[I];
+			if((B != null) && oldType.isAssignableFrom(B.getClass()))
+				{
+				// If the item has already been installed, just return it.
+				if(newType.isAssignableFrom(B.getClass()))
+					return B;
+
+				// Search for an appropriate constructor and install the item.
+				// Any errors are thrown as runtime exceptions and crash the
+				// server on startup.
+				Log("Install " + newType.toString() + " @ " + I);
+				Item.itemsList[I] = null;
+				try
+					{
+					return (Item)newType
+						.getConstructor(new Class[] { Integer.TYPE })
+						.newInstance(new Object[] { I - IndexShift });
+					}
+				catch(NoSuchMethodException ex) { throw new RuntimeException(ex); }
+				catch(InvocationTargetException ex) { throw new RuntimeException(ex); }
+				catch(IllegalAccessException ex) { throw new RuntimeException(ex); }
+				catch(InstantiationException ex) { throw new RuntimeException(ex); }
+				}
+			}
+
+		// If no suitable block to replace could be found, crash.
+		throw new RuntimeException("FAILED Install " + newType.toString());
+		}
+
 	// Helper to register Entity replacements with the two places where they need
 	// to be done: on chunk loading by EntityList, and on spawn by this mod.
 	public void MapEntityReplacement(Class<?> orig, Class<?> repl, String name, int id)
@@ -108,7 +147,6 @@ public class mod_BetterWithRenewables {
 		// Register replacement class with EntityList, so that the correct class is
 		// instantiated when loading chunks.
 		EntityList.addMapping(repl, name, id);
-
 		// Register replacement class mapping with this mod, so that entities that
 		// are transformed upon being added to the world get replaced with the correct
 		// custom subclass.  New class must have a constructor that takes just
@@ -146,6 +184,9 @@ public class mod_BetterWithRenewables {
 			mod_FCBetterThanWolves.fcPlanter = ReplaceBlock(FCBlockPlanter.class, BWRBlockPlanter.class);
 			ReplaceBlock(BlockLilyPad.class, BWRBlockLilyPad.class);
 			ReplaceBlock(BlockSoulSand.class, BWRBlockSoulSand.class);
+
+			// Replace upstream item definitions.
+			mod_FCBetterThanWolves.fcBreedingHarness = ReplaceItem(FCItemBreedingHarness.class, BWRItemBreedingHarness.class);
 
 			// Add mapping for custom Dragon Orb entities.
 			MapEntityReplacement(EntityXPOrb.class, BWREntityXPOrb.class, "XPOrb", 2);
