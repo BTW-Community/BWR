@@ -279,7 +279,9 @@ public class BWRAnimalBreedEngine {
 			+ (Habitat[Block.netherFence.blockID] / 2);
 		AddProb(Weights, eidBlaze, Brick / 50);
 		int Fire = Habitat[Block.fire.blockID]
-			+ Habitat[mod_FCBetterThanWolves.fcStokedFire.blockID] * 3;
+			+ (Habitat[mod_FCBetterThanWolves.fcStokedFire.blockID] * 3)
+			+ ((Habitat[Block.lavaMoving.blockID]
+				+ Habitat[Block.lavaStill.blockID]) / 2);
 		Fire = (Fire > Brick) ? Brick : Fire;
 		AddProb(Weights, eidBlaze, Fire / 40);
 
