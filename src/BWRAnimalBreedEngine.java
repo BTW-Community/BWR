@@ -230,14 +230,17 @@ public class BWRAnimalBreedEngine {
 		int CBZ = MathHelper.floor_double(CZ);
 		int[] Habitat = ScanHabitat(world, CBX, CBY, CBZ);
 
-		//////////////////// DEBUGGING:
-		String HDebug = "Animal Cross-Breed Habitat Data:";
-		for(int I = 0; I < Habitat.length; I++)
-			if(Habitat[I] > 0)
-				HDebug += " " + (((I / 16) == 0) ? "Air"
-					: Block.blocksList[I / 16].getBlockName())
-					+ "[" + (I % 16) + "]:" + Habitat[I];
-		mod_BetterWithRenewables.m_instance.Log(HDebug);
+		// If in development, log the habitat profile information.
+		if(mod_BetterWithRenewables.bwrDevVersion)
+			{
+			String HDebug = "Animal Cross-Breed Habitat Data:";
+			for(int I = 0; I < Habitat.length; I++)
+				if(Habitat[I] > 0)
+					HDebug += " " + (((I / 16) == 0) ? "Air"
+						: Block.blocksList[I / 16].getBlockName())
+						+ "[" + (I % 16) + "]:" + Habitat[I];
+			mod_BetterWithRenewables.m_instance.Log(HDebug);
+			}
 
 		// Choose a random child species based on weighted probabilities
 		// If the tile into which the child would spawn is water, then
@@ -300,15 +303,18 @@ public class BWRAnimalBreedEngine {
 				break;
 				}
 			}
-			
-		//////////////////// DEBUGGING:
-		String PDebug = "Animal Cross-Breeding Weights:";
-		for(Map.Entry<Integer, Integer> P : Weights.entrySet())
-			if(P.getValue() > 0)
-				PDebug += " " + EntityList.func_75617_a(P.getKey().intValue())
-					+ ":" + P.getValue();
-		PDebug += " TOTAL:" + Max;
-		mod_BetterWithRenewables.m_instance.Log(PDebug);
+
+		// If in development, log probability profile of animal cross-breeds.
+		if(mod_BetterWithRenewables.bwrDevVersion)
+			{
+			String PDebug = "Animal Cross-Breeding Weights:";
+			for(Map.Entry<Integer, Integer> P : Weights.entrySet())
+				if(P.getValue() > 0)
+					PDebug += " " + EntityList.func_75617_a(P.getKey().intValue())
+						+ ":" + P.getValue();
+			PDebug += " TOTAL:" + Max;
+			mod_BetterWithRenewables.m_instance.Log(PDebug);
+			}
 
 		// Choose a random child species based on weighted probabilities
 		// ########## STEP 3: COMPLETE BREEDING PROCESs

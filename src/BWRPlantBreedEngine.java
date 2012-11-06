@@ -252,14 +252,17 @@ public class BWRPlantBreedEngine {
 				}
 			}
 
-		//////////////////// DEBUGGING:
-		String PDebug = "Plant Cross-Breeding Weights:";
-		for(int I = 0; I < BlockTypes.length; I++)
-			if(Probs[I] > 0)
-				PDebug += " " + Block.blocksList[BlockTypes[I][0]].getBlockName()
-					+ "[" + BlockTypes[I][1] + "]:" + Probs[I];
-		PDebug += " TOTAL:" + Max;
-		mod_BetterWithRenewables.m_instance.Log(PDebug);
+		// If in development, log cross-breeding probability profile.
+		if(mod_BetterWithRenewables.bwrDevVersion)
+			{
+			String PDebug = "Plant Cross-Breeding Weights:";
+			for(int I = 0; I < BlockTypes.length; I++)
+				if(Probs[I] > 0)
+					PDebug += " " + Block.blocksList[BlockTypes[I][0]].getBlockName()
+						+ "[" + BlockTypes[I][1] + "]:" + Probs[I];
+			PDebug += " TOTAL:" + Max;
+			mod_BetterWithRenewables.m_instance.Log(PDebug);
+			}
 
 		// Extract the block ID and metadata value from the definition.
 		// If the metadata is to be random, choose one now.
