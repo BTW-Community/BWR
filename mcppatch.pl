@@ -27,7 +27,6 @@
 
 use strict;
 use warnings;
-use Digest::MD5 qw(md5_hex);
 
 chdir('mcp');
 chdir('runtime');
