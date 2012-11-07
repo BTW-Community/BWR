@@ -73,9 +73,7 @@ public class BWRAnimalBreedEngine {
 			// For wood and leaves, pay attention to the metadata, for others
 			// just treat it as 0 and lump together all blocks with the same ID.
 			int Meta = 0;
-			if(ID == Block.wood.blockID)
-				Meta = world.getBlockMetadata(x, y, z);
-			if(ID == Block.leaves.blockID)
+			if((ID == Block.wood.blockID) || (ID == Block.leaves.blockID))
 				Meta = world.getBlockMetadata(x, y, z) & 3;
 
 			// Increment block count.
