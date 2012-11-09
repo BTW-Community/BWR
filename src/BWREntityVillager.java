@@ -36,9 +36,50 @@ public class BWREntityVillager extends EntityVillager
 		if(TradingWhitelist == null)
 			{
 			boolean[] WL = new boolean[Item.itemsList.length];
+
+			// Villagers can buy items for emeralds.
 			WL[Item.emerald.shiftedIndex] = true;
+
+			// Villagers can sell only finished products, nothing
+			// made of gold or diamond, and no raw materials.
+			// All meats must be cooked (no tallow sources).
+			WL[Item.shovelSteel.shiftedIndex] = true;
+			WL[Item.pickaxeSteel.shiftedIndex] = true;
+			WL[Item.axeSteel.shiftedIndex] = true;
 			WL[Item.flintAndSteel.shiftedIndex] = true;
-			WL[Item.shears.shiftedIndex] = true;
+			WL[Item.appleRed.shiftedIndex] = true;
+			WL[Item.swordSteel.shiftedIndex] = true;
+			WL[Item.swordWood.shiftedIndex] = true;
+			WL[Item.shovelWood.shiftedIndex] = true;
+			WL[Item.pickaxeWood.shiftedIndex] = true;
+			WL[Item.axeWood.shiftedIndex] = true;
+			WL[Item.swordStone.shiftedIndex] = true;
+			WL[Item.shovelStone.shiftedIndex] = true;
+			WL[Item.pickaxeStone.shiftedIndex] = true;
+			WL[Item.axeStone.shiftedIndex] = true;
+			WL[Item.hoeWood.shiftedIndex] = true;
+			WL[Item.hoeStone.shiftedIndex] = true;
+			WL[Item.hoeSteel.shiftedIndex] = true;
+			WL[Item.bread.shiftedIndex] = true;
+			WL[Item.helmetLeather.shiftedIndex] = true;
+			WL[Item.plateLeather.shiftedIndex] = true;
+			WL[Item.legsLeather.shiftedIndex] = true;
+			WL[Item.bootsLeather.shiftedIndex] = true;
+			WL[Item.helmetChain.shiftedIndex] = true;
+			WL[Item.plateChain.shiftedIndex] = true;
+			WL[Item.legsChain.shiftedIndex] = true;
+			WL[Item.bootsChain.shiftedIndex] = true;
+			WL[Item.helmetSteel.shiftedIndex] = true;
+			WL[Item.plateSteel.shiftedIndex] = true;
+			WL[Item.legsSteel.shiftedIndex] = true;
+			WL[Item.bootsSteel.shiftedIndex] = true;
+			WL[Item.porkCooked.shiftedIndex] = true;
+			WL[Item.saddle.shiftedIndex] = true;
+			WL[Item.fishCooked.shiftedIndex] = true;
+			WL[Item.beefCooked.shiftedIndex] = true;
+			WL[Item.chickenCooked.shiftedIndex] = true;
+			WL[Item.expBottle.shiftedIndex] = true;
+
 			TradingWhitelist = WL;
 			}
 		}
