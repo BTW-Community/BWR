@@ -43,6 +43,7 @@ public class BWREntityVillager extends EntityVillager
 			// Villagers can sell only finished products, nothing
 			// made of gold or diamond, and no raw materials.
 			// All meats must be cooked (no tallow sources).
+			WL[Item.shears.shiftedIndex] = true;
 			WL[Item.shovelSteel.shiftedIndex] = true;
 			WL[Item.pickaxeSteel.shiftedIndex] = true;
 			WL[Item.axeSteel.shiftedIndex] = true;
