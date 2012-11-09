@@ -1,13 +1,3 @@
-Refine Villager Cross-Breeding requirements
-
-Renewable Diamond
-	Removed from villager trades.
-
-Renewable Redstone Catch-22
-	Requires a hibachi, which requires redstone.  Maybe
-	grind gold and hellfire together instead of melt,
-	for a low-efficiency bootstrap alternative?
-
 Obtainable Nether Portals
 	Villager trading changes break diamond->obsidian->portal
 	route on flatcore.
@@ -17,7 +7,17 @@ Obtainable Nether Portals
 	to taint emerald into obsidian and create portal (and
 	possibly spawn some consequences).
 
+Renewable Redstone Catch-22
+	Requires a hibachi, which requires redstone.  Maybe
+	grind gold and hellfire together instead of melt,
+	for a low-efficiency bootstrap alternative?
+
 Renewable Glowstone
+
+Renewable Diamond
+	Removed from villager trades.
+
+Refine Villager Cross-Breeding requirements
 
 SoulSand Catch-22
 	Soulsand currently requires sand, which requires gravel,
@@ -28,9 +28,11 @@ SoulSand Catch-22
 	Grind/stew netherwart alone for low-efficiency hellfire
 	production?
 
-End Portal
-	Endstone as a prereq, as it can now be gathered from
-	endermen, even in the overworld.
+Wither Skeletons
+	Not available without a Nether Fort.
+	Cross-breed them?
+	Some ritual to convert a regular skeleton? e.g. throw coal
+	dust at them?  Require netherbrick in ritual?
 
 Mob Spawners
 	Need to be able to make these in custom maps, minimally
@@ -45,23 +47,13 @@ Mob Spawners
 	  useable for cobblegen.
 	- Create an alternative to spawners for mossygen...?
 
+End Portal
+	Endstone as a prereq, as it can now be gathered from
+	endermen, even in the overworld.
+
 Dragon Egg
 	This is supposed to be unique, but what if it is lost, or
 	custom maps lack a dragon?
 	Ideas:
 	- Create replacement ender crystals; placing enough of these
 	  close to each other in the end will summon the dragon.
-
-Grinding Glowstone
-	Convenience recipe to grind glowstone block into 3 dust in
-	a millstone (average output).  For the cost of setting up a
-	millstone (tech tree advancement), you get predictability
-	and convenience.  Useful when glowstone is bought primarily
-	in block form in villager trading, but used mainly in dust
-	form for elements.
-
-Blazes, Wither Skeletons
-	Not available without a Nether Fort.
-
-Villagers
-	Not available without exploration and villages.
