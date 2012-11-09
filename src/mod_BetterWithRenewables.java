@@ -46,9 +46,6 @@ public class mod_BetterWithRenewables {
 	// Mappings for entity replacements.
 	private Map EntityTypeMap = new HashMap();
 
-	// Villager trading restrictions whitelist.
-	private boolean[] TradingWhitelist;
-
 	// Log a message to the server console log.
 	public void Log(String msg)
 		{
@@ -199,6 +196,7 @@ public class mod_BetterWithRenewables {
 			MapEntityReplacement(EntityWolf.class, BWREntityWolf.class, "Wolf", 95);
 			MapEntityReplacement(EntityMooshroom.class, BWREntityMooshroom.class, "MushroomCow", 96);
 			MapEntityReplacement(EntityOcelot.class, BWREntityOcelot.class, "Ozelot", 98);
+			MapEntityReplacement(EntityVillager.class, BWREntityVillager.class, "Villager", 120);
 
 			// Add custom BWR recipes.
 			BWRRecipes.m_instance.AddRecipes();
@@ -206,10 +204,6 @@ public class mod_BetterWithRenewables {
 			// Initialize the plant/fungus and animal cross-breeding engines.
 			BWRPlantBreedEngine.m_instance.Initialize();
 			BWRAnimalBreedEngine.m_instance.Initialize();
-
-			// Define the items that villagers are allowed to sell.
-			TradingWhitelist = new boolean[Item.itemsList.length];
-			TradingWhitelist[Item.emerald.shiftedIndex] = true;
 
 			Log(bwrProductString + " Initialization Complete.");
 			}
@@ -233,17 +227,6 @@ public class mod_BetterWithRenewables {
 	// to replace existing entities later, when they're added to the world.
 	public Entity TransformEntityOnSpawn(Entity original)
 		{
-		// Remove trades from villagers for items that are not allowed to be sold.
-		if(original instanceof EntityVillager)
-			{
-			EntityVillager V = (EntityVillager)original;
-			MerchantRecipeList Merch = V.getRecipes(null);
-			for(int I = Merch.size() - 1; I >= 0; I--)
-				if(!TradingWhitelist[((MerchantRecipe)Merch.get(I))
-					.getItemToSell().itemID])
-					Merch.remove(I);
-			}
-
 		// See if the type of this entity is mapped to a replacement.
 		// If it is, use NBT to copy properties from the original to a
 		// new instance of the replacement class, and return it instead.
