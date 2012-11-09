@@ -13,6 +13,9 @@ Renewable Redstone Catch-22
 	for a low-efficiency bootstrap alternative?
 
 Renewable Glowstone
+	Ideas:
+	- Concentrate sunlight using a lens, directly into a block
+	of obsidian (or emerald?).
 
 Renewable Diamond
 	Removed from villager trades.
@@ -35,6 +38,7 @@ Wither Skeletons
 	Cross-breed them?
 	Some ritual to convert a regular skeleton? e.g. throw coal
 	dust at them?  Require netherbrick in ritual?
+	Poison a skeleton with splash potion?
 
 Mob Spawners
 	Need to be able to make these in custom maps, minimally
@@ -48,6 +52,7 @@ Mob Spawners
 	  that die immediately with no drops, so they're ONLY
 	  useable for cobblegen.
 	- Create an alternative to spawners for mossygen...?
+	  Maybe nether portals create mossy too, in some way.
 
 End Portal
 	Endstone as a prereq, as it can now be gathered from
