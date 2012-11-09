@@ -1,16 +1,23 @@
-Review Villager Trading
-	Some trades villagers used to offer in Vanilla have been
-	removed in BTW, which includes anything made of diamond.
-	Will have to identify them and find alternative sources.
+Refine Villager Cross-Breeding requirements
 
-Obtainable Wolves
-	Need a way to get wolves in superflat (limited biomes).
-	Ideas:
-	- Terraform an area with sufficient spruce trees, and
-	  they'll spawn (or change the biome to forest/tundra).
-	- Wolves spawn in spaces with enough sheep and low
-	  enough light level.
-	- Cross-breed animals.
+Renewable Diamond
+	Removed from villager trades.
+
+Renewable Redstone Catch-22
+	Requires a hibachi, which requires redstone.  Maybe
+	grind gold and hellfire together instead of melt,
+	for a low-efficiency bootstrap alternative?
+
+Obtainable Nether Portals
+	Villager trading changes break diamond->obsidian->portal
+	route on flatcore.
+	Idea: make a portal out of emerald blocks instead, and
+	perform a "dark ritual", e.g. right-click on an on-fire
+	priest inside the portal while holding an arcane scroll,
+	to taint emerald into obsidian and create portal (and
+	possibly spawn some consequences).
+
+Renewable Glowstone
 
 SoulSand Catch-22
 	Soulsand currently requires sand, which requires gravel,
@@ -18,20 +25,8 @@ SoulSand Catch-22
 	charges require hellfire, which requires a hopper w/
 	soulsand filter.  We may need some way to bootstrap this
 	process without hellfire or gravel.
-
-Plant Crossbreeding Refinements
-	- Fine-tune speed of cross-breeding
-	- Fine-tune base probabilities of plants
-	Right now the entire science of plant crossbreeding is
-	in designing a layout with maximum production rate.
-	There is a pretty basic trade-off between using more
-	space for more species vs. more open plots, i.e. rate
-	of production goes up linearly for both.  Instead, it
-	would be better to have the player have to "target" a
-	species by making probabilities of each specific plant
-	dependent on its neighbors (but you still need to be
-	able to get any plant from any others, in case maps
-	lack certain resources).
+	Grind/stew netherwart alone for low-efficiency hellfire
+	production?
 
 End Portal
 	Endstone as a prereq, as it can now be gathered from
