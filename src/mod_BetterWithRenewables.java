@@ -73,19 +73,22 @@ public class mod_BetterWithRenewables {
 				// the new block.  Any errors are thrown as runtime exceptions
 				// and crash the server on startup.
 				Log("Install " + newType.toString() + " @ " + I);
+				float Hardness = Block.blocksList[I].blockHardness;
+				float Resistance = Block.blocksList[I].blockResistance;
+				String BlockName = Block.blocksList[I].getBlockName();
 				Block.blocksList[I] = null;
 				try
 					{
 					try
 						{
-						return (Block)newType
+						newType
 							.getConstructor(new Class[] { Integer.TYPE })
 							.newInstance(new Object[] { I });
 						}
 					catch(NoSuchMethodException ex)
 						{
 						int blockIndexInTexture = B.blockIndexInTexture;
-						return (Block)newType
+						newType
 							.getConstructor(new Class[] { Integer.TYPE, Integer.TYPE })
 							.newInstance(new Object[] { I, blockIndexInTexture });
 						}
@@ -94,6 +97,10 @@ public class mod_BetterWithRenewables {
 				catch(InvocationTargetException ex) { throw new RuntimeException(ex); }
 				catch(IllegalAccessException ex) { throw new RuntimeException(ex); }
 				catch(InstantiationException ex) { throw new RuntimeException(ex); }
+
+				// Preserve some stats that are defined outside of the constructor.
+				return Block.blocksList[I].setHardness(Hardness)
+					.setResistance(Resistance).setBlockName(BlockName);
 				}
 			}
 
