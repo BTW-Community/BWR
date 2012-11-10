@@ -113,9 +113,9 @@ public class BWREntityXPOrb extends EntityXPOrb
 			// to be sufficiently fire-proofed to keep running.
 			for(int n = 0; n < 20; n++)
 				{
-				int px = bx + MathHelper.floor_double(this.worldObj.rand.nextGaussian() * 2 + 0.5D);
-				int py = by + MathHelper.floor_double(this.worldObj.rand.nextGaussian() * 2 + 0.5D);
-				int pz = bz + MathHelper.floor_double(this.worldObj.rand.nextGaussian() * 2 + 0.5D);
+				int px = bx + MathHelper.floor_double(this.worldObj.rand.nextGaussian() + 0.5D);
+				int py = by + MathHelper.floor_double(this.worldObj.rand.nextGaussian() + 0.5D);
+				int pz = bz + MathHelper.floor_double(this.worldObj.rand.nextGaussian() + 0.5D);
 				if(this.worldObj.getBlockId(px, py, pz) == 0)
 					this.worldObj.setBlockAndMetadata(px, py, pz, Block.fire.blockID, 0);
 				}
