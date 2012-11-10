@@ -1,3 +1,15 @@
+SoulSand Catch-22
+	Soulsand currently requires sand, which requires gravel,
+	which may require using mining charges on cobble.  Mining
+	charges require hellfire, which requires a hopper w/
+	soulsand filter.  We may need some way to bootstrap this
+	process without hellfire or gravel.
+	Grind/stew netherwart alone for low-efficiency hellfire
+	production? (Wait... no wart w/o soulsand...)
+	Twice-grind netherrack for low-efficiency hellfire?
+	Low-efficiency recipes for sand?  Make soulsand out of
+	dirt or clay instead?  Maybe emerald?
+
 Obtainable Nether Portals
 	Villager trading changes break diamond->obsidian->portal
 	route on flatcore.
@@ -16,6 +28,7 @@ Renewable Glowstone
 	Ideas:
 	- Concentrate sunlight using a lens, directly into a block
 	of obsidian (or emerald?).
+	- Concentrated sunlight onto redstone to make glow dust
 
 Renewable Diamond
 	Removed from villager trades.
@@ -23,15 +36,6 @@ Renewable Diamond
 Refine Villager Cross-Breeding requirements
 
 Refine Blaze Cross-Breeding Requirements
-
-SoulSand Catch-22
-	Soulsand currently requires sand, which requires gravel,
-	which may require using mining charges on cobble.  Mining
-	charges require hellfire, which requires a hopper w/
-	soulsand filter.  We may need some way to bootstrap this
-	process without hellfire or gravel.
-	Grind/stew netherwart alone for low-efficiency hellfire
-	production?
 
 Wither Skeletons
 	Not available without a Nether Fort.
