@@ -351,8 +351,8 @@ public class BWRAnimalBreedEngine {
 			(Found.rand.nextFloat() - Found.rand.nextFloat()) * 0.2F + 1.0F);
 
 		// Add confusion effect to parents.  They'd have to be confused...
-		self.addPotionEffect(new PotionEffect(Potion.confusion.id, 300, 0));
-		Found.addPotionEffect(new PotionEffect(Potion.confusion.id, 300, 0));
+		self.addPotionEffect(new PotionEffect(Potion.confusion.id, 6000, 0));
+		Found.addPotionEffect(new PotionEffect(Potion.confusion.id, 6000, 0));
 
 		// Create placenta.
 		world.playAuxSFX(2222, MathHelper.floor_double(Child.posX), MathHelper.floor_double(Child.posY),
