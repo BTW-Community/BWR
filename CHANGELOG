@@ -1,4 +1,10 @@
 v0.20
+	- There is now a low-efficiency way to recover raw gold
+	  from tools and equipment.
+
+	- There is now a low-efficiency way to fabricate redstone
+	  dust without hibachis.
+
 	- Significant villager trading nerfs.  Villagers now only
 	  sell some finished tools and buy items for emeralds.
 	  Emerald can now be treated as a distinct resource with its

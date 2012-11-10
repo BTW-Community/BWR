@@ -22,6 +22,8 @@
 
 package net.minecraft.src;
 
+import java.util.ArrayList;
+
 // Singleton that manages adding custom BWR recipes to the crafting managers.
 public class BWRRecipes {
 	public static BWRRecipes m_instance = new BWRRecipes();
@@ -40,6 +42,20 @@ public class BWRRecipes {
 				new ItemStack(mod_FCBetterThanWolves.fcPotash, qty * 8, -1),
 				new ItemStack(mod_FCBetterThanWolves.fcConcentratedHellfire, qty, -1),
 				});
+		}
+
+	// Add low-tech low-efficiency alternative to melting gold in the crucible.
+	// Grinding it in a millstone recovers about one third of the original gold, and
+	// can be used to obtain raw gold from tools dropped by mobs.  Only gold
+	// is soft enough for this exception, and only because it's needed for
+	// fabricating redstone.
+	public void AddGoldGrindingRecipe(Item tool, int qty)
+		{
+		ItemStack[] Stax = new ItemStack[qty];
+		for(int I = 0; I < qty; I++)
+			Stax[I] = new ItemStack(Item.goldNugget, 3);
+		FCRecipes.AddMillStoneRecipe(Stax,
+			new ItemStack[] { new ItemStack(tool, 1, -1) });
 		}
 
 	// Add a recipe to the stoked cauldron to recover lapis from dyed wool.  Lapis is the
@@ -91,6 +107,17 @@ public class BWRRecipes {
 		AddDiamondRecoveryRecipe(Item.hoeDiamond, 2);
 		AddDiamondRecoveryRecipe(Item.shovelDiamond, 1);
 
+		// Add low-efficiency gold recycling recipes.
+		AddGoldGrindingRecipe(Item.plateGold, 8);
+		AddGoldGrindingRecipe(Item.legsGold, 7);
+		AddGoldGrindingRecipe(Item.helmetGold, 5);
+		AddGoldGrindingRecipe(Item.bootsGold, 4);
+		AddGoldGrindingRecipe(Item.axeGold, 3);
+		AddGoldGrindingRecipe(Item.pickaxeGold, 3);
+		AddGoldGrindingRecipe(Item.swordGold, 2);
+		AddGoldGrindingRecipe(Item.hoeGold, 2);
+		AddGoldGrindingRecipe(Item.shovelGold, 1);
+
 		// Add recipes for recovering lapis from various colored wools that
 		// can be made via sheep breeding.
 		AddLapisRecoveryRecipe(11, 0, 0, 1);
@@ -122,15 +149,23 @@ public class BWRRecipes {
 				new ItemStack(mod_FCBetterThanWolves.fcSoulUrn, 1, -1)
 				});
 
+		// Low-efficiency alternative way to obtain redstone from gold and hellfire.
+		// Hibachis cannot be made without redstone, but are necessary to make
+		// redstone without it being available from worldgen.
+		FCRecipes.AddMillStoneRecipe(
+			new ItemStack[] { new ItemStack(Item.redstone, 1, 0) },
+			new ItemStack[]
+				{
+				new ItemStack(mod_FCBetterThanWolves.fcConcentratedHellfire, 1, -1),
+				new ItemStack(Item.ingotGold, 1, -1)
+				});
+
 		// Dead bushes can be trivially created from oak saplings.
 		// Birch is the wrong color (and horizontally reversed), and pine
 		// and jungle are clearly the wrong shape.
 		FCRecipes.AddStokedCauldronRecipe(
 			new ItemStack(Block.deadBush, 1),
-			new ItemStack[]
-				{
-				new ItemStack(Block.sapling, 1, 0)
-				});
+			new ItemStack[] { new ItemStack(Block.sapling, 1, 0) });
 
 		// As of BTW 4.32, there is no way to combine dung into dung blocks
 		// automatically, which prevents clay farming in BWR to be automated.
@@ -138,9 +173,6 @@ public class BWRRecipes {
 		// the way string mats into wool.
 		FCRecipes.AddCauldronRecipe(
 			new ItemStack(mod_FCBetterThanWolves.fcAestheticOpaque, 1, FCBlockAestheticOpaque.m_iSubtypeDung),
-			new ItemStack[]
-				{
-				new ItemStack(mod_FCBetterThanWolves.fcDung, 9)
-				});
+			new ItemStack[] { new ItemStack(mod_FCBetterThanWolves.fcDung, 9) });
 		}
 	}
