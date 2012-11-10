@@ -252,7 +252,9 @@ public class BWRAnimalBreedEngine {
 		int PineLogs = Habitat[Block.wood.blockID * 16 + 1] * 20;
 		int PineLeaves = Habitat[Block.leaves.blockID * 16 + 1];
 		int Pine = (PineLogs > PineLeaves) ? PineLeaves : PineLogs;
-		AddProb(Weights, eidWolf, Pine / 10);
+		Pine /= 2;
+		Pine = (Pine > 100) ? 100 : Pine;
+		AddProb(Weights, eidWolf, Pine);
 		int Snow = Habitat[Block.snow.blockID] + Habitat[Block.blockSnow.blockID] * 2;
 		Snow = (Snow > Pine) ? Pine : Snow;
 		AddProb(Weights, eidWolf, Snow / 10);
@@ -262,13 +264,15 @@ public class BWRAnimalBreedEngine {
 		int JungLogs = Habitat[Block.wood.blockID * 16 + 3] * 5;
 		int JungLeaves = Habitat[Block.leaves.blockID * 16 + 3];
 		int Jung = (JungLogs > JungLeaves) ? JungLeaves : JungLogs;
-		AddProb(Weights, eidOcelot, Jung / 10);
+		Jung /= 2;
+		Jung = (Jung > 100) ? 100 : Jung;
+		AddProb(Weights, eidOcelot, Jung);
 		int Vines = Habitat[Block.vine.blockID] * 2;
 		Vines = (Vines > Jung) ? Jung : Vines;
-		AddProb(Weights, eidOcelot, Vines / 20);
+		AddProb(Weights, eidOcelot, Vines);
 		int Cocoa = Habitat[Block.cocoaPlant.blockID] * 3;
-		Cocoa = (Cocoa > Jung) ? Jung : Cocoa;
-		AddProb(Weights, eidOcelot, Cocoa / 20);
+		Cocoa = (Cocoa > Vines) ? Vines : Cocoa;
+		AddProb(Weights, eidOcelot, Cocoa);
 
 		// Blazes require nether brick to spawn, plus fire and
 		// lava encourage them.
