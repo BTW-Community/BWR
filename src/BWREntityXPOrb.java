@@ -109,13 +109,16 @@ public class BWREntityXPOrb extends EntityXPOrb
 					Ent.setFire(9);
 					}
 
-			// Set fire to nearby flammable materials.
-			for(int dx = -2; dx <= 2; dx++)
-				for(int dy = -2; dy <= 3; dy++)
-					for(int dz = -2; dz <= 2; dz++)
-						Block.fire.tryToCatchBlockOnFire(this.worldObj,
-							bx + dx, by + dy, bz + dz,
-							100, this.worldObj.rand, 0);
+			// Set a bunch of fire around the press, so an automated one needs
+			// to be sufficiently fire-proofed to keep running.
+			for(int n = 0; n < 20; n++)
+				{
+				int px = bx + MathHelper.floor_double(this.worldObj.rand.nextGaussian() * 2 + 0.5D);
+				int py = by + MathHelper.floor_double(this.worldObj.rand.nextGaussian() * 2 + 0.5D);
+				int pz = bz + MathHelper.floor_double(this.worldObj.rand.nextGaussian() * 2 + 0.5D);
+				if(this.worldObj.getBlockId(px, py, pz) == 0)
+					this.worldObj.setBlockAndMetadata(px, py, pz, Block.fire.blockID, 0);
+				}
 		
 			// Play some sound/visual effects.
 			for(int dx = -1; dx <= 1; dx++)

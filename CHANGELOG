@@ -1,13 +1,13 @@
 v0.20
-	- Gutted Villager Trading system.  They now mostly buy raw
-	  materials from players, and sell only a few selected
-	  finished products that would be otherwise unreasonably
-	  difficult or impossible to obtain in a challenge map.
+	- Significant villager trading nerfs.  Villagers now only
+	  sell some finished tools and buy items for emeralds.
 	  Emerald can now be treated as a distinct resource with its
 	  own purpose, rather than an medium for shortcuts around
 	  existing gameplay.
 
 	- Dung can be stewed into blocks similar to string to wool.
+
+	- Fixed Soul Press fire creation.
 
 
 v0.19
