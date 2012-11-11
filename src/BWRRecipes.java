@@ -160,6 +160,26 @@ public class BWRRecipes {
 				new ItemStack(Item.ingotGold, 1, -1)
 				});
 
+		// Method for extracting hellfire from netherrack earlier in the tech tree
+		// than necessary to bottle souls.  Grind the netherrack in the millstone a
+		// second time to extract hellfire.  If sawdust is present, souls are absorbed
+		// by it, producing souldust.  If not, souls dissipate harmlessly (since
+		// they are not trapped by soulsand).
+		FCRecipes.AddMillStoneRecipe(
+			new ItemStack[]
+				{
+				new ItemStack(mod_FCBetterThanWolves.fcHellfireDust, 1, 0),
+				new ItemStack(mod_FCBetterThanWolves.fcSoulDust, 1, 0)
+				},
+			new ItemStack[]
+				{
+				new ItemStack(mod_FCBetterThanWolves.fcGroundNetherrack, 1, 0),
+				new ItemStack(mod_FCBetterThanWolves.fcSawDust, 1, 0)
+				});
+		FCRecipes.AddMillStoneRecipe(
+			new ItemStack[] { new ItemStack(mod_FCBetterThanWolves.fcHellfireDust, 1, 0) },
+			new ItemStack[] { new ItemStack(mod_FCBetterThanWolves.fcGroundNetherrack, 1, 0) });
+
 		// Dead bushes can be trivially created from oak saplings.
 		// Birch is the wrong color (and horizontally reversed), and pine
 		// and jungle are clearly the wrong shape.

@@ -17,6 +17,10 @@ v0.20
 
 	- Made animal cross-breeding habitats easier to construct.
 
+	- Added low-efficency recipes for extracting raw gold from
+	  tools collected from ZP's, and for obtaining hellfire
+	  from ground netherrack.
+
 
 v0.19
 	- Added cross-breeding of animals.  Chances of rarer animals

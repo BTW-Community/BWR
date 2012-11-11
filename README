@@ -106,3 +106,8 @@ Animal Crossbreeding:
 
 Dung Block Automation:
 	Loose dung can now be stewed automatically into blocks.
+
+Low-Efficiency Recipes:
+	Alternative recipes and techniques for producing resources with
+	existing recipes, earlier in the tech tree than normally
+	possible, but at a steeper price.
