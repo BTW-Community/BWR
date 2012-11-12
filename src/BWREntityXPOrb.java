@@ -68,7 +68,8 @@ public class BWREntityXPOrb extends EntityXPOrb
 		int by = MathHelper.floor_double(y);
 		int bz = MathHelper.floor_double(z);
 		if(isDead || !m_bNotPlayerOwned
-			|| (this.worldObj.getBlockId(bx, by, bz) != Block.sand.blockID)
+			|| (this.worldObj.getBlockId(bx, by, bz) != mod_FCBetterThanWolves.fcAestheticOpaque.blockID)
+			|| (this.worldObj.getBlockMetadata(bx, by, bz) != FCBlockAestheticOpaque.m_iSubtypeDung)
 			|| !soulPressBlocksAllowed[this.worldObj.getBlockId(bx - 1, by, bz)]
 			|| !soulPressBlocksAllowed[this.worldObj.getBlockId(bx + 1, by, bz)]
 			|| !soulPressBlocksAllowed[this.worldObj.getBlockId(bx, by - 1, bz)]

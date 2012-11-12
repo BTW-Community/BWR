@@ -1,10 +1,4 @@
 v0.20
-	- There is now a low-efficiency way to recover raw gold
-	  from tools and equipment.
-
-	- There is now a low-efficiency way to fabricate redstone
-	  dust without hibachis.
-
 	- Significant villager trading nerfs.  Villagers now only
 	  sell some finished tools and buy items for emeralds.
 	  Emerald can now be treated as a distinct resource with its
@@ -18,8 +12,13 @@ v0.20
 	- Made animal cross-breeding habitats easier to construct.
 
 	- Added low-efficency recipes for extracting raw gold from
-	  tools collected from ZP's, and for obtaining hellfire
-	  from ground netherrack.
+	  tools collected from ZP's, for obtaining hellfire from
+	  ground netherrack, and for mixing gold and hellfire into
+	  redstone, using equipment lower on the tech tree.
+
+	- Soul Press now uses dung instead of sand for making
+	  soul sand, resolving tech tree cycle when naturally-occuring
+	  sand is not available.
 
 
 v0.19

@@ -196,12 +196,23 @@ public class BWRRecipes {
 			new ItemStack(Block.deadBush, 1),
 			new ItemStack[] { new ItemStack(Block.sapling, 1, 0) });
 
-		// As of BTW 4.32, there is no way to combine dung into dung blocks
-		// automatically, which prevents clay farming in BWR to be automated.
-		// Dung, added to a stewing pot, is stewed into blocks, similar to
-		// the way string mats into wool.
+		// Combine dung into blocks automatically to allow clay farms to be automated.
+		// If scoured leather is present, then it acts as a catalyst to break the dung
+		// back up again so the leather can be tanned, preventing automatic tanning
+		// machines from jamming on a dung backlog.
 		FCRecipes.AddCauldronRecipe(
 			new ItemStack(mod_FCBetterThanWolves.fcAestheticOpaque, 1, FCBlockAestheticOpaque.m_iSubtypeDung),
 			new ItemStack[] { new ItemStack(mod_FCBetterThanWolves.fcDung, 9) });
+		FCRecipes.AddCauldronRecipe(
+			new ItemStack[]
+				{
+				new ItemStack(mod_FCBetterThanWolves.fcTannedLeather, 1, 0),
+				new ItemStack(mod_FCBetterThanWolves.fcDung, 8, 0)
+				},
+			new ItemStack[]
+				{
+				new ItemStack(mod_FCBetterThanWolves.fcScouredLeather, 1, -1),
+				new ItemStack(mod_FCBetterThanWolves.fcAestheticOpaque, 1, FCBlockAestheticOpaque.m_iSubtypeDung)
+				});
 		}
 	}
