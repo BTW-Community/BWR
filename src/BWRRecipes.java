@@ -151,13 +151,22 @@ public class BWRRecipes {
 
 		// Low-efficiency alternative way to obtain redstone from gold and hellfire.
 		// Hibachis cannot be made without redstone, but are necessary to make
-		// redstone without it being available from worldgen.
+		// redstone in a stoked crucible without it being available from worldgen.
+		// Instead, redstone dust can be made in a millstone, but it requires 3x as
+		// much gold for the same amount of redstone.
 		FCRecipes.AddMillStoneRecipe(
-			new ItemStack[] { new ItemStack(Item.redstone, 1, 0) },
+			new ItemStack[] { new ItemStack(Item.redstone, 63, 0) },
+			new ItemStack[]
+				{
+				new ItemStack(mod_FCBetterThanWolves.fcConcentratedHellfire, 9, -1),
+				new ItemStack(Item.ingotGold, 3, -1)
+				});
+		FCRecipes.AddMillStoneRecipe(
+			new ItemStack[] { new ItemStack(Item.redstone, 7, 0) },
 			new ItemStack[]
 				{
 				new ItemStack(mod_FCBetterThanWolves.fcConcentratedHellfire, 1, -1),
-				new ItemStack(Item.ingotGold, 1, -1)
+				new ItemStack(Item.goldNugget, 3, -1)
 				});
 
 		// Method for extracting hellfire from netherrack earlier in the tech tree
