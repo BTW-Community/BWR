@@ -95,8 +95,7 @@ public class BWRRecipes {
 	// add-on initialization.
 	public void AddRecipes()
 		{
-		// Add recipes to the stoked pot for recovering diamond from equipment
-		// that can be purchased from villagers.
+		// Add recipes to the stoked pot for recovering diamond from equipment.
 		AddDiamondRecoveryRecipe(Item.plateDiamond, 8);
 		AddDiamondRecoveryRecipe(Item.legsDiamond, 7);
 		AddDiamondRecoveryRecipe(Item.helmetDiamond, 5);

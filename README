@@ -8,9 +8,8 @@ available to extend endgame play, especially on custom "challenge" maps
 that are resource-scarce.
 
 Programming by Warr1024.
-Design by DaveYanakov and Warr1024.
-BTW Community Relations and Support by DaveYanakov.
-Testing by DaveYanakov and Benanov.
+Design and Testing by Warr1024, DaveYanakov, and Benanov.
+BTW Community Relations by DaveYanakov.
 
 
 
@@ -75,8 +74,9 @@ Renewable Lapis Lazuli:
 
 Renewable Soul Sand:
 	Fresh souls, harvested without human violence, can be forced
-	under high pressure into sand by machinery made of sufficiently
-	hard materials.  The reaction is highly exothermic.
+	under high pressure into a nutrient-rich block by machinery made
+	of sufficiently hard materials.  The reaction is highly
+	exothermic.
 
 Renewable Netherrack:
 	The essence of hellfire is distilled from the nether by
@@ -111,3 +111,6 @@ Low-Efficiency Recipes:
 	Alternative recipes and techniques for producing resources with
 	existing recipes, earlier in the tech tree than normally
 	possible, but at a steeper price.
+		- Gold Recycling
+		- Hellfire Dust
+		- Redstone
