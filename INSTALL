@@ -72,6 +72,10 @@ Multiplayer Server Installation
 	- For users not using git, downloads of latest
 	  development version are at:
 	    https://gitorious.org/bwr/bwr/trees/release
+	- Unpack the archive into a location of your choice.
+	- For Windows (MSYS) users, you will want to unpack this
+	  somewhere inside your MSYS install (default
+	  C:\MinGW\MSYS\1.0).
 	
 2. Download Better Than Wolves:
 	- Check the Makefile to determine the version of BTW that BWR
@@ -106,17 +110,16 @@ Multiplayer Server Installation
 	  are not guaranteed.
 	- Place the mcp*.zip file in the root of the project.
 
-5. Run make clean:
-	- In a shell in the root of the BWR project, run "make clean".
-	- This will clean up any intermediate/output files from any
-	  previous builds.
-
-6. Run make:
-	- In a shell in the root of the BWR project, run "make".
+5. Run make:
+	- Open a shell.  In Linux, you can use any terminal of your
+	  choice.  In Windows, you should open the MSYS prompt
+	  (default C:\MinGW\MSYS\1.0\msys.bat).
+	- Change directory (cd) to the root of the project.
+	- Run "make clean && make".
 	- Minecraft server will be patched with BTW, then decompiled,
 	  the source code will be patched with BWR, then recompiled.
 
-7. Install bwr_btw_minecraft_server.jar:
+6. Install bwr_btw_minecraft_server.jar:
 	- The bwr_btw_minecraft_server.jar file is the final output.
 	- Install this wherever you want your multiplayer server to be
 	  (or update and restart your existing server).
