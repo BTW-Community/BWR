@@ -136,7 +136,7 @@ public class BWRAnimalBreedEngine {
 		int BY = MathHelper.floor_double(self.posY);
 		int BZ = MathHelper.floor_double(self.posZ);
 		World world = self.worldObj;
-		if(world.getBlockLightValue(BX, BY, BZ) > 4)
+		if(world.getBlockLightValue(BX, BY, BZ) >= 8)
 			return false;
 
 		// Search all possible candidates for mating or cross-breeding.

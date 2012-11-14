@@ -183,19 +183,17 @@ public class BWRPlantBreedEngine {
 		List<int[]>[] EvoTree = null;
 		boolean IsFungus = false;
 		int Light = world.getBlockLightValue(x, y, z);
-		if(Light >= 14)
+		if(Light >= 8)
 			{
 			BlockTypes = PlantTypes;
 			EvoTree = PlantEvolve;
 			}
-		else if(Light <= 1)
+		else
 			{
 			BlockTypes = FungusTypes;
 			EvoTree = FungusEvolve;
 			IsFungus = true;
 			}
-		else
-			return false;
 
 		// Only small chance of continuing; this slows down cross-breeding,
 		// making it more important to plan, and cuts down on the performance
