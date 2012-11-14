@@ -1,3 +1,11 @@
+v0.21
+	- Change plant/animal/fungus cross-breeding requirements
+	  to use the standard light level 7-8 pivot, so ender
+	  spectacles can now be used to verify light level
+	  requirements for cross-breeding, and cross-breeding
+	  setups are less difficult to make.
+
+
 v0.20
 	- Significant villager trading nerfs.  Villagers now only
 	  sell some finished tools and buy items for emeralds.
