@@ -29,6 +29,10 @@ use strict;
 use warnings;
 use Digest::MD5 qw(md5_hex);
 
+# Tag used to identify previously-patched lines, so hook installation
+# is idempotent.
+my $tag = '// BWR-PATCH';
+
 # Subroutine to patch a file, including scanning through it line-by-line,
 # identifying lines and inserting hooks after them, then moving the new
 # output file over top of the old one.  Hooks are tagged so they can be
@@ -50,7 +54,7 @@ sub dopatch
 		# Strip off any lines that end in the special
 		# patch tag, thus removing any previous versions
 		# of the patch.
-		m#//\s*BWR-PATCH\s*$# and next;
+		m#\Q$tag\E\s*$# and next;
 
 		# Output all original source lines.
 		push @lines, $_;
@@ -71,8 +75,9 @@ sub dopatch
 		my $val = $hooks{$key};
 		if($val)
 			{
-			push @lines, $pref . $val . " // BWR-PATCH" . $/;
-			print STDERR 'found ' . $key . "\n";
+			$val =~ s#^#$pref#gm;
+			push @lines, $val;
+			print STDERR 'found ' . $key . $/;
 			delete $hooks{$key};
 			}
 		}
@@ -103,6 +108,7 @@ while(my $e = readdir($dh))
 	my $md5 = '';
 	while(<$fh>)
 		{
+		chomp;
 		m/^\s*#/ and next;
 		if(m#^\s*:\s*(.*\S)\s+([0-9a-f]{32})#i)
 			{
@@ -112,9 +118,9 @@ while(my $e = readdir($dh))
 			}
 		if(m#\S# and $file and $md5)
 			{
-			my $x = $hooks{$file}{$md5};
-			$x and $x .= "\n" or $x = '';
-			$hooks{$file}{$md5} = $x . $_;
+			my $x = $hooks{$file}{$md5} || '';
+			$hooks{$file}{$md5} = $x . $_
+				. ' ' . $tag . $/;
 			}
 		}
 	}

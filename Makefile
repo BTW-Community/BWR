@@ -26,7 +26,7 @@ SVR=minecraft_server.jar
 
 # Primary build target: from a patched MCP with decompiled BTW server,
 # apply BWR patches and build BWR server.
-bwr_btw_${SVR}: src/* hooks.pl mcp tmp/jar tmp/btw
+bwr_btw_${SVR}: src/* hooks/* hooks.pl mcp tmp/jar tmp/btw
 	cp -fR src/* mcp/src/minecraft_server/net/minecraft/src/
 	perl -w hooks.pl
 	rm -rf mcp/bin
