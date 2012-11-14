@@ -72,6 +72,7 @@ sub dopatch
 		if($val)
 			{
 			push @lines, $pref . $val . " // BWR-PATCH" . $/;
+			print STDERR 'found ' . $key . "\n";
 			delete $hooks{$key};
 			}
 		}
@@ -89,22 +90,45 @@ sub dopatch
 	close($fh);
 	}
 
+# Read hook data dynamically from hook subdir.
+my %hooks = ();
+my $dh;
+opendir($dh, 'hooks') or die($!);
+while(my $e = readdir($dh))
+	{
+	$e =~ m#[^\.]# or next;
+	my $fh;
+	open($fh, '<', 'hooks/' . $e) or die($!);
+	my $file = '';
+	my $md5 = '';
+	while(<$fh>)
+		{
+		m/^\s*#/ and next;
+		if(m#^\s*:\s*(.*\S)\s+([0-9a-f]{32})#i)
+			{
+			$file = $1;
+			$md5 = $2;
+			next;
+			}
+		if(m#\S# and $file and $md5)
+			{
+			my $x = $hooks{$file}{$md5};
+			$x and $x .= "\n" or $x = '';
+			$hooks{$file}{$md5} = $x . $_;
+			}
+		}
+	}
+closedir($dh);
+
 # Path to the main decompiled source.
 chdir('mcp');
 chdir('src');
 chdir('minecraft_server');
 chdir('net');
 chdir('minecraft');
-chdir('src');
 
-# Add all hooks to existing MC/BTW classes.
-dopatch('World.java',
-	'43a2251845cc22fe9c9f213b6f9dad98',
-		'mod_BetterWithRenewables.m_instance.load();',
-	'ac21e31c83bddcfd956fb477b92376ee',
-		'   par1Entity = mod_BetterWithRenewables.m_instance.TransformEntityOnSpawn(par1Entity);'
-	);
-dopatch('ServerConfigurationManager.java',
-	'4e716b9b8fdd574849aa84e8d51335f4',
-		'mod_BetterWithRenewables.m_instance.ServerPlayerConnectionInitialized(var6, par2EntityPlayerMP);'
-	);
+# Apply all hook patches.
+for my $f ( keys %hooks )
+	{
+	dopatch($f, %{$hooks{$f}});
+	}
