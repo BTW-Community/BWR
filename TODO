@@ -1,3 +1,14 @@
+Automatic Update Check
+	Spin off a background thread in mod_BWR init.
+	Hit gitorious.org/bwr/bwr/blobs/raw/release/src/mod_BetterWithRenewables.java
+	and download the source for latest-released mod class.
+	Use regexes and search for bwrVersionString and bwrDevVersion
+	literal values.
+	If bwrDevVersion == false (sanity check), then store
+	bwrVersionString with mod class.
+	When user connects, if mod version != latest version, send
+	an alert re: update available.
+
 Refine Villager Cross-Breeding requirements
 
 Obtainable Nether Portals
