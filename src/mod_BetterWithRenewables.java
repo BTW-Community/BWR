@@ -39,6 +39,9 @@ public class mod_BetterWithRenewables {
 	public static final String bwrAbbrString = "BWR";
 	public static final String bwrCopyrightString = "(C)2012, MIT License.  https://gitorious.org/bwr";
 
+	// Latest version string, set by the auto update check thread.
+	public static volatile String bwrLatestVersion = null;
+
 	// Singleton variables.
 	public static boolean HasInitialized = false;
 	public static mod_BetterWithRenewables m_instance = new mod_BetterWithRenewables();
@@ -184,6 +187,10 @@ public class mod_BetterWithRenewables {
 			if(bwrDevVersion)
 				Log("THIS IS A PRE-RELEASE VERSION, NOT FOR PRODUCTION USE");
 
+			// Start auto-update check.
+			bwrLatestVersion = bwrVersionString;
+			new BWRUpdateCheckThread().Launch();
+			
 			// Replace some upstream block definitions with our custom ones, so our
 			// custom logic is run for these blocks.
 			mod_FCBetterThanWolves.fcAestheticOpaque = ReplaceBlock(FCBlockAestheticOpaque.class, BWRBlockAestheticOpaque.class);
@@ -284,5 +291,12 @@ public class mod_BetterWithRenewables {
 		if(bwrDevVersion)
 			Announce(net, "\u00a74THIS IS A PRE-RELEASE VERSION OF "
 				+ bwrAbbrString.toUpperCase());
+
+		// If this version is not the same as the release version, announce
+		// a warning to any player connecting (ostensibly, even if admins do
+		// not log in, their players may alert them to the update).
+		String Upd = bwrLatestVersion;
+		if((Upd != null) && (Upd != bwrVersionString))
+			Announce(net, "\u00a76VERSION " + Upd + " IS NOW AVAILABLE");
 		}
 	}

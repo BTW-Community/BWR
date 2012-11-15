@@ -1,4 +1,9 @@
 v0.21
+	- Automatic Update Check.  The server will automatically
+	  check for new versions of Better With Renewables
+	  periodically, and alert players upon joining if a
+	  different version is available.
+
 	- Change plant/animal/fungus cross-breeding requirements
 	  to use the standard light level 7-8 pivot, so ender
 	  spectacles can now be used to verify light level

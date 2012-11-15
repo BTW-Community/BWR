@@ -121,3 +121,8 @@ Low-Efficiency Recipes:
 		- Gold Recycling
 		- Hellfire Dust
 		- Redstone
+
+Automatic Update Check:
+	The Better With Renewables server will periodically check the
+	project website for new releases, and notify players if a new
+	version is available.
