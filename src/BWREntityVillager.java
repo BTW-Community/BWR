@@ -89,10 +89,50 @@ public class BWREntityVillager extends EntityVillager
 		{
 		super.updateAITick();
 
+		// Search the villager's trade list and remove any contraband
+		// recipes.  Determine if there is at least one trade that is
+		// not exhausted.
 		MerchantRecipeList Merch = this.getRecipes(null);
+		boolean HasTrade = false;
 		for(int I = Merch.size() - 1; I >= 0; I--)
-		if(!TradingWhitelist[((MerchantRecipe)Merch.get(I))
-			.getItemToSell().itemID])
-			Merch.remove(I);
+			{
+			MerchantRecipe MR = (MerchantRecipe)Merch.get(I);
+			if(!TradingWhitelist[MR.getItemToSell().itemID])
+				Merch.remove(I);
+			else if(!MR.func_82784_g())
+				HasTrade = true;
+			}
+
+		// If all trades are exhausted, normally Vanilla would create a new
+		// trade, but it's possible that BWR blacklisted the trade, and the
+		// villager is no longer offering any trades.  If this is the case,
+		// then try to generate a replacement trade.
+		if(!HasTrade)
+			{
+			// Create a surrogate villager as a duplicate of this one,
+			// but with the trade array removed, so new trades will
+			// generate on accessing the recipe list.  This is a workaround
+			// for accessibility limitations of the trade list, without
+			// having to call an entire AI cycle.
+			NBTTagCompound Tag = new NBTTagCompound();
+			this.writeEntityToNBT(Tag);
+			Tag.func_82580_o("Offers");
+			EntityVillager Surrogate = new EntityVillager(this.worldObj);
+			Surrogate.readEntityFromNBT(Tag);
+
+			// Loop through surrogate's now freshly-initialized recipe
+			// list and remove any contraband.
+			MerchantRecipeList SMerch = Surrogate.getRecipes(null);
+			for(int I = SMerch.size() - 1; I >= 0; I--)
+				{
+				MerchantRecipe MR = (MerchantRecipe)SMerch.get(I);
+				if(!TradingWhitelist[MR.getItemToSell().itemID])
+					SMerch.remove(I);
+				}
+
+			// Copy any valid trades from the surrogate back to the original.
+			for(int I = SMerch.size() - 1; I >= 0; I--)
+				Merch.add(SMerch.get(I));
+			}
 		}
 	}

@@ -10,6 +10,8 @@ v0.21
 	  requirements for cross-breeding, and cross-breeding
 	  setups are less difficult to make.
 
+	- Fix for "dud" villagers that refuse to trade.
+
 
 v0.20
 	- Significant villager trading nerfs.  Villagers now only
