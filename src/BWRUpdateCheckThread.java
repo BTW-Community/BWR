@@ -100,12 +100,16 @@ public class BWRUpdateCheckThread extends Thread {
 			BR.close();
 
 			// If there is a new version available, report it to the server
-			// operator on the server console.
+			// operator on the server console, and to the mod core.
 			if(mod_BetterWithRenewables.bwrVersionString != UpdVer)
-				Log("VERSION " + UpdVer + " IS NOW AVAILABLE");
-
-			// Report the latest available release version to the mod.
-			mod_BetterWithRenewables.bwrLatestVersion = UpdVer;
+				{
+				UpdVer = mod_BetterWithRenewables.bwrAbbrString.toUpperCase()
+					+ " VERSION " + UpdVer + " IS NOW AVAILABLE";
+				mod_BetterWithRenewables.bwrUpdateVersion = UpdVer;
+				Log(UpdVer);
+				}
+			else
+				mod_BetterWithRenewables.bwrUpdateVersion = null;
 
 			Log("Complete");
 			}

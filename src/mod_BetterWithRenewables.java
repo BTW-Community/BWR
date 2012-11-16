@@ -40,7 +40,7 @@ public class mod_BetterWithRenewables {
 	public static final String bwrCopyrightString = "(C)2012, MIT License.  https://gitorious.org/bwr";
 
 	// Latest version string, set by the auto update check thread.
-	public static volatile String bwrLatestVersion = null;
+	public static volatile String bwrUpdateVersion = null;
 
 	// Singleton variables.
 	public static boolean HasInitialized = false;
@@ -188,7 +188,7 @@ public class mod_BetterWithRenewables {
 				Log("THIS IS A PRE-RELEASE VERSION, NOT FOR PRODUCTION USE");
 
 			// Start auto-update check.
-			bwrLatestVersion = bwrVersionString;
+			bwrUpdateVersion = bwrVersionString;
 			new BWRUpdateCheckThread().Launch();
 			
 			// Replace some upstream block definitions with our custom ones, so our
@@ -295,8 +295,8 @@ public class mod_BetterWithRenewables {
 		// If this version is not the same as the release version, announce
 		// a warning to any player connecting (ostensibly, even if admins do
 		// not log in, their players may alert them to the update).
-		String Upd = bwrLatestVersion;
-		if((Upd != null) && (Upd != bwrVersionString))
-			Announce(net, "\u00a76VERSION " + Upd + " IS NOW AVAILABLE");
+		String Upd = bwrUpdateVersion;
+		if(Upd != null)
+			Announce(net, "\u00a76" + Upd);
 		}
 	}
