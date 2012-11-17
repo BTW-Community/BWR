@@ -267,6 +267,7 @@ public class mod_BetterWithRenewables {
 			NBTTagCompound Tag = new NBTTagCompound();
 			original.writeToNBT(Tag);
 			Repl.readFromNBT(Tag);
+			original.setDead();
 			return Repl;
 			}
 

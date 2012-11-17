@@ -133,6 +133,8 @@ public class BWREntityVillager extends EntityVillager
 			// Copy any valid trades from the surrogate back to the original.
 			for(int I = SMerch.size() - 1; I >= 0; I--)
 				Merch.add(SMerch.get(I));
+
+			Surrogate.setDead();
 			}
 		}
 	}
