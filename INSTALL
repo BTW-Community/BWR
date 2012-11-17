@@ -5,7 +5,7 @@ Environment Setup on OpenBSD
 The Better With Renewables build process has been tested on OpenBSD
 release 5.0+.  To install the additional prerequisite packages:
 
-	sudo pkg_add -i python zip unzip
+	sudo pkg_add -i python zip unzip jdk
 
 Perl and make are part of the base system and do not need to be
 installed separately.
@@ -20,7 +20,7 @@ The Better With Renewables build process has been tested on Debian 6,
 and is believed to work on similar Debian-based distributions such as
 Ubuntu.  To install the additional prerequisite packages:
 
-	sudo apt-get install perl-base zip unzip make python
+	sudo apt-get install perl-base zip unzip make python default-jdk
 
 
 
