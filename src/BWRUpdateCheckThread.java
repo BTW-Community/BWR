@@ -24,6 +24,7 @@ package net.minecraft.src;
 
 import java.lang.Thread;
 import java.net.URL;
+import java.net.URLConnection;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.regex.Pattern;
@@ -59,8 +60,10 @@ public class BWRUpdateCheckThread extends Thread {
 			// Contact the BWR website and start downloading the latest source code
 			// for the mod_BetterWithRenewables class, which contains the static hard-coded
 			// version numbers.
-			URL Url = new URL("http://gitorious.org/bwr/bwr/blobs/raw/release/src/mod_BetterWithRenewables.java");
-			BufferedReader BR = new BufferedReader(new InputStreamReader(Url.openStream()));
+			URL Url = new URL("https://gitorious.org/bwr/bwr/blobs/raw/release/src/mod_BetterWithRenewables.java");
+			URLConnection URLConn = Url.openConnection();
+			URLConn.setUseCaches(false);
+			BufferedReader BR = new BufferedReader(new InputStreamReader(URLConn.getInputStream()));
 
 			// Scan through the source code line-by-line and identify the places in the
 			// source code where the version information is specified.
@@ -101,7 +104,7 @@ public class BWRUpdateCheckThread extends Thread {
 
 			// If there is a new version available, report it to the server
 			// operator on the server console, and to the mod core.
-			if(mod_BetterWithRenewables.bwrVersionString != UpdVer)
+			if((UpdVer != null) && !mod_BetterWithRenewables.bwrVersionString.equals(UpdVer))
 				{
 				UpdVer = mod_BetterWithRenewables.bwrAbbrString.toUpperCase()
 					+ " VERSION " + UpdVer + " IS NOW AVAILABLE";
