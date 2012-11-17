@@ -20,8 +20,8 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-BTW=BTWMod4-34.zip
-MCP=mcp719.zip
+BTW=BTWMod4-35.zip
+MCP=mcp722.zip
 SVR=minecraft_server.jar
 
 # Primary build target: from a patched MCP with decompiled BTW server,

@@ -125,9 +125,9 @@ public class BWRPlantBreedEngine {
 			new int[] { Block.sapling.blockID, 3 },
 
 			// 17: Potatoes
-			new int[] { Block.field_82514_ch.blockID, -1 },
+			new int[] { Block.potato.blockID, -1 },
 			// 18: Carrots
-			new int[] { Block.field_82513_cg.blockID, -1 },
+			new int[] { Block.carrot.blockID, -1 },
 			};
 		FungusTypes = new int[][]
 			{

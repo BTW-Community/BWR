@@ -191,11 +191,6 @@ public class BWRAnimalBreedEngine {
 		if(Found == null)
 			return false;
 
-		// Cross-breeding happens randomly within the time window, so there's still
-		// a probability that it won't happen at all this attempt.
-		if(self.rand.nextInt(20) != 0)
-			return false;
-
 		// ########## STEP 2: DETERMINE CHILD SPECIES
 
 		// Setup a table of probabilities for each creature type.
@@ -281,7 +276,7 @@ public class BWRAnimalBreedEngine {
 			+ (Habitat[Block.netherFence.blockID] / 2);
 		AddProb(Weights, eidBlaze, Brick / 50);
 		int Fire = Habitat[Block.fire.blockID]
-			+ (Habitat[mod_FCBetterThanWolves.fcStokedFire.blockID] * 3)
+			+ (Habitat[mod_FCBetterThanWolves.fcBlockFireStoked.blockID] * 3)
 			+ ((Habitat[Block.lavaMoving.blockID]
 				+ Habitat[Block.lavaStill.blockID]) / 2);
 		Fire = (Fire > Brick) ? Brick : Fire;
@@ -314,7 +309,7 @@ public class BWRAnimalBreedEngine {
 			String PDebug = "Animal Cross-Breeding Weights:";
 			for(Map.Entry<Integer, Integer> P : Weights.entrySet())
 				if(P.getValue() > 0)
-					PDebug += " " + EntityList.func_75617_a(P.getKey().intValue())
+					PDebug += " " + EntityList.getStringFromID(P.getKey().intValue())
 						+ ":" + P.getValue();
 			PDebug += " TOTAL:" + Max;
 			mod_BetterWithRenewables.m_instance.Log(PDebug);

@@ -67,7 +67,7 @@ public class BWRBlockAestheticOpaque extends FCBlockAestheticOpaque
 							for(int dz = -1; dz <= 1; dz++)
 								{
 								int b = world.getBlockId(x + dy, y - dy, z);
-								if(b == mod_FCBetterThanWolves.fcStokedFire.blockID)
+								if(b == mod_FCBetterThanWolves.fcBlockFireStoked.blockID)
 									heat += 3;
 								else if(b == Block.fire.blockID)
 									heat += 1;

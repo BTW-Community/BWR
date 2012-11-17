@@ -116,7 +116,7 @@ public class BWREntityVillager extends EntityVillager
 			// having to call an entire AI cycle.
 			NBTTagCompound Tag = new NBTTagCompound();
 			this.writeEntityToNBT(Tag);
-			Tag.func_82580_o("Offers");
+			Tag.removeTag("Offers");
 			EntityVillager Surrogate = new EntityVillager(this.worldObj);
 			Surrogate.readEntityFromNBT(Tag);
 

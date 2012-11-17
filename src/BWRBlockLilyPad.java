@@ -96,10 +96,7 @@ public class BWRBlockLilyPad extends BlockLilyPad
 			int rx = x + r.nextInt(3) - 1;
 			int rz = z + r.nextInt(3) - 1;
 			if((world.getBlockId(rx, y, rz) == 0) && canBlockStay(world, rx, y, rz))
-				{
 				world.setBlockWithNotify(rx, y, rz, blockID);
-				world.markBlocksDirty(rx, y, rz, rx, y, rz);
-				}
 			}
 		}
 	}
