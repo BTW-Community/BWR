@@ -33,8 +33,8 @@ import net.minecraft.server.MinecraftServer;
 // external hooks and managed overall mod functionality.
 public class mod_BetterWithRenewables {
 	// Central mod meta-info strings, easily changeable for updates.
-	public static final String bwrVersionString = "0.21.0435b";
-	public static final boolean bwrDevVersion = false;
+	public static final String bwrVersionString = "0.22.0435b";
+	public static final boolean bwrDevVersion = true;
 	public static final String bwrProductString = "Better With Renewables";
 	public static final String bwrAbbrString = "BWR";
 	public static final String bwrCopyrightString = "(C)2012, MIT License.  https://gitorious.org/bwr";
@@ -84,14 +84,14 @@ public class mod_BetterWithRenewables {
 					{
 					try
 						{
-						B = newType
+						B = (Block)newType
 							.getConstructor(new Class[] { Integer.TYPE })
 							.newInstance(new Object[] { I });
 						}
 					catch(NoSuchMethodException ex)
 						{
 						int blockIndexInTexture = B.blockIndexInTexture;
-						B = newType
+						B = (Block)newType
 							.getConstructor(new Class[] { Integer.TYPE, Integer.TYPE })
 							.newInstance(new Object[] { I, blockIndexInTexture });
 						}

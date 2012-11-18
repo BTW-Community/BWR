@@ -25,14 +25,19 @@ package net.minecraft.src;
 import java.util.List;
 import java.util.Random;
 
+// Subclass for villagers that adds custom functionality, such as trading
+// limitations, and alternative nether portal creation.
 public class BWREntityVillager extends EntityVillager
 	{
+	// The list of items the villagers are allowed to sell.  Any trade
+	// whose output is not one of the items on this list will be blocked.
 	private static boolean[] TradingWhitelist;
 
 	public BWREntityVillager(World world)
 		{
 		super(world);
 
+		// If the trading whitelist is not initialized, initialize it.
 		if(TradingWhitelist == null)
 			{
 			boolean[] WL = new boolean[Item.itemsList.length];
@@ -85,6 +90,7 @@ public class BWREntityVillager extends EntityVillager
 			}
 		}
 
+	// Called by entity AI subsystem.
 	protected void updateAITick()
 		{
 		super.updateAITick();
@@ -136,5 +142,112 @@ public class BWREntityVillager extends EntityVillager
 
 			Surrogate.setDead();
 			}
+		}
+
+	// Called by interact.  Search for an emerald portal frame given a specific location
+	// and orientation, and if found, convert it to obsidian and create the nether portal.
+	private boolean SearchPortal(World world, int x, int y, int z, int dx, int dz)
+		{
+		int Em = Block.blockEmerald.blockID;
+
+		// Make sure the portal is filled with a 2x3 air space...
+		if(!world.getBlockMaterial(x, y, z).isReplaceable()
+			|| !world.getBlockMaterial(x + dx, y, z + dz).isReplaceable()
+			|| !world.getBlockMaterial(x, y + 1, z).isReplaceable()
+			|| !world.getBlockMaterial(x + dx, y + 1, z + dz).isReplaceable()
+			|| !world.getBlockMaterial(x, y + 2, z).isReplaceable()
+			|| !world.getBlockMaterial(x + dx, y + 2, z + dz).isReplaceable()
+
+			// ...and the top and bottom frames are made of emerald block...
+			|| (world.getBlockId(x, y - 1, z) != Em)
+			|| (world.getBlockId(x + dx, y - 1, z + dz) != Em)
+			|| (world.getBlockId(x, y + 3, z) != Em)
+			|| (world.getBlockId(x + dx, y + 3, z + dz) != Em)
+
+			// ...and the sides are also emerald block.
+			|| (world.getBlockId(x + dx * 2, y, z + dz * 2) != Em)
+			|| (world.getBlockId(x + dx * 2, y + 1, z + dz * 2) != Em)
+			|| (world.getBlockId(x + dx * 2, y + 2, z + dz * 2) != Em)
+			|| (world.getBlockId(x - dx, y, z - dz) != Em)
+			|| (world.getBlockId(x - dx, y + 1, z - dz) != Em)
+			|| (world.getBlockId(x - dx, y + 2, z - dz) != Em))
+			return false;
+
+		// Replace the outside frame with obsidian.  While the corner pieces
+		// are not necessary to the check (similar to how a normal nether
+		// portal works), replace them with obsidian if there is emerald there.
+		for(int cx = -1; cx <= 2; cx++)
+			for(int cy = -1; cy <= 3; cy++)
+				for(int cz = -1; cz <= 2; cz++)
+					{
+					int nx = x + cx * dx;
+					int ny = y + cy;
+					int nz = z + cz * dz;
+					if(world.getBlockId(nx, ny, nz) == Em)
+						world.setBlockAndMetadata(nx, ny, nz, Block.obsidian.blockID, 0);
+					}
+
+		// Explosive consequences.
+		world.newExplosion((Entity)null, x + world.rand.nextDouble() * dx * 2,
+			y + world.rand.nextDouble() * 3,
+			z + world.rand.nextDouble() * dz * 2,
+			4.0F, true, true);
+
+		// Ghastly consequences.
+		int Success = 0;
+		for(int Attempt = 0; Attempt < 25; Attempt++)
+			{
+			EntityGhast Ghast = new EntityGhast(world);
+			Ghast.setLocationAndAngles(x + world.rand.nextDouble() * dx * 2 + world.rand.nextGaussian() * 5,
+				y + world.rand.nextDouble() * 3 + world.rand.nextGaussian() * 5,
+				z + world.rand.nextDouble() * dz * 2 + world.rand.nextGaussian() * 5,
+				this.worldObj.rand.nextFloat() * 360.0F, 0.0F);
+			if(Ghast.getCanSpawnHere())
+				{
+				world.spawnEntityInWorld(Ghast);
+				if(++Success >= 3)
+					break;
+				}
+			}
+
+		// Create a nether portal on the spot.
+		Block.portal.tryToCreatePortal(world, x, y, z);
+
+		return true;
+		}
+
+	// Called when a player right-clicks on the entity.
+	public boolean interact(EntityPlayer player)
+		{
+		// If the player's currently-selected item while right-clicking is an arcane
+		// scroll, and the villager is a Priest, and on fire, then try to create a
+		// nether portal.
+		ItemStack Tool = player.inventory.getCurrentItem();
+		if((Tool != null) && (Tool.itemID == mod_FCBetterThanWolves.fcArcaneScroll.shiftedIndex)
+			&& (this.getProfession() == 2) && this.isBurning())
+			{
+			int BX = MathHelper.floor_double(this.posX);
+			int BY = MathHelper.floor_double(this.posY);
+			int BZ = MathHelper.floor_double(this.posZ);
+
+			// Search for each possible orientation of an emerald frame for
+			// nether portal creation.  If one is found, destroy the villager.
+			if(SearchPortal(this.worldObj, BX, BY, BZ, 0, 1)
+				|| SearchPortal(this.worldObj, BX, BY, BZ, 0, -1)
+				|| SearchPortal(this.worldObj, BX, BY, BZ, 1, 0)
+				|| SearchPortal(this.worldObj, BX, BY, BZ, -1, 0)
+				|| SearchPortal(this.worldObj, BX, BY - 1, BZ, 0, 1)
+				|| SearchPortal(this.worldObj, BX, BY - 1, BZ, 0, -1)
+				|| SearchPortal(this.worldObj, BX, BY - 1, BZ, 1, 0)
+				|| SearchPortal(this.worldObj, BX, BY - 1, BZ, -1, 0))
+				this.setDead();
+
+			// Item was consumed.
+			Tool.stackSize--;
+			return true;
+			}
+
+		// Call base code if the nether portal creation checks did not pass.
+		return super.interact(player);
 		}
 	}

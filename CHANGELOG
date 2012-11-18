@@ -1,3 +1,12 @@
+v0.22
+	- Added alternative method to create nether portals when
+	  obsidian (or diamonds to collect it) is not available.
+	  A portal frame can be built out of emerald, then tainted by
+	  performing a dark ritual inside it.  The ritual requires the
+	  reading of an arcane incantation, and the sacrifice of a holy
+	  man inside the portal frame.
+
+
 v0.21
 	- Automatic Update Check.  The server will automatically
 	  check for new versions of Better With Renewables

@@ -4,15 +4,6 @@ DEVELOPMENT TASKS
 
 Refine Villager Cross-Breeding requirements
 
-Obtainable Nether Portals
-	Villager trading changes break diamond->obsidian->portal
-	route on flatcore.
-	Idea: make a portal out of emerald blocks instead, and
-	perform a "dark ritual", e.g. right-click on an on-fire
-	priest inside the portal while holding an arcane scroll,
-	to taint emerald into obsidian and create portal (and
-	possibly spawn some consequences).
-
 Renewable Glowstone
 	Ideas:
 	- Concentrate sunlight using a lens, directly into a block
