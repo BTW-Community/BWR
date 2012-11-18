@@ -1,3 +1,7 @@
+========================================================================
+DEVELOPMENT TASKS
+------------------------------------------------------------------------
+
 Refine Villager Cross-Breeding requirements
 
 Obtainable Nether Portals
@@ -56,3 +60,18 @@ Dragon Egg
 	Ideas:
 	- Create replacement ender crystals; placing enough of these
 	  close to each other in the end will summon the dragon.
+
+
+
+========================================================================
+DOCUMENTATION/SUPPORT TASKS
+------------------------------------------------------------------------
+
+Update BWR OP on Sargunster's BTW Forums with latest README data.
+
+Test building and create instructions for OSX.
+
+Create an extremely specific install guide for Windows users who have
+limited understanding of operating systems basics that are necessary to
+follow the process in INSTALL.  A guide with pictures and specific
+per-click instructions would help, plus possibly a video.
