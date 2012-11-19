@@ -79,10 +79,8 @@ public class BWREntityVillager extends EntityVillager
 			WL[Item.plateSteel.shiftedIndex] = true;
 			WL[Item.legsSteel.shiftedIndex] = true;
 			WL[Item.bootsSteel.shiftedIndex] = true;
-			WL[Item.porkCooked.shiftedIndex] = true;
 			WL[Item.saddle.shiftedIndex] = true;
 			WL[Item.fishCooked.shiftedIndex] = true;
-			WL[Item.beefCooked.shiftedIndex] = true;
 			WL[Item.chickenCooked.shiftedIndex] = true;
 			WL[Item.expBottle.shiftedIndex] = true;
 
