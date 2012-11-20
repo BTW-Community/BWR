@@ -6,6 +6,11 @@ v0.22
 	  reading of an arcane incantation, and the sacrifice of a holy
 	  man inside the portal frame.
 
+	- Fix long-standing bug that causes certain blocks (the modded
+	  ones, e.g. soulsand, BTW aesthetic opaques) reappearing after
+	  being mined.  It was caused by tools losing track of the
+	  blocks against which they're effective.
+
 
 v0.21
 	- Automatic Update Check.  The server will automatically

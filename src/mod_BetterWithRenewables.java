@@ -25,6 +25,7 @@ package net.minecraft.src;
 import java.util.Map;
 import java.util.HashMap;
 import java.lang.reflect.Type;
+import java.lang.reflect.Field;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import net.minecraft.server.MinecraftServer;
@@ -198,6 +199,31 @@ public class mod_BetterWithRenewables {
 			ReplaceBlock(BlockLilyPad.class, BWRBlockLilyPad.class);
 			ReplaceBlock(BlockSoulSand.class, BWRBlockSoulSand.class);
 
+			// After replacing blocks, some tool items have references to the old blocks by reference instead
+			// of by ID in their list of blocks against which they're effective.  Search through and replace all
+			// blocks with the current instances.
+			Field BlockField = null;
+			for(Field F : ItemTool.class.getDeclaredFields())
+				if(F.getType() == Block[].class)
+					{
+					BlockField = F;
+					break;
+					}
+			BlockField.setAccessible(true);
+			for(int I = 0; I < Item.itemsList.length; I++)
+				{
+				Item T = Item.itemsList[I];
+				if((T != null) && (T instanceof ItemTool))
+					try
+						{
+						Block[] Blocks = (Block[])BlockField.get(T);
+						if(Blocks != null)
+							for(int J = 0; J < Blocks.length; J++)
+								Blocks[J] = Block.blocksList[Blocks[J].blockID];
+						}
+					catch(IllegalAccessException ex) { throw new RuntimeException(ex); }
+				}
+			
 			// Replace upstream item definitions.
 			mod_FCBetterThanWolves.fcBreedingHarness = ReplaceItem(FCItemBreedingHarness.class, BWRItemBreedingHarness.class);
 
