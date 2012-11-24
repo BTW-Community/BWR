@@ -33,7 +33,7 @@ import net.minecraft.server.MinecraftServer;
 // external hooks and managed overall mod functionality.
 public class mod_BetterWithRenewables {
 	// Central mod meta-info strings, easily changeable for updates.
-	public static final String bwrVersionString = "0.21.0437";
+	public static final String bwrVersionString = "0.21.0437b";
 	public static final boolean bwrDevVersion = false;
 	public static final String bwrProductString = "Better With Renewables";
 	public static final String bwrAbbrString = "BWR";
