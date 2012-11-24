@@ -198,6 +198,7 @@ public class mod_BetterWithRenewables {
 			mod_FCBetterThanWolves.fcPlanter = ReplaceBlock(FCBlockPlanter.class, BWRBlockPlanter.class);
 			ReplaceBlock(BlockLilyPad.class, BWRBlockLilyPad.class);
 			ReplaceBlock(BlockSoulSand.class, BWRBlockSoulSand.class);
+			ReplaceBlock(BlockRedstoneWire.class, BWRBlockRedstoneWire.class);
 
 			// After replacing blocks, some tool items have references to the old blocks by reference instead
 			// of by ID in their list of blocks against which they're effective.  Search through and replace all
