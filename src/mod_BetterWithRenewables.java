@@ -251,16 +251,6 @@ public class mod_BetterWithRenewables {
 		HasInitialized = true;
 		}
 
-	// Helper for TransformEntityOnSpawn to replace entities with BWR-specific-subclassed
-	// ones.  Uses NBT as a cheap serialization hack to copy all relevant properties.
-	public Entity ReplaceEntity(Entity original, Entity replacement)
-		{
-		NBTTagCompound Tag = new NBTTagCompound();
-		original.writeToNBT(Tag);
-		replacement.readFromNBT(Tag);
-		return replacement;
-		}
-
 	// Called by a custom hook World upon an entity being spawned.  This gives
 	// the mod an opportunity to replace existing Entity class types with its
 	// own subclasses.  Note that we cannot intercept entity creation, and we have
