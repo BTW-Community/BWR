@@ -20,7 +20,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-BTW=BTWMod4-37b.zip
+BTW=BTWMod4-38.zip
 MCP=mcp723.zip
 SVR=minecraft_server.jar
 
