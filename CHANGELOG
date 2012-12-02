@@ -11,6 +11,11 @@ v0.22
 	  being mined.  It was caused by tools losing track of the
 	  blocks against which they're effective.
 
+	- Spontaneous animal spawning on tall grass, lit directly by
+	  natural sunlight, if there are no other animals within a large
+	  radius around them.  This makes it possible to play a
+	  desert-only superflat world.
+
 
 v0.21
 	- Automatic Update Check.  The server will automatically
