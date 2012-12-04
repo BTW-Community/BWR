@@ -269,19 +269,6 @@ public class BWRAnimalBreedEngine {
 		Cocoa = (Cocoa > Vines) ? Vines : Cocoa;
 		AddProb(Weights, eidOcelot, Cocoa);
 
-		// Blazes require nether brick to spawn, plus fire and
-		// lava encourage them.
-		int Brick = Habitat[Block.netherBrick.blockID]
-			+ (Habitat[Block.stairsNetherBrick.blockID] * 3 / 4)
-			+ (Habitat[Block.netherFence.blockID] / 2);
-		AddProb(Weights, eidBlaze, Brick / 50);
-		int Fire = Habitat[Block.fire.blockID]
-			+ (Habitat[mod_FCBetterThanWolves.fcBlockFireStoked.blockID] * 3)
-			+ ((Habitat[Block.lavaMoving.blockID]
-				+ Habitat[Block.lavaStill.blockID]) / 2);
-		Fire = (Fire > Brick) ? Brick : Fire;
-		AddProb(Weights, eidBlaze, Fire / 40);
-
 		// Villagers will rarely spawn if surrounded by blocks they desire.
 		AddProb(Weights, eidVillager, (Habitat[Block.blockEmerald.blockID] / 100)
 			+ (Habitat[Block.blockDiamond.blockID] / 30));
@@ -327,13 +314,6 @@ public class BWRAnimalBreedEngine {
 		Child.setLocationAndAngles((self.posX + Found.posX) / 2.0D, (self.posY + Found.posY) / 2.0D,
 			(self.posZ + Found.posZ) / 2.0D, self.rotationYaw, self.rotationPitch);
 		world.spawnEntityInWorld(Child);
-
-		// Special case: blazes set parents on fire upon birth.
-		if(Child instanceof EntityBlaze)
-			{
-			self.setFire(10);
-			Found.setFire(10);
-			}
 
 		// Use up the parents' "in love" status, and make them not breed
 		// again for the normal refractory period.

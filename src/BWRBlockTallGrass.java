@@ -41,7 +41,14 @@ public class BWRBlockTallGrass extends BlockTallGrass
 		super.updateTick(world, x, y, z, r);
 
 		// Animals spawn spontaneously only extremely rarely.
-		if(world.rand.nextInt(2400) > 0)
+		if(world.rand.nextInt(1200) > 0)
+			return;
+
+		// Only perform this type of aux spawning in desert biomes, as normal
+		// spawning is already suitable for all other biomes.  This allows
+		// animals to be obtained in deserts by terraforming with tall grass,
+		// but without disrupting animal spawning balance elsewhere.
+		if(world.getBiomeGenForCoords(x, z).biomeID != BiomeGenBase.desert.biomeID)
 			return;
 
 		// Animals can only spawn in direct natural sunlight.
@@ -60,23 +67,13 @@ public class BWRBlockTallGrass extends BlockTallGrass
 		if(Near.size() > 0)
 			return;
 
-		// Choose a random animal species.
+		// Choose a random animal species.  Only pigs and sheep
+		// are available this way; all others must be cross-bred.
 		EntityAnimal A = null;
-		switch(world.rand.nextInt(4))
-			{
-			case 0:
-				A = new EntityCow(world);
-				break;
-			case 1:
-				A = new EntityPig(world);
-				break;
-			case 2:
-				A = new EntitySheep(world);
-				break;
-			default:
-				A = new EntityChicken(world);
-				break;
-			}
+		if(world.rand.nextInt(2) == 0)
+			A = new EntityPig(world);
+		else
+			A = new EntitySheep(world);
 
 		// Create new animal and spawn in world.
 		A.setLocationAndAngles(x + 0.5D, y + 0.1D, z + 0.5D, world.rand.nextFloat() * 360.0F, 0F);
