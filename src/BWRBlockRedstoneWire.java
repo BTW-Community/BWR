@@ -24,6 +24,7 @@ package net.minecraft.src;
 
 import java.util.Random;
 
+// Replacement class for redstone wire that adds glowstone creation recipe.
 public class BWRBlockRedstoneWire extends BlockRedstoneWire
 	{
 	public BWRBlockRedstoneWire(int id, int txridx)
@@ -31,28 +32,38 @@ public class BWRBlockRedstoneWire extends BlockRedstoneWire
 		super(id, txridx);
 		}
 
+	// Called when a neighbor block changes, including redstone signal updates.
 	public void onNeighborBlockChange(World world, int x, int y, int z, int i)
 		{
-		if((y >= 255)
-			|| world.provider.hasNoSky
-			|| !world.isDaytime()
-			|| world.isRaining()
-			|| !world.canBlockSeeTheSky(x, y + 1, z)
-			|| (world.getBlockId(x, y + 1, z) != mod_FCBetterThanWolves.fcLens.blockID))
-			{
-			super.onNeighborBlockChange(world, x, y, z, i);
-			return;
-			}
-			
+		// Perform normal update, and keep before/after metadata (signal strength)
+		// for comparison.
 		int OldMeta = world.getBlockMetadata(x, y, z);
 		super.onNeighborBlockChange(world, x, y, z, i);
 		int NewMeta = world.getBlockMetadata(x, y, z);
 
-		if((NewMeta - OldMeta) > world.rand.nextInt(160))
-			{
-			FCUtilsItem.EjectSingleItemWithRandomOffset(world, x, y, z,
-				Item.lightStoneDust.shiftedIndex, 0);
-			world.setBlockAndMetadata(x, y, z, 0, 0);
-			}
+		// Only continue on a "rising" clock edge.
+		if(NewMeta <= OldMeta)
+			return;
+
+		// The probability of glowstone transformation is proportional to the amount
+		// of signal strength change.
+		if((NewMeta - OldMeta) < world.rand.nextInt(1600))
+			return;
+
+		// Make sure that we have a downward-facing lens immediately above the redstone
+		// wire to concentrate sunlight into it, and that we have the requisite sunlight.
+		if((y >= 255)
+			|| world.provider.hasNoSky
+			|| (world.getBlockId(x, y + 1, z) != mod_FCBetterThanWolves.fcLens.blockID)
+			|| (world.getBlockMetadata(x, y + 1, z) != 0)
+			|| !world.isDaytime()
+			|| world.isRaining()
+			|| !world.canBlockSeeTheSky(x, y + 2, z))
+			return;
+
+		// Pop off glowstone dust as an item.
+		FCUtilsItem.EjectSingleItemWithRandomOffset(world, x, y, z,
+			Item.lightStoneDust.shiftedIndex, 0);
+		world.setBlockAndMetadataWithNotify(x, y, z, 0, 0);
 		}
 	}

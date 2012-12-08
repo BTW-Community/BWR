@@ -182,7 +182,7 @@ public class BWREntityVillager extends EntityVillager
 					int ny = y + cy;
 					int nz = z + cz * dz;
 					if(world.getBlockId(nx, ny, nz) == Em)
-						world.setBlockAndMetadata(nx, ny, nz, Block.obsidian.blockID, 0);
+						world.setBlockAndMetadataWithNotify(nx, ny, nz, Block.obsidian.blockID, 0);
 					}
 
 		// Explosive consequences.
