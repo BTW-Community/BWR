@@ -47,7 +47,7 @@ public class BWRBlockRedstoneWire extends BlockRedstoneWire
 
 		// The probability of glowstone transformation is proportional to the amount
 		// of signal strength change.
-		if((NewMeta - OldMeta) < world.rand.nextInt(1600))
+		if((NewMeta - OldMeta) < world.rand.nextInt(6400))
 			return;
 
 		// Make sure that we have a downward-facing lens immediately above the redstone
