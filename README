@@ -98,6 +98,10 @@ Renewable Lava Sources:
 Renewable Dead Shrubs:
 	Render the leaves off a living plant of similar shape.
 
+Renewable Glowstone:
+	Redstone dust has a chance of absorbing concentrated sunlight
+	when experiencing a change in potential.
+
 Alternative Nether Portal Recipe:
 	A portal frame made of emerald can be tainted into a portal to
 	the underworld by a dark ritual, requiring the reading of an
@@ -116,6 +120,11 @@ Animal Crossbreeding:
 	environment to be a more suitable habaitat for that species.
 	Some mutations, however, will be dangerous abominations.
 
+Animals in the Desert:
+	A couple of species animals can now spawn, very rarely, on tall
+	grass in desert biomes.  Combined with animal cross-breeding,
+	this makes desert-only superflat maps playable.
+	
 Dung Block Automation:
 	Loose dung can now be stewed automatically into blocks.
 

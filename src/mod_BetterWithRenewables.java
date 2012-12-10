@@ -188,7 +188,6 @@ public class mod_BetterWithRenewables {
 				Log("THIS IS A PRE-RELEASE VERSION, NOT FOR PRODUCTION USE");
 
 			// Start auto-update check.
-			bwrUpdateVersion = bwrVersionString;
 			new BWRUpdateCheckThread().Launch();
 			
 			// Replace some upstream block definitions with our custom ones, so our

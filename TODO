@@ -15,17 +15,6 @@ Obtainable Villagers
 	- Cross-breeding?
 	- Some other method?
 
-Renewable Glowstone
-	Ideas:
-	- Concentrate sunlight using a lens, directly into a block
-	  of obsidian (or emerald?).
-	- Concentrated sunlight onto redstone to make glow dust;
-	  when the restone receives a rising edge signal, if it's
-	  exposed to sunlight through lens, it has a chance of
-	  popping off as glowstone dust; need to use a clock circuit.
-	  Can detect when circuit is broken, instead of using a
-	  buddy block.
-
 Renewable Diamond
 	Removed from villager trades.
 

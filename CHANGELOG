@@ -1,3 +1,9 @@
+v0.23
+	- Glowstone is now renewable: redstone has a chance of absorbing
+	  concentrated sunlight when experiencing a change in potential,
+	  converting it to glowstone.
+
+
 v0.22
 	- Added alternative method to create nether portals when
 	  obsidian (or diamonds to collect it) is not available.
