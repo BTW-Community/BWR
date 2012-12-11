@@ -47,6 +47,7 @@ DESIGN GOALS
   specific builds to break, but the world will still load and run with
   standard BTW functionaltiy.
 
+- Coding standards: http://geosoft.no/development/javastyle.html
 
 
 ========================================================================

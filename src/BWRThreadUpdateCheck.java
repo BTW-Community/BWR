@@ -36,31 +36,31 @@ import net.minecraft.server.MinecraftServer;
 // and once again periodically as the server is running.  Any update version
 // information found is reported to the mod_BetterWithRenewables class, to be
 // announced to users as appropriate.
-public class BWRUpdateCheckThread extends Thread {
+public class BWRThreadUpdateCheck extends Thread {
 	// Shortcut for logging a message relevant to the update check subsystem.
 	// a prefix is added automatically, as these messages will tend to
 	// interleave with other messages in other threads.
-	private void Log(String msg)
+	private void log(String msg)
 		{
-		mod_BetterWithRenewables.m_instance.Log("Update Check: " + msg);
+		BWREngineCore.getInstance().log("Update Check: " + msg);
 		}
 
 	// This method performs a single update check, contacting the BWR website
 	// and reading the latest released source code.  Exceptions are ignored.
-	private void UpdateCheck()
+	private void updateCheck()
 		{
 		try
 			{
-			Log("Starting...");
+			log("Starting...");
 			Pattern VerRx = Pattern.compile("bwrVersionString\\s*=\\s*\"([^\"]+)\";");
 			Pattern DevRx = Pattern.compile("bwrDevVersion\\s*=\\s*(true|false);");
 			String UpdVer = null;
 			boolean UpdDev = false;
 
 			// Contact the BWR website and start downloading the latest source code
-			// for the mod_BetterWithRenewables class, which contains the static hard-coded
+			// for the BWREngineCore class, which contains the static hard-coded
 			// version numbers.
-			URL Url = new URL("https://gitorious.org/bwr/bwr/blobs/raw/release/src/mod_BetterWithRenewables.java");
+			URL Url = new URL("https://gitorious.org/bwr/bwr/blobs/raw/release/src/BWREngineCore.java");
 			URLConnection URLConn = Url.openConnection();
 			URLConn.setUseCaches(false);
 			BufferedReader BR = new BufferedReader(new InputStreamReader(URLConn.getInputStream()));
@@ -75,7 +75,7 @@ public class BWRUpdateCheckThread extends Thread {
 				while(VerMatch.find())
 					{
 					UpdVer = VerMatch.group(1);
-					Log("Found version " + UpdVer);
+					log("Found version " + UpdVer);
 					}
 
 				// Check to see if the "development pre-release version"
@@ -87,10 +87,10 @@ public class BWRUpdateCheckThread extends Thread {
 					{
 					if(Boolean.valueOf(DevMatch.group(1)))
 						{
-						Log("Invalid release; aborting");
+						log("Invalid release; aborting");
 						return;
 						}
-					Log("Release check OK");
+					log("Release check OK");
 					UpdDev = true;
 					}
 
@@ -104,24 +104,24 @@ public class BWRUpdateCheckThread extends Thread {
 
 			// If there is a new version available, report it to the server
 			// operator on the server console, and to the mod core.
-			if((UpdVer != null) && !mod_BetterWithRenewables.bwrVersionString.equals(UpdVer))
+			if((UpdVer != null) && !BWREngineCore.BWR_VERSION.equals(UpdVer))
 				{
-				UpdVer = mod_BetterWithRenewables.bwrAbbrString.toUpperCase()
+				UpdVer = BWREngineCore.BWR_ABBREV.toUpperCase()
 					+ " VERSION " + UpdVer + " IS NOW AVAILABLE";
-				mod_BetterWithRenewables.bwrUpdateVersion = UpdVer;
-				Log(UpdVer);
+				BWREngineCore.versionUpdateAlert = UpdVer;
+				log(UpdVer);
 				}
 			else
-				mod_BetterWithRenewables.bwrUpdateVersion = null;
+				BWREngineCore.versionUpdateAlert = null;
 
-			Log("Complete");
+			log("Complete");
 			}
 		catch(Exception ex)
 			{
 			// Log any exceptions caught (e.g. network errors), but
 			// ignore them and let the thread keep running; we'll try
 			// again next cycle, and maybe it will work then.
-			Log(ex.toString());
+			log(ex.toString());
 			}
 		}
 
@@ -135,7 +135,7 @@ public class BWRUpdateCheckThread extends Thread {
 				{
 				// Do an update check immediately when the server is
 				// first started, then once again each cycle.
-				UpdateCheck();
+				updateCheck();
 
 				// Wait 4 hours between cycles, to keep traffic at the
 				// BWR website under control.  If the server is stopped
@@ -153,15 +153,15 @@ public class BWRUpdateCheckThread extends Thread {
 			// The update checker is not a vital part of the BWR server.
 			// If anything goes wrong, just log the issue and let the
 			// thread die.  Note that this should NOT include network issues,
-			// as there's a separate trap for that in UpdateCheck().
-			Log(ex.toString());
+			// as there's a separate trap for that in updateCheck().
+			log(ex.toString());
 			}
 		}
 
 	// Start the update checker in a background thread.  Called
-	// by mod_BetterWithRenewables.load(), only once on startup.
-	public static void Launch()
+	// by BWREngineCore.initialize(), only once on startup.
+	public static void launch()
 		{
-		(new BWRUpdateCheckThread()).start();
+		(new BWRThreadUpdateCheck()).start();
 		}
 	}

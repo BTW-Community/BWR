@@ -30,8 +30,8 @@ import java.util.HashMap;
 // allowing otherwise unavailable animal species to be obtained in
 // worlds where only a limited set are available, e.g. obtaining wolves
 // on a Classic SuperFlat world.
-public class BWRAnimalBreedEngine {
-	public static BWRAnimalBreedEngine m_instance = new BWRAnimalBreedEngine();
+public class BWREngineBreedAnimal {
+	public static BWREngineBreedAnimal m_instance = new BWREngineBreedAnimal();
 
 	// Entity ID constants.
 	private static final int eidSlime = 55;
