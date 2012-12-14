@@ -31,60 +31,60 @@ public class BWREntityVillager extends EntityVillager
 	{
 	// The list of items the villagers are allowed to sell.  Any trade
 	// whose output is not one of the items on this list will be blocked.
-	private static boolean[] TradingWhitelist;
+	private static boolean[] tradingWhitelist;
 
 	public BWREntityVillager(World world)
 		{
 		super(world);
 
 		// If the trading whitelist is not initialized, initialize it.
-		if(TradingWhitelist == null)
+		if(tradingWhitelist == null)
 			{
-			boolean[] WL = new boolean[Item.itemsList.length];
+			boolean[] wl = new boolean[Item.itemsList.length];
 
 			// Villagers can buy items for emeralds.
-			WL[Item.emerald.shiftedIndex] = true;
+			wl[Item.emerald.shiftedIndex] = true;
 
 			// Villagers can sell only finished products, nothing
 			// made of gold or diamond, and no raw materials.
 			// All meats must be cooked (no tallow sources).
-			WL[Item.shears.shiftedIndex] = true;
-			WL[Item.shovelSteel.shiftedIndex] = true;
-			WL[Item.pickaxeSteel.shiftedIndex] = true;
-			WL[Item.axeSteel.shiftedIndex] = true;
-			WL[Item.flintAndSteel.shiftedIndex] = true;
-			WL[Item.appleRed.shiftedIndex] = true;
-			WL[Item.swordSteel.shiftedIndex] = true;
-			WL[Item.swordWood.shiftedIndex] = true;
-			WL[Item.shovelWood.shiftedIndex] = true;
-			WL[Item.pickaxeWood.shiftedIndex] = true;
-			WL[Item.axeWood.shiftedIndex] = true;
-			WL[Item.swordStone.shiftedIndex] = true;
-			WL[Item.shovelStone.shiftedIndex] = true;
-			WL[Item.pickaxeStone.shiftedIndex] = true;
-			WL[Item.axeStone.shiftedIndex] = true;
-			WL[Item.hoeWood.shiftedIndex] = true;
-			WL[Item.hoeStone.shiftedIndex] = true;
-			WL[Item.hoeSteel.shiftedIndex] = true;
-			WL[Item.bread.shiftedIndex] = true;
-			WL[Item.helmetLeather.shiftedIndex] = true;
-			WL[Item.plateLeather.shiftedIndex] = true;
-			WL[Item.legsLeather.shiftedIndex] = true;
-			WL[Item.bootsLeather.shiftedIndex] = true;
-			WL[Item.helmetChain.shiftedIndex] = true;
-			WL[Item.plateChain.shiftedIndex] = true;
-			WL[Item.legsChain.shiftedIndex] = true;
-			WL[Item.bootsChain.shiftedIndex] = true;
-			WL[Item.helmetSteel.shiftedIndex] = true;
-			WL[Item.plateSteel.shiftedIndex] = true;
-			WL[Item.legsSteel.shiftedIndex] = true;
-			WL[Item.bootsSteel.shiftedIndex] = true;
-			WL[Item.saddle.shiftedIndex] = true;
-			WL[Item.fishCooked.shiftedIndex] = true;
-			WL[Item.chickenCooked.shiftedIndex] = true;
-			WL[Item.expBottle.shiftedIndex] = true;
+			wl[Item.shears.shiftedIndex] = true;
+			wl[Item.shovelSteel.shiftedIndex] = true;
+			wl[Item.pickaxeSteel.shiftedIndex] = true;
+			wl[Item.axeSteel.shiftedIndex] = true;
+			wl[Item.flintAndSteel.shiftedIndex] = true;
+			wl[Item.appleRed.shiftedIndex] = true;
+			wl[Item.swordSteel.shiftedIndex] = true;
+			wl[Item.swordWood.shiftedIndex] = true;
+			wl[Item.shovelWood.shiftedIndex] = true;
+			wl[Item.pickaxeWood.shiftedIndex] = true;
+			wl[Item.axeWood.shiftedIndex] = true;
+			wl[Item.swordStone.shiftedIndex] = true;
+			wl[Item.shovelStone.shiftedIndex] = true;
+			wl[Item.pickaxeStone.shiftedIndex] = true;
+			wl[Item.axeStone.shiftedIndex] = true;
+			wl[Item.hoeWood.shiftedIndex] = true;
+			wl[Item.hoeStone.shiftedIndex] = true;
+			wl[Item.hoeSteel.shiftedIndex] = true;
+			wl[Item.bread.shiftedIndex] = true;
+			wl[Item.helmetLeather.shiftedIndex] = true;
+			wl[Item.plateLeather.shiftedIndex] = true;
+			wl[Item.legsLeather.shiftedIndex] = true;
+			wl[Item.bootsLeather.shiftedIndex] = true;
+			wl[Item.helmetChain.shiftedIndex] = true;
+			wl[Item.plateChain.shiftedIndex] = true;
+			wl[Item.legsChain.shiftedIndex] = true;
+			wl[Item.bootsChain.shiftedIndex] = true;
+			wl[Item.helmetSteel.shiftedIndex] = true;
+			wl[Item.plateSteel.shiftedIndex] = true;
+			wl[Item.legsSteel.shiftedIndex] = true;
+			wl[Item.bootsSteel.shiftedIndex] = true;
+			wl[Item.saddle.shiftedIndex] = true;
+			wl[Item.fishCooked.shiftedIndex] = true;
+			wl[Item.chickenCooked.shiftedIndex] = true;
+			wl[Item.expBottle.shiftedIndex] = true;
 
-			TradingWhitelist = WL;
+			tradingWhitelist = wl;
 			}
 		}
 
@@ -96,57 +96,57 @@ public class BWREntityVillager extends EntityVillager
 		// Search the villager's trade list and remove any contraband
 		// recipes.  Determine if there is at least one trade that is
 		// not exhausted.
-		MerchantRecipeList Merch = this.getRecipes(null);
-		boolean HasTrade = false;
-		for(int I = Merch.size() - 1; I >= 0; I--)
+		MerchantRecipeList merch = this.getRecipes(null);
+		boolean hasTrade = false;
+		for(int i = merch.size() - 1; i >= 0; i--)
 			{
-			MerchantRecipe MR = (MerchantRecipe)Merch.get(I);
-			if(!TradingWhitelist[MR.getItemToSell().itemID])
-				Merch.remove(I);
-			else if(!MR.func_82784_g())
-				HasTrade = true;
+			MerchantRecipe mr = (MerchantRecipe)merch.get(i);
+			if(!tradingWhitelist[mr.getItemToSell().itemID])
+				merch.remove(i);
+			else if(!mr.func_82784_g())
+				hasTrade = true;
 			}
 
 		// If all trades are exhausted, normally Vanilla would create a new
 		// trade, but it's possible that BWR blacklisted the trade, and the
 		// villager is no longer offering any trades.  If this is the case,
 		// then try to generate a replacement trade.
-		if(!HasTrade)
+		if(!hasTrade)
 			{
 			// Create a surrogate villager as a duplicate of this one,
 			// but with the trade array removed, so new trades will
 			// generate on accessing the recipe list.  This is a workaround
 			// for accessibility limitations of the trade list, without
 			// having to call an entire AI cycle.
-			NBTTagCompound Tag = new NBTTagCompound();
-			this.writeEntityToNBT(Tag);
-			Tag.removeTag("Offers");
-			EntityVillager Surrogate = new EntityVillager(this.worldObj);
-			Surrogate.readEntityFromNBT(Tag);
+			NBTTagCompound tag = new NBTTagCompound();
+			this.writeEntityToNBT(tag);
+			tag.removeTag("Offers");
+			EntityVillager surrogate = new EntityVillager(this.worldObj);
+			surrogate.readEntityFromNBT(tag);
 
 			// Loop through surrogate's now freshly-initialized recipe
 			// list and remove any contraband.
-			MerchantRecipeList SMerch = Surrogate.getRecipes(null);
-			for(int I = SMerch.size() - 1; I >= 0; I--)
+			MerchantRecipeList smerch = surrogate.getRecipes(null);
+			for(int i = smerch.size() - 1; i >= 0; i--)
 				{
-				MerchantRecipe MR = (MerchantRecipe)SMerch.get(I);
-				if(!TradingWhitelist[MR.getItemToSell().itemID])
-					SMerch.remove(I);
+				MerchantRecipe mr = (MerchantRecipe)smerch.get(i);
+				if(!tradingWhitelist[mr.getItemToSell().itemID])
+					smerch.remove(i);
 				}
 
 			// Copy any valid trades from the surrogate back to the original.
-			for(int I = SMerch.size() - 1; I >= 0; I--)
-				Merch.add(SMerch.get(I));
+			for(int i = smerch.size() - 1; i >= 0; i--)
+				merch.add(smerch.get(i));
 
-			Surrogate.setDead();
+			surrogate.setDead();
 			}
 		}
 
 	// Called by interact.  Search for an emerald portal frame given a specific location
 	// and orientation, and if found, convert it to obsidian and create the nether portal.
-	private boolean SearchPortal(World world, int x, int y, int z, int dx, int dz)
+	private boolean searchPortal(World world, int x, int y, int z, int dx, int dz)
 		{
-		int Em = Block.blockEmerald.blockID;
+		int em = Block.blockEmerald.blockID;
 
 		// Make sure the portal is filled with a 2x3 air space...
 		if(!world.getBlockMaterial(x, y, z).isReplaceable()
@@ -157,18 +157,18 @@ public class BWREntityVillager extends EntityVillager
 			|| !world.getBlockMaterial(x + dx, y + 2, z + dz).isReplaceable()
 
 			// ...and the top and bottom frames are made of emerald block...
-			|| (world.getBlockId(x, y - 1, z) != Em)
-			|| (world.getBlockId(x + dx, y - 1, z + dz) != Em)
-			|| (world.getBlockId(x, y + 3, z) != Em)
-			|| (world.getBlockId(x + dx, y + 3, z + dz) != Em)
+			|| (world.getBlockId(x, y - 1, z) != em)
+			|| (world.getBlockId(x + dx, y - 1, z + dz) != em)
+			|| (world.getBlockId(x, y + 3, z) != em)
+			|| (world.getBlockId(x + dx, y + 3, z + dz) != em)
 
 			// ...and the sides are also emerald block.
-			|| (world.getBlockId(x + dx * 2, y, z + dz * 2) != Em)
-			|| (world.getBlockId(x + dx * 2, y + 1, z + dz * 2) != Em)
-			|| (world.getBlockId(x + dx * 2, y + 2, z + dz * 2) != Em)
-			|| (world.getBlockId(x - dx, y, z - dz) != Em)
-			|| (world.getBlockId(x - dx, y + 1, z - dz) != Em)
-			|| (world.getBlockId(x - dx, y + 2, z - dz) != Em))
+			|| (world.getBlockId(x + dx * 2, y, z + dz * 2) != em)
+			|| (world.getBlockId(x + dx * 2, y + 1, z + dz * 2) != em)
+			|| (world.getBlockId(x + dx * 2, y + 2, z + dz * 2) != em)
+			|| (world.getBlockId(x - dx, y, z - dz) != em)
+			|| (world.getBlockId(x - dx, y + 1, z - dz) != em)
+			|| (world.getBlockId(x - dx, y + 2, z - dz) != em))
 			return false;
 
 		// Replace the outside frame with obsidian.  While the corner pieces
@@ -181,7 +181,7 @@ public class BWREntityVillager extends EntityVillager
 					int nx = x + cx * dx;
 					int ny = y + cy;
 					int nz = z + cz * dz;
-					if(world.getBlockId(nx, ny, nz) == Em)
+					if(world.getBlockId(nx, ny, nz) == em)
 						world.setBlockAndMetadataWithNotify(nx, ny, nz, Block.obsidian.blockID, 0);
 					}
 
@@ -192,18 +192,18 @@ public class BWREntityVillager extends EntityVillager
 			4.0F, true, true);
 
 		// Ghastly consequences.
-		int Success = 0;
-		for(int Attempt = 0; Attempt < 25; Attempt++)
+		int success = 0;
+		for(int attempt = 0; attempt < 25; attempt++)
 			{
-			EntityGhast Ghast = new EntityGhast(world);
-			Ghast.setLocationAndAngles(x + world.rand.nextDouble() * dx * 2 + world.rand.nextGaussian() * 5,
+			EntityGhast ghast = new EntityGhast(world);
+			ghast.setLocationAndAngles(x + world.rand.nextDouble() * dx * 2 + world.rand.nextGaussian() * 5,
 				y + world.rand.nextDouble() * 3 + world.rand.nextGaussian() * 5,
 				z + world.rand.nextDouble() * dz * 2 + world.rand.nextGaussian() * 5,
 				this.worldObj.rand.nextFloat() * 360.0F, 0.0F);
-			if(Ghast.getCanSpawnHere())
+			if(ghast.getCanSpawnHere())
 				{
-				world.spawnEntityInWorld(Ghast);
-				if(++Success >= 3)
+				world.spawnEntityInWorld(ghast);
+				if(++success >= 3)
 					break;
 				}
 			}
@@ -220,28 +220,28 @@ public class BWREntityVillager extends EntityVillager
 		// If the player's currently-selected item while right-clicking is an arcane
 		// scroll, and the villager is a Priest, and on fire, then try to create a
 		// nether portal.
-		ItemStack Tool = player.inventory.getCurrentItem();
-		if((Tool != null) && (Tool.itemID == mod_FCBetterThanWolves.fcArcaneScroll.shiftedIndex)
+		ItemStack tool = player.inventory.getCurrentItem();
+		if((tool != null) && (tool.itemID == mod_FCBetterThanWolves.fcArcaneScroll.shiftedIndex)
 			&& (this.getProfession() == 2) && this.isBurning())
 			{
-			int BX = MathHelper.floor_double(this.posX);
-			int BY = MathHelper.floor_double(this.posY);
-			int BZ = MathHelper.floor_double(this.posZ);
+			int bx = MathHelper.floor_double(this.posX);
+			int by = MathHelper.floor_double(this.posY);
+			int bz = MathHelper.floor_double(this.posZ);
 
 			// Search for each possible orientation of an emerald frame for
 			// nether portal creation.  If one is found, destroy the villager.
-			if(SearchPortal(this.worldObj, BX, BY, BZ, 0, 1)
-				|| SearchPortal(this.worldObj, BX, BY, BZ, 0, -1)
-				|| SearchPortal(this.worldObj, BX, BY, BZ, 1, 0)
-				|| SearchPortal(this.worldObj, BX, BY, BZ, -1, 0)
-				|| SearchPortal(this.worldObj, BX, BY - 1, BZ, 0, 1)
-				|| SearchPortal(this.worldObj, BX, BY - 1, BZ, 0, -1)
-				|| SearchPortal(this.worldObj, BX, BY - 1, BZ, 1, 0)
-				|| SearchPortal(this.worldObj, BX, BY - 1, BZ, -1, 0))
+			if(searchPortal(this.worldObj, bx, by, bz, 0, 1)
+				|| searchPortal(this.worldObj, bx, by, bz, 0, -1)
+				|| searchPortal(this.worldObj, bx, by, bz, 1, 0)
+				|| searchPortal(this.worldObj, bx, by, bz, -1, 0)
+				|| searchPortal(this.worldObj, bx, by - 1, bz, 0, 1)
+				|| searchPortal(this.worldObj, bx, by - 1, bz, 0, -1)
+				|| searchPortal(this.worldObj, bx, by - 1, bz, 1, 0)
+				|| searchPortal(this.worldObj, bx, by - 1, bz, -1, 0))
 				this.setDead();
 
 			// Item was consumed.
-			Tool.stackSize--;
+			tool.stackSize--;
 			return true;
 			}
 

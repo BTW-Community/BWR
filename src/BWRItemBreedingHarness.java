@@ -45,12 +45,12 @@ public class BWRItemBreedingHarness extends FCItemBreedingHarness
 			// cow subclass is used, and the breeding harness is applied before
 			// spawning the animal in the world, i.e. before BWR's code for
 			// transforming (replacing) entities on spawn is called.
-			BWREntityCow Cow = new BWREntityCow(orig.worldObj);
-			Cow.setLocationAndAngles(orig.posX, orig.posY, orig.posZ, orig.rotationYaw, orig.rotationPitch);
-			Cow.setEntityHealth(orig.getHealth());
-			Cow.renderYawOffset = orig.renderYawOffset;
-			Cow.setWearingBreedingHarness(true);
-			orig.worldObj.spawnEntityInWorld(Cow);
+			BWREntityCow cow = new BWREntityCow(orig.worldObj);
+			cow.setLocationAndAngles(orig.posX, orig.posY, orig.posZ, orig.rotationYaw, orig.rotationPitch);
+			cow.setEntityHealth(orig.getHealth());
+			cow.renderYawOffset = orig.renderYawOffset;
+			cow.setWearingBreedingHarness(true);
+			orig.worldObj.spawnEntityInWorld(cow);
 			return true;
 			}
 		else

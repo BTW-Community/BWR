@@ -40,7 +40,7 @@ public class BWREngineRecipes {
 	// from the specified item.  Calculates the amount of potash and hellfire that
 	// would be required.  Potash + hellfire are kind of like "Drano Crystals" that
 	// form a strong alkaline, sufficient to destroy sticks and other bonding materials.
-	public void AddDiamondRecoveryRecipe(Item tool, int qty)
+	public void addDiamondRecoveryRecipe(Item tool, int qty)
 		{
 		FCRecipes.AddStokedCauldronRecipe(
 			new ItemStack(Item.diamond, qty),
@@ -57,12 +57,12 @@ public class BWREngineRecipes {
 	// can be used to obtain raw gold from tools dropped by mobs.  Only gold
 	// is soft enough for this exception, and only because it's needed for
 	// fabricating redstone.
-	public void AddGoldGrindingRecipe(Item tool, int qty)
+	public void addGoldGrindingRecipe(Item tool, int qty)
 		{
-		ItemStack[] Stax = new ItemStack[qty];
+		ItemStack[] stax = new ItemStack[qty];
 		for(int I = 0; I < qty; I++)
-			Stax[I] = new ItemStack(Item.goldNugget, 3);
-		FCRecipes.AddMillStoneRecipe(Stax,
+			stax[I] = new ItemStack(Item.goldNugget, 3);
+		FCRecipes.AddMillStoneRecipe(stax,
 			new ItemStack[] { new ItemStack(tool, 1, -1) });
 		}
 
@@ -71,7 +71,7 @@ public class BWREngineRecipes {
 	// behind.  Up to 2 different colors of wool can be left behind, to preserve the
 	// other organic dyes; magenta wool needs this to leave behind pink and red.  Also adds
 	// a recipe to destroy lapis if you forget to add enough clay to the pot.
-	public void AddLapisRecoveryRecipe(int indmg, int outdmg1, int outdmg2, int qty)
+	public void addLapisRecoveryRecipe(int indmg, int outdmg1, int outdmg2, int qty)
 		{
 		FCRecipes.AddStokedCauldronRecipe(
 			new ItemStack[]
@@ -101,37 +101,37 @@ public class BWREngineRecipes {
 
 	// Add all BWR recipes to the BTW/Vanilla crafting managers.  Called on
 	// add-on initialization.
-	public void AddRecipes()
+	public void addRecipes()
 		{
 		// Add recipes to the stoked pot for recovering diamond from equipment.
-		AddDiamondRecoveryRecipe(Item.plateDiamond, 8);
-		AddDiamondRecoveryRecipe(Item.legsDiamond, 7);
-		AddDiamondRecoveryRecipe(Item.helmetDiamond, 5);
-		AddDiamondRecoveryRecipe(Item.bootsDiamond, 4);
-		AddDiamondRecoveryRecipe(Item.axeDiamond, 3);
-		AddDiamondRecoveryRecipe(Item.pickaxeDiamond, 3);
-		AddDiamondRecoveryRecipe(Item.swordDiamond, 2);
-		AddDiamondRecoveryRecipe(Item.hoeDiamond, 2);
-		AddDiamondRecoveryRecipe(Item.shovelDiamond, 1);
+		addDiamondRecoveryRecipe(Item.plateDiamond, 8);
+		addDiamondRecoveryRecipe(Item.legsDiamond, 7);
+		addDiamondRecoveryRecipe(Item.helmetDiamond, 5);
+		addDiamondRecoveryRecipe(Item.bootsDiamond, 4);
+		addDiamondRecoveryRecipe(Item.axeDiamond, 3);
+		addDiamondRecoveryRecipe(Item.pickaxeDiamond, 3);
+		addDiamondRecoveryRecipe(Item.swordDiamond, 2);
+		addDiamondRecoveryRecipe(Item.hoeDiamond, 2);
+		addDiamondRecoveryRecipe(Item.shovelDiamond, 1);
 
 		// Add low-efficiency gold recycling recipes.
-		AddGoldGrindingRecipe(Item.plateGold, 8);
-		AddGoldGrindingRecipe(Item.legsGold, 7);
-		AddGoldGrindingRecipe(Item.helmetGold, 5);
-		AddGoldGrindingRecipe(Item.bootsGold, 4);
-		AddGoldGrindingRecipe(Item.axeGold, 3);
-		AddGoldGrindingRecipe(Item.pickaxeGold, 3);
-		AddGoldGrindingRecipe(Item.swordGold, 2);
-		AddGoldGrindingRecipe(Item.hoeGold, 2);
-		AddGoldGrindingRecipe(Item.shovelGold, 1);
+		addGoldGrindingRecipe(Item.plateGold, 8);
+		addGoldGrindingRecipe(Item.legsGold, 7);
+		addGoldGrindingRecipe(Item.helmetGold, 5);
+		addGoldGrindingRecipe(Item.bootsGold, 4);
+		addGoldGrindingRecipe(Item.axeGold, 3);
+		addGoldGrindingRecipe(Item.pickaxeGold, 3);
+		addGoldGrindingRecipe(Item.swordGold, 2);
+		addGoldGrindingRecipe(Item.hoeGold, 2);
+		addGoldGrindingRecipe(Item.shovelGold, 1);
 
 		// Add recipes for recovering lapis from various colored wools that
 		// can be made via sheep breeding.
-		AddLapisRecoveryRecipe(11, 0, 0, 1);
-		AddLapisRecoveryRecipe(3, 0, 0, 2);
-		AddLapisRecoveryRecipe(9, 13, 13, 2);
-		AddLapisRecoveryRecipe(10, 14, 14, 2);
-		AddLapisRecoveryRecipe(2, 6, 14, 4);
+		addLapisRecoveryRecipe(11, 0, 0, 1);
+		addLapisRecoveryRecipe(3, 0, 0, 2);
+		addLapisRecoveryRecipe(9, 13, 13, 2);
+		addLapisRecoveryRecipe(10, 14, 14, 2);
+		addLapisRecoveryRecipe(2, 6, 14, 4);
 
 		// Netherrack can be created by mixing netherwart, cobblestone,
 		// and a source of souls (of which soul dust is renewable).

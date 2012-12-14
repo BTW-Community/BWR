@@ -52,8 +52,8 @@ public class BWRThreadUpdateCheck extends Thread {
 		try
 			{
 			log("Starting...");
-			Pattern VerRx = Pattern.compile("bwrVersionString\\s*=\\s*\"([^\"]+)\";");
-			Pattern DevRx = Pattern.compile("bwrDevVersion\\s*=\\s*(true|false);");
+			Pattern VerRx = Pattern.compile("BWR_VERSION\\s*=\\s*\"([^\"]+)\";");
+			Pattern DevRx = Pattern.compile("BWR_IS_DEV\\s*=\\s*(true|false);");
 			String UpdVer = null;
 			boolean UpdDev = false;
 

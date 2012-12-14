@@ -40,15 +40,15 @@ public class BWREntityXPOrb extends EntityXPOrb
 		// mechanism.
 		if(soulPressBlocksAllowed == null)
 			{
-			boolean[] A = new boolean[Block.blocksList.length];
-			for(int I = 0; I < Block.blocksList.length; I++)
+			boolean[] allow = new boolean[Block.blocksList.length];
+			for(int idx = 0; idx < Block.blocksList.length; idx++)
 				{
-				Block B = Block.blocksList[I];
-				A[I] = (B != null)
-					&& (B.blockHardness >= 5.0F)
-					&& B.isNormalCube(I);
+				Block block = Block.blocksList[idx];
+				allow[idx] = (block != null)
+					&& (block.blockHardness >= 5.0F)
+					&& block.isNormalCube(idx);
 				}
-			soulPressBlocksAllowed = A;
+			soulPressBlocksAllowed = allow;
 			}
 		}
 
@@ -80,34 +80,34 @@ public class BWREntityXPOrb extends EntityXPOrb
 
 		// If trapped in sand, destroy this XP orb and any others trapped
 		// in the same block, and add up total XP value.
-		int XP = this.xpValue;
+		int xp = 0;
 		this.setDead();
-		List Found = this.worldObj.getEntitiesWithinAABB(BWREntityXPOrb.class,
+		List found = this.worldObj.getEntitiesWithinAABB(BWREntityXPOrb.class,
 			AxisAlignedBB.getAABBPool().addOrModifyAABBInPool(bx, by, bz, bx + 1, by + 1, bz + 1));
-		if((Found != null) && (Found.size() > 0))
-			for(int I = 0; I < Found.size(); I++)
+		if((found != null) && (found.size() > 0))
+			for(int i = 0; i < found.size(); i++)
 				{
-				BWREntityXPOrb Orb = (BWREntityXPOrb)Found.get(I);
-				if(!Orb.isDead && Orb.m_bNotPlayerOwned)
+				BWREntityXPOrb orb = (BWREntityXPOrb)found.get(i);
+				if(!orb.isDead && orb.m_bNotPlayerOwned)
 					{
-					XP += Orb.xpValue;
-					Orb.setDead();
+					xp += orb.xpValue;
+					orb.setDead();
 					}
 				}
 
 		// 2% probability per trapped XP point of converting sand to soulsand.
 		// Large flame particle effect from soulsand conversion.
-		if(this.worldObj.rand.nextInt(50) < XP)
+		if(this.worldObj.rand.nextInt(50) < xp)
 			{
 			// Burn all entities that are too close to the press.
-			List Hurt = this.worldObj.getEntitiesWithinAABB(Entity.class,
+			List hurt = this.worldObj.getEntitiesWithinAABB(Entity.class,
 				AxisAlignedBB.getAABBPool().addOrModifyAABBInPool(bx - 2, by - 2, bz - 2, bx + 3, by + 4, bz + 3));
-			if((Hurt != null) && (Hurt.size() > 0))
-				for(int I = 0; I < Hurt.size(); I++)
+			if((hurt != null) && (hurt.size() > 0))
+				for(int i = 0; i < hurt.size(); i++)
 					{
-					Entity Ent = (Entity)Hurt.get(I);
-					Ent.attackEntityFrom(DamageSource.onFire, 1);
-					Ent.setFire(9);
+					Entity ent = (Entity)hurt.get(i);
+					ent.attackEntityFrom(DamageSource.onFire, 1);
+					ent.setFire(9);
 					}
 
 			// Set a bunch of fire around the press, so an automated one needs

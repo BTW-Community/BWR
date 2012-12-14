@@ -249,7 +249,7 @@ public class BWREngineCore
 		mapEntityReplacement(EntityVillager.class, BWREntityVillager.class, "Villager", 120);
 
 		// Add custom BWR recipes.
-		BWREngineRecipes.getInstance().AddRecipes();
+		BWREngineRecipes.getInstance().addRecipes();
 
 		// Initialize the plant/fungus and animal cross-breeding engines.
 		BWREngineBreedAnimal.getInstance().initialize();
