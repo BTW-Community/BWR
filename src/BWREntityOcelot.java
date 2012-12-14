@@ -38,6 +38,6 @@ public class BWREntityOcelot extends EntityOcelot
 		super.onLivingUpdate();
 
 		// Do cross-breeding check.
-		BWREngineBreedAnimal.getInstance().TryBreed(this);
+		BWREngineBreedAnimal.getInstance().tryBreed(this);
 		}
 	}

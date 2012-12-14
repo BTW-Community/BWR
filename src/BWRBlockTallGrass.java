@@ -36,12 +36,12 @@ public class BWRBlockTallGrass extends BlockTallGrass
 		}
 
 	// Called randomly by World.
-	public void updateTick(World world, int x, int y, int z, Random r)
+	public void updateTick(World world, int x, int y, int z, Random rand)
 		{
-		super.updateTick(world, x, y, z, r);
+		super.updateTick(world, x, y, z, rand);
 
 		// Animals spawn spontaneously only extremely rarely.
-		if(world.rand.nextInt(1200) > 0)
+		if(rand.nextInt(1200) > 0)
 			return;
 
 		// Only perform this type of aux spawning in desert biomes, as normal
@@ -52,31 +52,32 @@ public class BWRBlockTallGrass extends BlockTallGrass
 			return;
 
 		// Animals can only spawn in direct natural sunlight.
-                if(world.provider.hasNoSky
-                        || !world.isDaytime()
-                        || world.isRaining()
-                        || !world.canBlockSeeTheSky(x, y + 1, z))
+		if(world.provider.hasNoSky
+			|| !world.isDaytime()
+			|| world.isRaining()
+			|| !world.canBlockSeeTheSky(x, y + 1, z))
 			return;
 
 		// Look for nearby animals.  If there are any, none can spawn
 		// spontaneously here.
-		Double R = 32.0D;
-		List Near = world.getEntitiesWithinAABB(EntityAnimal.class,
+		Double r = 32.0D;
+		List near = world.getEntitiesWithinAABB(EntityAnimal.class,
 			AxisAlignedBB.getAABBPool().addOrModifyAABBInPool(
-			x - R, y - R, z - R, x + R, y + R, z + R));
-		if(Near.size() > 0)
+			x - r, y - r, z - r, x + r, y + r, z + r));
+		if(near.size() > 0)
 			return;
 
 		// Choose a random animal species.  Only pigs and sheep
 		// are available this way; all others must be cross-bred.
-		EntityAnimal A = null;
+		EntityAnimal animal = null;
 		if(world.rand.nextInt(2) == 0)
-			A = new EntityPig(world);
+			animal = new EntityPig(world);
 		else
-			A = new EntitySheep(world);
+			animal = new EntitySheep(world);
 
 		// Create new animal and spawn in world.
-		A.setLocationAndAngles(x + 0.5D, y + 0.1D, z + 0.5D, world.rand.nextFloat() * 360.0F, 0F);
-		world.spawnEntityInWorld(A);
+		animal.setLocationAndAngles(x + 0.5D, y + 0.1D, z + 0.5D,
+				world.rand.nextFloat() * 360.0F, 0F);
+		world.spawnEntityInWorld(animal);
 		}
 	}

@@ -37,17 +37,17 @@ public class BWRBlockRedstoneWire extends BlockRedstoneWire
 		{
 		// Perform normal update, and keep before/after metadata (signal strength)
 		// for comparison.
-		int OldMeta = world.getBlockMetadata(x, y, z);
+		int oldmeta = world.getBlockMetadata(x, y, z);
 		super.onNeighborBlockChange(world, x, y, z, i);
-		int NewMeta = world.getBlockMetadata(x, y, z);
+		int newmeta = world.getBlockMetadata(x, y, z);
 
 		// Only continue on a "rising" clock edge.
-		if(NewMeta <= OldMeta)
+		if(newmeta <= oldmeta)
 			return;
 
 		// The probability of glowstone transformation is proportional to the amount
 		// of signal strength change.
-		if((NewMeta - OldMeta) < world.rand.nextInt(6400))
+		if((newmeta - oldmeta) < world.rand.nextInt(6400))
 			return;
 
 		// Make sure that we have a downward-facing lens immediately above the redstone

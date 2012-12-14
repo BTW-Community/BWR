@@ -38,6 +38,6 @@ public class BWREntityWolf extends EntityWolf
 		super.onLivingUpdate();
 
 		// Do cross-breeding check.
-		BWREngineBreedAnimal.getInstance().TryBreed(this);
+		BWREngineBreedAnimal.getInstance().tryBreed(this);
 		}
 	}

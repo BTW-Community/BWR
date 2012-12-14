@@ -38,6 +38,6 @@ public class BWREntityPig extends EntityPig
 		super.onLivingUpdate();
 
 		// Do cross-breeding check.
-		BWREngineBreedAnimal.getInstance().TryBreed(this);
+		BWREngineBreedAnimal.getInstance().tryBreed(this);
 		}
 	}
