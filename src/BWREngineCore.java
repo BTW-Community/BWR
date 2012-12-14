@@ -34,10 +34,6 @@ import net.minecraft.server.MinecraftServer;
 // external hooks and manages overall mod functionality.
 public class BWREngineCore
 	{
-	// Central mod version meta-info, easily changeable for updates.
-	public static final boolean BWR_IS_DEV = true;
-	public static final String BWR_VERSION = "0.23.0440";
-
 	// Central mod name and copyright strings.
 	public static final String BWR_PRODUCT = "Better With Renewables";
 	public static final String BWR_ABBREV = "BWR";
@@ -196,19 +192,19 @@ public class BWREngineCore
 			return;
 		isInitialized_ = true;
 
-		log(BWR_PRODUCT + " v" + BWR_VERSION + " Initializing...");
+		log(BWR_PRODUCT + " v" + BWRVersionInfo.BWR_VERSION + " Initializing...");
 
-		if(BWR_IS_DEV)
+		if(BWRVersionInfo.BWR_IS_DEV)
 			log("THIS IS A PRE-RELEASE VERSION, NOT FOR PRODUCTION USE");
 
 		// Start auto-update check.
-		new BWRUpdateCheckThread().Launch();
+		BWRThreadUpdateCheck.launch();
 			
 		// Replace some upstream block definitions with our custom ones, so our
 		// custom logic is run for these blocks.
-		mod_FCBetterThanWolves.fcAestheticOpaque = ReplaceBlock(FCBlockAestheticOpaque.class, BWRBlockAestheticOpaque.class);
-		mod_FCBetterThanWolves.fcBlockFarmlandFertilized = ReplaceBlock(FCBlockFarmlandFertilized.class, BWRBlockFarmlandFertilized.class);
-		mod_FCBetterThanWolves.fcPlanter = ReplaceBlock(FCBlockPlanter.class, BWRBlockPlanter.class);
+		mod_FCBetterThanWolves.fcAestheticOpaque = replaceBlock(FCBlockAestheticOpaque.class, BWRBlockAestheticOpaque.class);
+		mod_FCBetterThanWolves.fcBlockFarmlandFertilized = replaceBlock(FCBlockFarmlandFertilized.class, BWRBlockFarmlandFertilized.class);
+		mod_FCBetterThanWolves.fcPlanter = replaceBlock(FCBlockPlanter.class, BWRBlockPlanter.class);
 		replaceBlock(BlockLilyPad.class, BWRBlockLilyPad.class);
 		replaceBlock(BlockSoulSand.class, BWRBlockSoulSand.class);
 		replaceBlock(BlockRedstoneWire.class, BWRBlockRedstoneWire.class);
@@ -227,13 +223,13 @@ public class BWREngineCore
 		blockField.setAccessible(true);
 		for(int index = 0; index < Item.itemsList.length; index++)
 			{
-			Item item = Item.itemsList[item];
+			Item item = Item.itemsList[index];
 			if((item != null) && (item instanceof ItemTool))
 				try
 					{
 					Block[] blocks = (Block[])blockField.get(item);
 					if(blocks != null)
-						for(int blockIndex = 0; blockIndex < Blocks.length; blockIndex++)
+						for(int blockIndex = 0; blockIndex < blocks.length; blockIndex++)
 							blocks[blockIndex] = Block.blocksList[blocks[blockIndex].blockID];
 					}
 				catch(IllegalAccessException ex) { throw new RuntimeException(ex); }
@@ -253,7 +249,7 @@ public class BWREngineCore
 		mapEntityReplacement(EntityVillager.class, BWREntityVillager.class, "Villager", 120);
 
 		// Add custom BWR recipes.
-		BWRRecipes.getInstance().AddRecipes();
+		BWREngineRecipes.getInstance().AddRecipes();
 
 		// Initialize the plant/fungus and animal cross-breeding engines.
 		BWREngineBreedAnimal.getInstance().initialize();
@@ -272,7 +268,7 @@ public class BWREngineCore
 		// If it is, use NBT to copy properties from the original to a
 		// new instance of the replacement class, and return it instead.
 		Constructor constructor = (Constructor)EntityTypeMap.get(original.getClass());
-		if(ctor != null)
+		if(constructor != null)
 			{
 			Entity replacement = null;
 			try
@@ -319,12 +315,12 @@ public class BWREngineCore
 		{
 		// Let the player know of the add-on.  We don't have to do any version checks here
 		// beyond those already done by BTW, as we're compatible with the BTW client.
-		announce(net, BWR_PRODUCT + " BTW Add-On v" + BWR_VERSION);
+		announce(net, BWR_PRODUCT + " BTW Add-On v" + BWRVersionInfo.BWR_VERSION);
 		announce(net, BWR_COPYRIGHT);
 
 		// If this is a development version, announce a warning to players.
-		if(BWR_IS_DEV)
-			Announce(net, chatColor("4") + "THIS IS A PRE-RELEASE VERSION OF "
+		if(BWRVersionInfo.BWR_IS_DEV)
+			announce(net, chatColor("4") + "THIS IS A PRE-RELEASE VERSION OF "
 				+ BWR_ABBREV.toUpperCase());
 
 		// If this version is not the same as the release version, announce
@@ -332,6 +328,6 @@ public class BWREngineCore
 		// not log in, their players may alert them to the update).
 		String upd = versionUpdateAlert;
 		if(upd != null)
-			Announce(net, chatColor("6") + Upd);
+			announce(net, chatColor("6") + upd);
 		}
 	}

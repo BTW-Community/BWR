@@ -4,3 +4,5 @@
 /bwr_btw_minecraft_server.jar
 /mcp
 /tmp
+*~
+*.swp

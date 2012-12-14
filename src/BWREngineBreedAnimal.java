@@ -31,7 +31,7 @@ import java.util.HashMap;
 // worlds where only a limited set are available, e.g. obtaining wolves
 // on a Classic SuperFlat world.
 public class BWREngineBreedAnimal {
-	public static BWREngineBreedAnimal m_instance = new BWREngineBreedAnimal();
+	public static BWREngineBreedAnimal instance_ = null;
 
 	// Entity ID constants.
 	private static final int eidSlime = 55;
@@ -47,8 +47,16 @@ public class BWREngineBreedAnimal {
 	private static final int eidOcelot = 98;
 	private static final int eidVillager = 120;
 
+	// Get singleton instance.
+	public static BWREngineBreedAnimal getInstance()
+		{
+		if(instance_ == null)
+			instance_ = new BWREngineBreedAnimal();
+		return instance_;
+		}
+
 	// One-time initialization of the engine, called by the mod startup.
-	public void Initialize()
+	public void initialize()
 		{
 		// Stub.  Normally I'd initialize some fast lookup tables or
 		// something here, but the engine doesn't currently use any of that.
@@ -223,18 +231,6 @@ public class BWREngineBreedAnimal {
 		int CBZ = MathHelper.floor_double(CZ);
 		int[] Habitat = ScanHabitat(world, CBX, CBY, CBZ);
 
-		// If in development, log the habitat profile information.
-		if(mod_BetterWithRenewables.bwrDevVersion)
-			{
-			String HDebug = "Animal Cross-Breed Habitat Data:";
-			for(int I = 0; I < Habitat.length; I++)
-				if(Habitat[I] > 0)
-					HDebug += " " + (((I / 16) == 0) ? "Air"
-						: Block.blocksList[I / 16].getBlockName())
-						+ "[" + (I % 16) + "]:" + Habitat[I];
-			mod_BetterWithRenewables.m_instance.Log(HDebug);
-			}
-
 		// Choose a random child species based on weighted probabilities
 		// If the tile into which the child would spawn is water, then
 		// a squid is possible, and encouraged by nearby water.
@@ -288,18 +284,6 @@ public class BWREngineBreedAnimal {
 					P.getKey().intValue(), world);
 				break;
 				}
-			}
-
-		// If in development, log probability profile of animal cross-breeds.
-		if(mod_BetterWithRenewables.bwrDevVersion)
-			{
-			String PDebug = "Animal Cross-Breeding Weights:";
-			for(Map.Entry<Integer, Integer> P : Weights.entrySet())
-				if(P.getValue() > 0)
-					PDebug += " " + EntityList.getStringFromID(P.getKey().intValue())
-						+ ":" + P.getValue();
-			PDebug += " TOTAL:" + Max;
-			mod_BetterWithRenewables.m_instance.Log(PDebug);
 			}
 
 		// Choose a random child species based on weighted probabilities

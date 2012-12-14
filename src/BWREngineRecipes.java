@@ -25,8 +25,16 @@ package net.minecraft.src;
 import java.util.ArrayList;
 
 // Singleton that manages adding custom BWR recipes to the crafting managers.
-public class BWRRecipes {
-	public static BWRRecipes m_instance = new BWRRecipes();
+public class BWREngineRecipes {
+	public static BWREngineRecipes instance_ = null;
+
+	// Singleton access method.
+	public static BWREngineRecipes getInstance()
+		{
+		if(instance_ == null)
+			instance_ = new BWREngineRecipes();
+		return instance_;
+		}
 
 	// Adds a recipe to the stoked cauldron to recover the specified number of diamonds
 	// from the specified item.  Calculates the amount of potash and hellfire that

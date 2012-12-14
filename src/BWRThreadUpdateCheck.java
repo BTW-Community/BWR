@@ -104,7 +104,7 @@ public class BWRThreadUpdateCheck extends Thread {
 
 			// If there is a new version available, report it to the server
 			// operator on the server console, and to the mod core.
-			if((UpdVer != null) && !BWREngineCore.BWR_VERSION.equals(UpdVer))
+			if((UpdVer != null) && !BWRVersionInfo.BWR_VERSION.equals(UpdVer))
 				{
 				UpdVer = BWREngineCore.BWR_ABBREV.toUpperCase()
 					+ " VERSION " + UpdVer + " IS NOW AVAILABLE";

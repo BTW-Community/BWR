@@ -38,6 +38,6 @@ public class BWREntitySheep extends EntitySheep
 		super.onLivingUpdate();
 
 		// Do cross-breeding check.
-		BWRAnimalBreedEngine.m_instance.TryBreed(this);
+		BWREngineBreedAnimal.getInstance().TryBreed(this);
 		}
 	}

@@ -30,8 +30,8 @@ import java.util.HashSet;
 // breeding, allowing otherwise unavailable plants/fungi to be obtained in
 // worlds where only a limited set are available, e.g. obtaining sugarcane
 // on a Classic SuperFlat world.
-public class BWRPlantBreedEngine {
-	public static BWRPlantBreedEngine m_instance = new BWRPlantBreedEngine();
+public class BWREngineBreedPlant {
+	public static BWREngineBreedPlant instance_ = null;
 
 	// Tables of information about plant and fungus types that can be bred.
 	private int[][] PlantTypes;
@@ -40,6 +40,14 @@ public class BWRPlantBreedEngine {
 	// Tables about evolutionary paths relating plant/fungi varieties.
 	private List[] PlantEvolve;
 	private List[] FungusEvolve;
+
+	// Singleton access method
+	public static BWREngineBreedPlant getInstance()
+		{
+		if(instance_ == null)
+			instance_ =  new BWREngineBreedPlant();
+		return instance_;
+		}
 
 	// Some miscelaneous helper functions for constructing
 	// the flora evolutionary tree data.
@@ -70,7 +78,7 @@ public class BWRPlantBreedEngine {
 		}
 
 	// Called once on add-on initialization.
-	public void Initialize()
+	public void initialize()
 		{
 		// Define plant/fungus lookup tables, separated by kingdom.
 		// - The first column is the blockID of the plant that would be created.
@@ -248,18 +256,6 @@ public class BWRPlantBreedEngine {
 				Sel = BlockTypes[I];
 				break;
 				}
-			}
-
-		// If in development, log cross-breeding probability profile.
-		if(mod_BetterWithRenewables.bwrDevVersion)
-			{
-			String PDebug = "Plant Cross-Breeding Weights:";
-			for(int I = 0; I < BlockTypes.length; I++)
-				if(Probs[I] > 0)
-					PDebug += " " + Block.blocksList[BlockTypes[I][0]].getBlockName()
-						+ "[" + BlockTypes[I][1] + "]:" + Probs[I];
-			PDebug += " TOTAL:" + Max;
-			mod_BetterWithRenewables.m_instance.Log(PDebug);
 			}
 
 		// Extract the block ID and metadata value from the definition.
