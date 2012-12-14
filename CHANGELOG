@@ -11,6 +11,11 @@ v0.23
 	  suitably sticky.  Don't throw too much string in or you'll end
 	  up with a matted mess.
 
+	- Added Flatcore Spawn.  This replaces hardcore spawn, and works
+	  very much like it, but should also allow you to spawn in
+	  hardcore locations in superflat worlds where there is little
+	  or no terrain at or above Y=64.
+
 
 v0.22
 	- Added alternative method to create nether portals when

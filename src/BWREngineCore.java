@@ -330,4 +330,33 @@ public class BWREngineCore
 		if(upd != null)
 			announce(net, chatColor("6") + upd);
 		}
+
+	// Stopgap "Flatcore Spawn" to replace "Hardcore Spawn" until FC fixes HC Spawn to work well with
+	// superflat worlds with most terrain at y < 64.  This is on his todo list, but we have no idea
+	// when he'll be able to get to it.
+	public boolean assignNewFlatcoreSpawnLocation(World world, EntityPlayerMP player)
+		{
+		for(int attempt = 0; attempt < 20; attempt++)
+			{
+			double r = world.rand.nextDouble() * 2000.0D;
+			float a = (float)(world.rand.nextDouble() * 3.14159265358979323D * 2000.0D);
+			int x = MathHelper.floor_double((double)MathHelper.cos(a) * r);
+			int z = MathHelper.floor_double((double)MathHelper.sin(a) * r);
+			int y = world.getTopSolidOrLiquidBlock(x, z);
+			if((y < 0) || ((attempt >= 15) && (y < 64)))
+				continue;
+			Material material = world.getBlockMaterial(x, y, z);
+			if((material != null) && material.isLiquid())
+				continue;
+			player.setLocationAndAngles((double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D,
+				world.rand.nextFloat() * 360.0F, 0.0F);
+			while(!world.getCollidingBoundingBoxes(player, player.boundingBox).isEmpty())
+				player.setLocationAndAngles(player.posX, player.posY + 1.0D, player.posZ,
+					world.rand.nextFloat() * 360.0F, 0.0F);
+			player.m_lTimeOfLastSpawnAssignment = MinecraftServer.getServer().worldServers[0].getWorldTime();
+			player.setSpawnChunk(new ChunkCoordinates(x, MathHelper.floor_double(player.posY), z), false);
+			return true;
+			}
+		return false;
+		}
 	}

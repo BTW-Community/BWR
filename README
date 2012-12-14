@@ -142,6 +142,9 @@ Low-Efficiency Recipes:
 		- Hellfire Dust
 		- Redstone
 
+Flatcore Spawn:
+	Hardcore spawn that works in superflat worlds.
+
 Automatic Update Check:
 	The Better With Renewables server will periodically check the
 	project website for new releases, and notify players if a new

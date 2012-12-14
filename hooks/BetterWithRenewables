@@ -29,3 +29,9 @@ BWREngineCore.getInstance().initialize();
 
 : src/ServerConfigurationManager.java 4e716b9b8fdd574849aa84e8d51335f4
 BWREngineCore.getInstance().serverPlayerConnectionInitialized(var6, par2EntityPlayerMP);
+
+: src/ServerConfigurationManager.java f274c85b807b2b2d031a4a6f6a02b706
+   return BWREngineCore.getInstance().assignNewFlatcoreSpawnLocation(var1, var2);
+}
+
+public boolean OldHCSpawn(World var1, EntityPlayerMP var2) {
