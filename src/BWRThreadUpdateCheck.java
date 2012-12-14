@@ -60,7 +60,7 @@ public class BWRThreadUpdateCheck extends Thread {
 			// Contact the BWR website and start downloading the latest source code
 			// for the BWREngineCore class, which contains the static hard-coded
 			// version numbers.
-			URL Url = new URL("https://gitorious.org/bwr/bwr/blobs/raw/release/src/BWREngineCore.java");
+			URL Url = new URL("https://gitorious.org/bwr/bwr/blobs/raw/release/src/BWRVersionInfo.java");
 			URLConnection URLConn = Url.openConnection();
 			URLConn.setUseCaches(false);
 			BufferedReader BR = new BufferedReader(new InputStreamReader(URLConn.getInputStream()));
