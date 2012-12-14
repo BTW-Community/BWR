@@ -34,12 +34,12 @@ public class BWREngineBreedPlant {
 	public static BWREngineBreedPlant instance_ = null;
 
 	// Tables of information about plant and fungus types that can be bred.
-	private int[][] PlantTypes;
-	private int[][] FungusTypes;
+	private int[][] plantTypes;
+	private int[][] fungusTypes;
 
 	// Tables about evolutionary paths relating plant/fungi varieties.
-	private List[] PlantEvolve;
-	private List[] FungusEvolve;
+	private List[] plantEvolve;
+	private List[] fungusEvolve;
 
 	// Singleton access method
 	public static BWREngineBreedPlant getInstance()
@@ -51,30 +51,30 @@ public class BWREngineBreedPlant {
 
 	// Some miscelaneous helper functions for constructing
 	// the flora evolutionary tree data.
-	private static List[] CreateEvoTable(int[][] floraTypes)
+	private static List[] createEvoTable(int[][] floraTypes)
 		{
-		List[] Table = new List[floraTypes.length];
+		List[] table = new List[floraTypes.length];
 		for(int I = 0; I < floraTypes.length; I++)
 			{
-			Table[I] = new ArrayList<int[]>();
-			Table[I].add(new int[] { I, 25 });
+			table[I] = new ArrayList<int[]>();
+			table[I].add(new int[] { I, 25 });
 			}
-		return Table;
+		return table;
 		}
-	private static void AddEvoCore(List parent, int child, int val)
+	private static void addEvoCore(List parent, int child, int val)
 		{
-		for(Object Entry : parent)
-			if(((int[])Entry)[0] == child)
+		for(Object entry : parent)
+			if(((int[])entry)[0] == child)
 				{
-				((int[])Entry)[1] += val;
+				((int[])entry)[1] += val;
 				return;
 				}
 		parent.add(new int[] { child, val });
 		}
-	private static void AddEvo(List[] table, int parent, int child)
+	private static void addEvo(List[] table, int parent, int child)
 		{
-		AddEvoCore(table[parent], child, 1);
-		AddEvoCore(table[child], parent, 5);
+		addEvoCore(table[parent], child, 1);
+		addEvoCore(table[child], parent, 5);
 		}
 
 	// Called once on add-on initialization.
@@ -90,7 +90,7 @@ public class BWREngineBreedPlant {
 		// - The first (index 0) entry is special; it's the one one that's
 		//   considered the "root" of the evolution tree, and gets an automatic
 		//   probability boost.
-		PlantTypes = new int[][]
+		plantTypes = new int[][]
 			{
 			// 0: Tall Grass
 			new int[] { Block.tallGrass.blockID, 1 },
@@ -137,7 +137,7 @@ public class BWREngineBreedPlant {
 			// 18: Carrots
 			new int[] { Block.carrot.blockID, -1 },
 			};
-		FungusTypes = new int[][]
+		fungusTypes = new int[][]
 			{
 			// 0: Brown Mushroom
 			new int[] { Block.mushroomBrown.blockID, -1 },
@@ -148,36 +148,36 @@ public class BWREngineBreedPlant {
 			};
 
 		// Define evolutionary paths for plants.
-		PlantEvolve = CreateEvoTable(PlantTypes);
-		AddEvo(PlantEvolve, 0, 1);
-		AddEvo(PlantEvolve, 0, 2);
-		AddEvo(PlantEvolve, 0, 3);
-		AddEvo(PlantEvolve, 2, 4);
-		AddEvo(PlantEvolve, 4, 5);
-		AddEvo(PlantEvolve, 2, 6);
-		AddEvo(PlantEvolve, 6, 7);
-		AddEvo(PlantEvolve, 3, 8);
-		AddEvo(PlantEvolve, 8, 9);
-		AddEvo(PlantEvolve, 9, 10);
-		AddEvo(PlantEvolve, 10, 11);
-		AddEvo(PlantEvolve, 11, 12);
-		AddEvo(PlantEvolve, 3, 13);
-		AddEvo(PlantEvolve, 13, 14);
-		AddEvo(PlantEvolve, 14, 15);
-		AddEvo(PlantEvolve, 15, 16);
-		AddEvo(PlantEvolve, 1, 17);
-		AddEvo(PlantEvolve, 17, 18);
+		plantEvolve = createEvoTable(plantTypes);
+		addEvo(plantEvolve, 0, 1);
+		addEvo(plantEvolve, 0, 2);
+		addEvo(plantEvolve, 0, 3);
+		addEvo(plantEvolve, 2, 4);
+		addEvo(plantEvolve, 4, 5);
+		addEvo(plantEvolve, 2, 6);
+		addEvo(plantEvolve, 6, 7);
+		addEvo(plantEvolve, 3, 8);
+		addEvo(plantEvolve, 8, 9);
+		addEvo(plantEvolve, 9, 10);
+		addEvo(plantEvolve, 10, 11);
+		addEvo(plantEvolve, 11, 12);
+		addEvo(plantEvolve, 3, 13);
+		addEvo(plantEvolve, 13, 14);
+		addEvo(plantEvolve, 14, 15);
+		addEvo(plantEvolve, 15, 16);
+		addEvo(plantEvolve, 1, 17);
+		addEvo(plantEvolve, 17, 18);
 
 		// Define evolutionary paths for fungi.
-		FungusEvolve = CreateEvoTable(FungusTypes);
-		AddEvo(FungusEvolve, 0, 1);
-		AddEvo(FungusEvolve, 1, 2);
+		fungusEvolve = createEvoTable(fungusTypes);
+		addEvo(fungusEvolve, 0, 1);
+		addEvo(fungusEvolve, 1, 2);
 		}
 
 	// Attempt to grow a plant/fungus in the specified space.  Called by
 	// blocks above which plants can cross-breed, i.e. planters, soulsand,
 	// and fertilized farmland on world UpdateTick.
-	public boolean Grow(World world, int x, int y, int z)
+	public boolean grow(World world, int x, int y, int z)
 		{
 		// The space into which the plant is to grow must be air.
 		if(world.getBlockId(x, y, z) > 0)
@@ -187,20 +187,20 @@ public class BWREngineBreedPlant {
 		// very low immediate light levels.  These will be stricter than
 		// the requirements necessary for normal survival, and will
 		// determine whether we try to grow plants or fungi.
-		int[][] BlockTypes = null;
-		List<int[]>[] EvoTree = null;
-		boolean IsFungus = false;
-		int Light = world.getBlockLightValue(x, y, z);
-		if(Light >= 8)
+		int[][] blockTypes = null;
+		List<int[]>[] evoTree = null;
+		boolean isFungus = false;
+		int light = world.getBlockLightValue(x, y, z);
+		if(light >= 8)
 			{
-			BlockTypes = PlantTypes;
-			EvoTree = PlantEvolve;
+			blockTypes = plantTypes;
+			evoTree = plantEvolve;
 			}
 		else
 			{
-			BlockTypes = FungusTypes;
-			EvoTree = FungusEvolve;
-			IsFungus = true;
+			blockTypes = fungusTypes;
+			evoTree = fungusEvolve;
+			isFungus = true;
 			}
 
 		// Only small chance of continuing; this slows down cross-breeding,
@@ -211,26 +211,26 @@ public class BWREngineBreedPlant {
 
 		// Look at neighboring blocks and determine the probabilities of each type
 		// of florum to grow based on its evolutionary neighbors.
-		HashSet Near = new HashSet();
-		int[] Probs = new int[BlockTypes.length];
-		Probs[0] = 10;
+		HashSet near = new HashSet();
+		int[] probs = new int[blockTypes.length];
+		probs[0] = 10;
 		for(int dx = -1; dx <= 1; dx++)
 			for(int dz = -1; dz <= 1; dz++)
 				{
-				int B = world.getBlockId(x + dx, y, z + dz);
-				int M = -1;
-				for(int I = 0; I < BlockTypes.length; I++)
+				int b = world.getBlockId(x + dx, y, z + dz);
+				int m = -1;
+				for(int i = 0; i < blockTypes.length; i++)
 					{
-					int[] Def = BlockTypes[I];
-					if(Def[0] != B)
+					int[] def = blockTypes[i];
+					if(def[0] != b)
 						continue;
-					if((Def[1] >= 0) && (M < 0))
-						M = world.getBlockMetadata(x + dx, y, z + dz);
-					if((Def[1] < 0) || (Def[1] == M))
+					if((def[1] >= 0) && (m < 0))
+						m = world.getBlockMetadata(x + dx, y, z + dz);
+					if((def[1] < 0) || (def[1] == m))
 						{
-						Near.add(I);
-						for(int[] P : EvoTree[I])
-							Probs[P[0]] += P[1];
+						near.add(i);
+						for(int[] p : evoTree[i])
+							probs[p[0]] += p[1];
 						break;
 						}
 					}
@@ -238,34 +238,34 @@ public class BWREngineBreedPlant {
 
 		// There must be at least 2 different types of neighboring plants
 		// for the cross-breed to be allowed.
-		if(Near.size() < 2)
+		if(near.size() < 2)
 			return false;
 
 		// Select a random type of plant/fungus to try to grow based
 		// on the weighted probabilities determined.
-		int Max = 0;
-		for(int P : Probs)
-			Max += P;
-		int Pick = world.rand.nextInt(Max) + 1;
-		int[] Sel = null;
-		for(int I = 0; I < BlockTypes.length; I++)
+		int max = 0;
+		for(int p : probs)
+			max += p;
+		int pick = world.rand.nextInt(max) + 1;
+		int[] sel = null;
+		for(int i = 0; i < blockTypes.length; i++)
 			{
-			Pick -= Probs[I];
-			if(Pick <= 0)
+			pick -= probs[i];
+			if(pick <= 0)
 				{
-				Sel = BlockTypes[I];
+				sel = blockTypes[i];
 				break;
 				}
 			}
 
 		// Extract the block ID and metadata value from the definition.
 		// If the metadata is to be random, choose one now.
-		int CreateID = Sel[0];
-		int CreateMeta = Sel[1];
-		if(CreateMeta < -1)
-			CreateMeta = world.rand.nextInt(16);
-		if(CreateMeta < 0)
-			CreateMeta = 0;
+		int createID = sel[0];
+		int createMeta = sel[1];
+		if(createMeta < -1)
+			createMeta = world.rand.nextInt(16);
+		if(createMeta < 0)
+			createMeta = 0;
 
 		// Count the number of different types of plant/fungus in adjacent
 		// spaces.  Note that this check is fast and sloppy, by block ID only,
@@ -274,14 +274,14 @@ public class BWREngineBreedPlant {
 		// increases the probability of breeding.
 
 		// Attempt to create the block in its target location.
-		world.setBlockAndMetadata(x, y, z, CreateID, CreateMeta);
+		world.setBlockAndMetadata(x, y, z, createID, createMeta);
 
 		// Vines have special behavior; they do not inherit from BlockFlower like
 		// most flora, and have different hooks for can-stay checks.  Check if
 		// the vine can stay by sending it a Block Update; it will destroy itself
 		// with no drop if its location is unsuitable, and change its metadata
 		// otherwise.
-		if(CreateID == Block.vine.blockID)
+		if(createID == Block.vine.blockID)
 			{
 			Block.vine.onNeighborBlockChange(world, x, y, z, 0);
 			return true;
@@ -289,19 +289,19 @@ public class BWREngineBreedPlant {
 
 		// Check if the block can stay, i.e. the blocks surrounding the florum
 		// are suitable for its survival.
-		int BelowID = world.getBlockId(x, y - 1, z);
-		int NewBelowID = BelowID;
-		boolean UpdateBelow = true;
-		if(!Block.blocksList[CreateID].canBlockStay(world, x, y, z))
+		int belowID = world.getBlockId(x, y - 1, z);
+		int newBelowID = belowID;
+		boolean updateBelow = true;
+		if(!Block.blocksList[createID].canBlockStay(world, x, y, z))
 			{
 			// If the block below is farmland, try converting it back to dirt
 			// to see if the block can stay on dirt.
-			if((BelowID == mod_FCBetterThanWolves.fcBlockFarmlandFertilized.blockID)
-				|| (BelowID == Block.tilledField.blockID))
+			if((belowID == mod_FCBetterThanWolves.fcBlockFarmlandFertilized.blockID)
+				|| (belowID == Block.tilledField.blockID))
 				{
 				// Save the old blockID and metadata; if the dirt attempt
 				// fails, we will revert to farmland.
-				int BelowMeta = world.getBlockMetadata(x, y - 1, z);
+				int belowMeta = world.getBlockMetadata(x, y - 1, z);
 
 				// Remove the plant, so it doesn't pop off as an item when
 				// changing the material below it causes a Block Update.
@@ -310,22 +310,22 @@ public class BWREngineBreedPlant {
 				// Fungus will convert blocks below it to mycelium 2% of the time.
 				// Tall grass and ferns will convert blocks below to grass.  All
 				// other blocks will change the farmland to dirt.
-				if(IsFungus && (world.rand.nextInt(50) == 0))
-					NewBelowID = Block.mycelium.blockID;
-				else if(CreateID == Block.tallGrass.blockID)
-					NewBelowID = Block.grass.blockID;
+				if(isFungus && (world.rand.nextInt(50) == 0))
+					newBelowID = Block.mycelium.blockID;
+				else if(createID == Block.tallGrass.blockID)
+					newBelowID = Block.grass.blockID;
 				else
-					NewBelowID = Block.dirt.blockID;
-				world.setBlockAndMetadata(x, y - 1, z, NewBelowID, 0);
+					newBelowID = Block.dirt.blockID;
+				world.setBlockAndMetadata(x, y - 1, z, newBelowID, 0);
 
 				// Replace the florum and check if it can stay on the new solid block.
-				world.setBlockAndMetadata(x, y, z, CreateID, CreateMeta);
-				if(!Block.blocksList[CreateID].canBlockStay(world, x, y, z))
+				world.setBlockAndMetadata(x, y, z, createID, createMeta);
+				if(!Block.blocksList[createID].canBlockStay(world, x, y, z))
 					{
 					// If it still can't stay (e.g. lilypads, cocoa pods), then
 					// revert all block changes and fail.
 					world.setBlockAndMetadata(x, y, z, 0, 0);
-					world.setBlockAndMetadata(x, y - 1, z, BelowID, BelowMeta);
+					world.setBlockAndMetadata(x, y - 1, z, belowID, belowMeta);
 					return false;
 					}
 				}
@@ -337,42 +337,42 @@ public class BWREngineBreedPlant {
 				return false;
 				}
 			}
-		else if(BelowID == mod_FCBetterThanWolves.fcBlockFarmlandFertilized.blockID)
+		else if(belowID == mod_FCBetterThanWolves.fcBlockFarmlandFertilized.blockID)
 			{
 			// If the florum was able to stay, remove fertilization from farmland
 			// underneath.  Additionally, fungus will convert the block below
 			// into mycelium 2% of the time, and tall grass / ferns will convert
 			// the farmland below into grass blocks.
-			if(IsFungus && (world.rand.nextInt(50) == 0))
-				NewBelowID = Block.mycelium.blockID;
-			else if(CreateID == Block.tallGrass.blockID)
-				NewBelowID = Block.grass.blockID;
+			if(isFungus && (world.rand.nextInt(50) == 0))
+				newBelowID = Block.mycelium.blockID;
+			else if(createID == Block.tallGrass.blockID)
+				newBelowID = Block.grass.blockID;
 			else
-				NewBelowID = Block.tilledField.blockID;
-			world.setBlockAndMetadata(x, y - 1, z, NewBelowID, 0);
+				newBelowID = Block.tilledField.blockID;
+			world.setBlockAndMetadata(x, y - 1, z, newBelowID, 0);
 			}
-		else if(BelowID ==  mod_FCBetterThanWolves.fcPlanter.blockID)
+		else if(belowID ==  mod_FCBetterThanWolves.fcPlanter.blockID)
 			{
 			// If the florum was able to stay, remove fertilization from planters
 			// underneath.  Additionally, tall grass / ferns will convert the
 			// soil inside the planter into grass.
-			int BelowMeta = world.getBlockMetadata(x, y - 1, z);
-			if(BelowMeta == FCBlockPlanter.m_iTypeSoilFertilized)
+			int belowMeta = world.getBlockMetadata(x, y - 1, z);
+			if(belowMeta == FCBlockPlanter.m_iTypeSoilFertilized)
 				{
-				if(CreateID == Block.tallGrass.blockID)
+				if(createID == Block.tallGrass.blockID)
 					world.setBlockMetadata(x, y - 1, z, FCBlockPlanter.m_iTypeGrass0);
 				else
 					world.setBlockMetadata(x, y - 1, z, FCBlockPlanter.m_iTypeSoil);
 				}
 			}
 		else
-			UpdateBelow = false;
+			updateBelow = false;
 
 		// Trigger appropriate block update notifications, to ensure that Buddy
 		// Block based builds function as expected.
-		world.notifyBlockChange(x, y, z, CreateID);
-		if(UpdateBelow)
-			world.notifyBlockChange(x, y - 1, z, NewBelowID);
+		world.notifyBlockChange(x, y, z, createID);
+		if(updateBelow)
+			world.notifyBlockChange(x, y - 1, z, newBelowID);
 
 		return true;
 		}
