@@ -3,6 +3,10 @@ v0.23
 	  concentrated sunlight when experiencing a change in potential,
 	  converting it to glowstone.
 
+	- Significant refactoring (mostly renaming) in code, to bring
+	  naming convention more in line with java coding standard
+	  (http://geosoft.no/development/javastyle.html).
+
 
 v0.22
 	- Added alternative method to create nether portals when
