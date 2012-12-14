@@ -221,5 +221,14 @@ public class BWREngineRecipes {
 				new ItemStack(mod_FCBetterThanWolves.fcScouredLeather, 1, -1),
 				new ItemStack(mod_FCBetterThanWolves.fcAestheticOpaque, 1, FCBlockAestheticOpaque.m_iSubtypeDung)
 				});
+
+		// Allow the creation of webs for builds and aesthetic purposes.
+		FCRecipes.AddCauldronRecipe(
+			new ItemStack(Block.web, 1),
+			new ItemStack[]
+				{
+				new ItemStack(Item.silk, 3, -1),
+				new ItemStack(Item.slimeBall, 1, -1)
+				});
 		}
 	}

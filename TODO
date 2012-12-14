@@ -2,8 +2,10 @@
 DEVELOPMENT TASKS
 ------------------------------------------------------------------------
 
-Cobwebs
-	- Stew string + slimeballs?
+Flatcore Spawn?
+	- FC said he'd fix this, but doesn't seem to have had time yet.
+	- Functionally similar to hardcore spawn, but skip the y>=64
+	  check and allow HC spawn on flatcore.
 
 Renewable Blazes
 	- Use a "golem" construct to make them out of gold block, iron
