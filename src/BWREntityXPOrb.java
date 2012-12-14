@@ -80,7 +80,7 @@ public class BWREntityXPOrb extends EntityXPOrb
 
 		// If trapped in sand, destroy this XP orb and any others trapped
 		// in the same block, and add up total XP value.
-		int xp = 0;
+		int xp = this.xpValue;
 		this.setDead();
 		List found = this.worldObj.getEntitiesWithinAABB(BWREntityXPOrb.class,
 			AxisAlignedBB.getAABBPool().addOrModifyAABBInPool(bx, by, bz, bx + 1, by + 1, bz + 1));
