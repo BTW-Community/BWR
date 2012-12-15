@@ -45,9 +45,9 @@ public class BWRBlockRedstoneWire extends BlockRedstoneWire
 		if(newmeta <= oldmeta)
 			return;
 
-		// The probability of glowstone transformation is proportional to the amount
-		// of signal strength change.
-		if((newmeta - oldmeta) < world.rand.nextInt(6400))
+		// Probability of continuing the effect is proportional to the change
+		// in signal strength.
+		if((newmeta - oldmeta) < world.rand.nextInt(640))
 			return;
 
 		// Make sure that we have a downward-facing lens immediately above the redstone
@@ -61,9 +61,23 @@ public class BWRBlockRedstoneWire extends BlockRedstoneWire
 			|| !world.canBlockSeeTheSky(x, y + 2, z))
 			return;
 
-		// Pop off glowstone dust as an item.
-		FCUtilsItem.EjectSingleItemWithRandomOffset(world, x, y, z,
-			Item.lightStoneDust.shiftedIndex, 0);
+		// Play the effect of redstone wire being broken.
+		world.playAuxSFX(2001, x, y, z, this.blockID);
+
+		// Remove the existing redstone wire.
 		world.setBlockAndMetadataWithNotify(x, y, z, 0, 0);
+
+		// 10% of the time, pop glowstone dust off as an item.
+		if(world.rand.nextInt(10) == 0)
+			{
+			FCUtilsItem.EjectSingleItemWithRandomOffset(world, x, y, z,
+				Item.lightStoneDust.shiftedIndex, 0);
+			return;
+			}
+
+		// The other 90% of the time, we get a "spurious block update" effect,
+		// in which the redstone wire is placed back as it was; this makes
+		// detecting the reaction more challenging, as a buddy block won't work.
+		world.setBlockAndMetadata(x, y, z, this.blockID, newmeta);
 		}
 	}

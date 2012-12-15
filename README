@@ -101,7 +101,9 @@ Renewable Dead Shrubs:
 
 Renewable Glowstone:
 	Redstone dust has a chance of absorbing concentrated sunlight
-	when experiencing a change in potential.
+	when experiencing a change in potential.  Gasses released
+	during the reaction cause the redstone to "boil," which can
+	trigger nearby buddy blocks erratically.
 
 Renewable Cobwebs:
 	Stew spider silk with something suitably sticky.  Don't try to
