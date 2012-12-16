@@ -147,6 +147,11 @@ Low-Efficiency Recipes:
 Flatcore Spawn:
 	Hardcore spawn that works in superflat worlds.
 
+Hardercore Villagers:
+	Goods that may be sold by villagers have been further
+	restricted.  This reduces villager trades bypassing some of the
+	more interesting challenges in the tech tree.
+
 Automatic Update Check:
 	The Better With Renewables server will periodically check the
 	project website for new releases, and notify players if a new
