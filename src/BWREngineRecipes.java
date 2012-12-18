@@ -113,6 +113,7 @@ public class BWREngineRecipes {
 		addDiamondRecoveryRecipe(Item.swordDiamond, 2);
 		addDiamondRecoveryRecipe(Item.hoeDiamond, 2);
 		addDiamondRecoveryRecipe(Item.shovelDiamond, 1);
+		addDiamondRecoveryRecipe(Block.jukebox, 1);
 
 		// Add low-efficiency gold recycling recipes.
 		addGoldGrindingRecipe(Item.plateGold, 8);

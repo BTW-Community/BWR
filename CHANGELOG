@@ -1,3 +1,7 @@
+v0.24
+	- Added diamond recycling recipe for jukebox.
+
+
 v0.23
 	- Glowstone is now renewable: redstone has a chance of absorbing
 	  concentrated sunlight when experiencing a change in potential,
