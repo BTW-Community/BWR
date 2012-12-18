@@ -28,6 +28,8 @@ import java.lang.reflect.Type;
 import java.lang.reflect.Field;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.io.DataOutputStream;
+import java.io.ByteArrayOutputStream;
 import net.minecraft.server.MinecraftServer;
 
 // Main singleton representing overall BWR add-on, which receives events from
@@ -313,6 +315,14 @@ public class BWREngineCore
 	// Called by a custom hook in ServerConfigurationManager when a new player logs in.
 	public void serverPlayerConnectionInitialized(NetServerHandler net, EntityPlayerMP player)
 		{
+		// Announce the presence, and version, of BWR to the client in a
+		// machine-readable fashion, so that client add-ons can detect BWR, e.g.
+		// via public void clientCustomPayload(NetClientHandler, Packet250CustomPayload)
+		// in the ModLoader API.
+		ByteArrayOutputStream verstream = new ByteArrayOutputStream();
+		new DataOutputStream(verstream).writeUTF(BWRVersionInfo.BWR_VERSION);
+		new Packet250CustomPayload("BWR|VC", verstream.toByteArray());
+
 		// Let the player know of the add-on.  We don't have to do any version checks here
 		// beyond those already done by BTW, as we're compatible with the BTW client.
 		announce(net, BWR_PRODUCT + " BTW Add-On v" + BWRVersionInfo.BWR_VERSION);
