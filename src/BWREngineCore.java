@@ -320,7 +320,8 @@ public class BWREngineCore
 		// via public void clientCustomPayload(NetClientHandler, Packet250CustomPayload)
 		// in the ModLoader API.
 		ByteArrayOutputStream verstream = new ByteArrayOutputStream();
-		new DataOutputStream(verstream).writeUTF(BWRVersionInfo.BWR_VERSION);
+		try { new DataOutputStream(verstream).writeUTF(BWRVersionInfo.BWR_VERSION); }
+		catch(Exception ex) { ex.printStackTrace(); }
 		new Packet250CustomPayload("BWR|VC", verstream.toByteArray());
 
 		// Let the player know of the add-on.  We don't have to do any version checks here

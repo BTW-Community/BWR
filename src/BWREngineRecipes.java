@@ -51,6 +51,17 @@ public class BWREngineRecipes {
 				new ItemStack(mod_FCBetterThanWolves.fcConcentratedHellfire, qty, -1),
 				});
 		}
+	public void addDiamondRecoveryRecipe(Block block, int qty)
+		{
+		FCRecipes.AddStokedCauldronRecipe(
+			new ItemStack(Item.diamond, qty),
+			new ItemStack[]
+				{
+				new ItemStack(block, 1, -1),
+				new ItemStack(mod_FCBetterThanWolves.fcPotash, qty * 8, -1),
+				new ItemStack(mod_FCBetterThanWolves.fcConcentratedHellfire, qty, -1),
+				});
+		}
 
 	// Add low-tech low-efficiency alternative to melting gold in the crucible.
 	// Grinding it in a millstone recovers about one third of the original gold, and
