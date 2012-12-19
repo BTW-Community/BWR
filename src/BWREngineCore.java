@@ -322,7 +322,7 @@ public class BWREngineCore
 		ByteArrayOutputStream verstream = new ByteArrayOutputStream();
 		try { new DataOutputStream(verstream).writeUTF(BWRVersionInfo.BWR_VERSION); }
 		catch(Exception ex) { ex.printStackTrace(); }
-		new Packet250CustomPayload("BWR|VC", verstream.toByteArray());
+		net.sendPacket(new Packet250CustomPayload("BWR|VC", verstream.toByteArray()));
 
 		// Let the player know of the add-on.  We don't have to do any version checks here
 		// beyond those already done by BTW, as we're compatible with the BTW client.
