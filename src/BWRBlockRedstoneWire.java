@@ -30,6 +30,7 @@ public class BWRBlockRedstoneWire extends BlockRedstoneWire
 	public BWRBlockRedstoneWire(int id, int txridx)
 		{
 		super(id, txridx);
+		this.setTickRandomly(false);
 		}
 
 	// Called when a neighbor block changes, including redstone signal updates.
@@ -47,7 +48,7 @@ public class BWRBlockRedstoneWire extends BlockRedstoneWire
 
 		// Probability of continuing the effect is proportional to the change
 		// in signal strength.
-		if((newmeta - oldmeta) < world.rand.nextInt(640))
+		if((newmeta - oldmeta) < world.rand.nextInt(128))
 			return;
 
 		// Make sure that we have a downward-facing lens immediately above the redstone
@@ -61,10 +62,24 @@ public class BWRBlockRedstoneWire extends BlockRedstoneWire
 			|| !world.canBlockSeeTheSky(x, y + 2, z))
 			return;
 
+		// Delay about a quarter of a second after the clock edge before actually
+		// applying the transformation effect.  This discourages the use of very fast
+		// clocks that eat CPU and network chunk update bandwidth, and fixes an
+		// exploit of sorts (discovered by Noir) that makes a glowstone-making machine
+		// easy to build using only a clock and block dispenser.
+		if(!world.IsUpdateScheduledForBlock(x, y, z, this.blockID))
+			world.scheduleBlockUpdate(x, y, z, this.blockID, 9);
+		}
+
+	// Delayed tick event, called by World, and schduled by onNeighborBlockChange.
+	public void updateTick(World world, int x, int y, int z, Random r)
+		{
 		// Play the effect of redstone wire being broken.
 		world.playAuxSFX(2001, x, y, z, this.blockID);
 
-		// Remove the existing redstone wire.
+		// Remove the existing redstone wire.  Save the old metadata
+		// value in case we have to replace it.
+		int meta = world.getBlockMetadata(x, y, z);
 		world.setBlockAndMetadataWithNotify(x, y, z, 0, 0);
 
 		// 10% of the time, pop glowstone dust off as an item.
@@ -78,6 +93,6 @@ public class BWRBlockRedstoneWire extends BlockRedstoneWire
 		// The other 90% of the time, we get a "spurious block update" effect,
 		// in which the redstone wire is placed back as it was; this makes
 		// detecting the reaction more challenging, as a buddy block won't work.
-		world.setBlockAndMetadata(x, y, z, this.blockID, newmeta);
+		world.setBlockAndMetadata(x, y, z, this.blockID, meta);
 		}
 	}
