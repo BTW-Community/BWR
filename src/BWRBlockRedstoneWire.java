@@ -69,6 +69,8 @@ public class BWRBlockRedstoneWire extends BlockRedstoneWire
 	// Called when the block is added/placed.
 	public void onBlockAdded(World world, int x, int y, int z)
 		{
+		super.onBlockAdded(world, x, y, z);
+
 		// Redstone, once placed, needs to "warm up" before the glowstone transformation
 		// can begin.  This discourages builds that rely on the fact that redstone can
 		// be placed/removed rapidly, obviating the need for a circuit to detect glowstone
