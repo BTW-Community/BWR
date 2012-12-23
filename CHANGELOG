@@ -1,6 +1,18 @@
 v0.24
 	- Added diamond recycling recipe for jukebox.
 
+	- Refinements to glowstone production to prevent trivial
+	  exploits that make automated production too simple.  Redstone
+	  needs 5 seconds to "warm up" after being placed before it can
+	  be cooked into glowstone, and there is roughly a half second
+	  delay between pulses and the reaction, to avoid creating an
+	  incentive to consume too much CPU on the server.
+
+	- Alert client-side mods to the presence of BWR via a custom
+	  plugin channel.  An upcoming version of CraftGuide is
+	  expected to use this to automatically add BWR recipes to the
+	  recipe list.
+
 
 v0.23
 	- Glowstone is now renewable: redstone has a chance of absorbing
