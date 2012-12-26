@@ -13,6 +13,9 @@ v0.24
 	  expected to use this to automatically add BWR recipes to the
 	  recipe list.
 
+	- Pull Flatcore Spawn back out, as upstream HC spawn has been
+	  fixed to work in superflat.
+
 
 v0.23
 	- Glowstone is now renewable: redstone has a chance of absorbing
