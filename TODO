@@ -16,7 +16,9 @@ Obtainable Villagers
 	- Some other method?
 
 Renewable Diamond
-	Removed from villager trades.
+	- Recipe using Ghast Tears and Cyan Dye.  Maybe a soul urn
+	  or SFS ingot?
+	- Nethercoal has been suggested.
 
 Wither Skeletons
 	Not available without a Nether Fort.
@@ -38,6 +40,16 @@ Mob Spawners
 	  useable for cobblegen.
 	- Create an alternative to spawners for mossygen...?
 	  Maybe nether portals create mossy too, in some way.
+
+Snow/Ice
+	- Peltier effect cooler using gold block -> repeater ->
+	  gold block, pass current through repeater.  Freezes
+	  water near input side, evaporates water or sets fires
+	  near the output side.
+	- Ice is collectable using a BD.
+	- Grind ice in millstone into snowballs.
+	- Allows access to snow golems and snowballs on maps with
+	  no tundra.
 
 End Portal
 	Endstone as a prereq, as it can now be gathered from
