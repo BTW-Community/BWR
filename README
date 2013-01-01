@@ -45,7 +45,7 @@ DESIGN GOALS
 - Remain backwards-compatible with BTW server, and forwards-compatible
   with future expansion of BTW.  Removing BWR will cause only BWR-
   specific builds to break, but the world will still load and run with
-  standard BTW functionaltiy.
+  standard BTW functionality.
 
 - Coding standards: http://geosoft.no/development/javastyle.html
 
@@ -64,8 +64,8 @@ Renewable Clay:
 	Sand rinsed in acid is etched into finer clay particles.
 	Added heat speeds up the process.
 
-Renewable Lilypads:
-	Lilypads will spread (very limited) to adjacent spaces that
+Renewable Lily Pads:
+	Lily pads will spread (very limited) to adjacent spaces that
 	meet their living requirements.  They can now grow and survive
 	on deep enough flowing water, so they can be farmed using pumps
 	with Hardcore Buckets, when water sources are scarce.
@@ -110,6 +110,13 @@ Renewable Cobwebs:
 	use too much silk at one time, or you'll end up with a matted
 	mess.
 
+Renewable Diamond:
+	Melt the tears of the damned with 9 souls of the damned, along
+	with an appropriately-colored dopant, at high temperatures. A
+	small amount of powdered hellfire is needed as a catalyst, but
+	this needs to be properly stabilized to prevent a dangerous
+	reaction.
+
 Alternative Nether Portal Recipe:
 	A portal frame made of emerald can be tainted into a portal to
 	the underworld by a dark ritual, requiring the reading of an
@@ -123,9 +130,9 @@ Plant Crossbreeding:
 
 Animal Crossbreeding:
 	A pair of animals of different species, under sufficiently
-	desparate circumstances, may breed and produce offspring.
+	desperate circumstances, may breed and produce offspring.
 	Certain desirable mutations can be achieved by modifying the
-	environment to be a more suitable habaitat for that species.
+	environment to be a more suitable habitat for that species.
 	Some mutations, however, will be dangerous abominations.
 
 Animals in the Desert:

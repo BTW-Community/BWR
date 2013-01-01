@@ -6,6 +6,10 @@ v0.25
 	  worlds, and gives the player a little control over animal
 	  spawning, reducing frustrating waiting.
 
+	- Finally added renewable diamond recipe.  This should unlock
+	  some high-tech items in renewablock, like lenses and
+	  glowstone.
+
 
 v0.24
 	- Added diamond recycling recipe for jukebox.
@@ -92,13 +96,13 @@ v0.20
 
 	- Made animal cross-breeding habitats easier to construct.
 
-	- Added low-efficency recipes for extracting raw gold from
+	- Added low-efficiency recipes for extracting raw gold from
 	  tools collected from ZP's, for obtaining hellfire from
 	  ground netherrack, and for mixing gold and hellfire into
 	  redstone, using equipment lower on the tech tree.
 
 	- Soul Press now uses dung instead of sand for making
-	  soul sand, resolving tech tree cycle when naturally-occuring
+	  soul sand, resolving tech tree cycle when naturally-occurring
 	  sand is not available.
 
 	- Official Windows installation instructions included.
@@ -143,11 +147,11 @@ v0.16
 	- Lava source blocks are now renewable.  Lava will
 	  melt nearby blocks of hellfire.
 
-	- Lilypads can now grow on the highest level of flowing
-	  water, as well as source blocks, so lilypad farming
+	- Lily pads can now grow on the highest level of flowing
+	  water, as well as source blocks, so lily pad farming
 	  will work with HCB even when water is extremely scarce.
 
-	- Lilypad growth rate is now dependent on actual immediate
+	- Lily pad growth rate is now dependent on actual immediate
 	  light level, even though they will remain in place as
 	  long as they have a view of the sky.
 
@@ -181,8 +185,8 @@ v0.14
 v0.13
 	- First publicly-available version of BWR, distributed
 	  in source form, with MCP, BTW, and Minecraft as
-	  external dependencies.  Requires perl, python (for mcp),
-	  and a unix-like programming environment with a bsd-
+	  external dependencies.  Requires Perl, python (for MCP),
+	  and a Unix-like programming environment with a BSD-
 	  or gnu-like make.
 
 	- Make diamond recycling recipe lossless, as it already
@@ -227,6 +231,6 @@ v0.10
 	  mineral powder will bond to the lapis and make it settle
 	  out of suspension.
 
-	- Lilypads are now renewable.  They spread to adjacent
+	- Lily pads are now renewable.  They spread to adjacent
 	  blocks, though their growth is limited, to avoid them
 	  taking over existing worlds.

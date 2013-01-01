@@ -44,7 +44,7 @@ Environment Setup on Windows
 	- Complete the installation.
 
 3. Install Python from MCP into MSYS:
-	- Obtain correct vesion of MCP from the MCP wiki, at either:
+	- Obtain correct version of MCP from the MCP wiki, at either:
 	    http://mcp.ocean-labs.de/index.php/MCP_Releases#Releases
 	    http://mcp.ocean-labs.de/index.php/MCP_Old_Releases#History
 	- Unpack the MCP archive into a temporary folder.
@@ -102,7 +102,7 @@ Multiplayer Server Installation
 	- Check the Makefile to determine the version of MCP that BWR
 	  depends on; this will also correspond to the Minecraft and
 	  BTW versions.
-	- Obtain correct vesion of MCP from the MCP wiki, at either:
+	- Obtain correct version of MCP from the MCP wiki, at either:
 	    http://mcp.ocean-labs.de/index.php/MCP_Releases#Releases
 	    http://mcp.ocean-labs.de/index.php/MCP_Old_Releases#History
 	- If a newer version is available, you can try downloading it

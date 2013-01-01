@@ -41,7 +41,7 @@ public class BWRBlockTallGrass extends BlockTallGrass
 		super.updateTick(world, x, y, z, rand);
 
 		// Animals spawn spontaneously only very rarely.
-		if(rand.nextInt(120) > 0)
+		if(rand.nextInt(1200) > 0)
 			return;
 
 		// Animals can only spawn in direct natural sunlight.

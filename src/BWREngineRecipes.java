@@ -242,5 +242,19 @@ public class BWREngineRecipes {
 				new ItemStack(Item.silk, 3, -1),
 				new ItemStack(Item.slimeBall, 1, -1)
 				});
+
+		FCRecipes.AddStokedCrucibleRecipe(
+			new ItemStack[]
+				{
+				new ItemStack(Item.diamond, 1),
+				new ItemStack(mod_FCBetterThanWolves.fcHellfireDust, 1, -1)
+				},
+			new ItemStack[]
+				{
+				new ItemStack(Item.ghastTear, 1, -1),
+				new ItemStack(Item.dyePowder, 1, 6),
+				new ItemStack(mod_FCBetterThanWolves.fcSoulUrn, 1, -1),
+				new ItemStack(mod_FCBetterThanWolves.fcGroundNetherrack, 1, -1)
+				});
 		}
 	}
