@@ -130,8 +130,9 @@ Animal Crossbreeding:
 
 Animals in the Desert:
 	A couple of species animals can now spawn, very rarely, on tall
-	grass in desert biomes.  Combined with animal cross-breeding,
-	this makes desert-only superflat maps playable.
+	grass, in full sunlight, if food is left out for them..  Combined
+	with animal cross-breeding, this makes desert-only superflat maps
+	playable.
 	
 Dung Block Automation:
 	Loose dung can now be stewed automatically into blocks.

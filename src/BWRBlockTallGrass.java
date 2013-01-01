@@ -40,15 +40,8 @@ public class BWRBlockTallGrass extends BlockTallGrass
 		{
 		super.updateTick(world, x, y, z, rand);
 
-		// Animals spawn spontaneously only extremely rarely.
-		if(rand.nextInt(1200) > 0)
-			return;
-
-		// Only perform this type of aux spawning in desert biomes, as normal
-		// spawning is already suitable for all other biomes.  This allows
-		// animals to be obtained in deserts by terraforming with tall grass,
-		// but without disrupting animal spawning balance elsewhere.
-		if(world.getBiomeGenForCoords(x, z).biomeID != BiomeGenBase.desert.biomeID)
+		// Animals spawn spontaneously only very rarely.
+		if(rand.nextInt(120) > 0)
 			return;
 
 		// Animals can only spawn in direct natural sunlight.
@@ -67,17 +60,42 @@ public class BWRBlockTallGrass extends BlockTallGrass
 		if(near.size() > 0)
 			return;
 
-		// Choose a random animal species.  Only pigs and sheep
+		// Look for nearby wheat or carrots.  Choose the species to
+		// spawn based on the first food item found.  Only pigs and sheep
 		// are available this way; all others must be cross-bred.
 		EntityAnimal animal = null;
-		if(world.rand.nextInt(2) == 0)
-			animal = new EntityPig(world);
-		else
-			animal = new EntitySheep(world);
+		List found = world.getEntitiesWithinAABB(EntityItem.class,
+			AxisAlignedBB.getAABBPool().addOrModifyAABBInPool(x - 2, y, z - 2, x + 3, y + 1, z + 3));
+		if((found != null) && (found.size() > 0))
+			for(int i = 0; i < found.size(); i++)
+			{
+			EntityItem item = (EntityItem)found.get(i);
+			if(item.isDead)
+				continue;
+			ItemStack stack = item.func_92014_d();
+			if(stack.stackSize < 1)
+				continue;
+			if(stack.itemID == Item.wheat.shiftedIndex)
+				animal = new EntitySheep(world);
+			else if(stack.itemID == Item.carrot.shiftedIndex)
+				animal = new EntityPig(world);
+			if(animal != null)
+				{
+				stack.stackSize--;
+				if(stack.stackSize < 1)
+					item.setDead();
+				break;
+				}
+			}
+		if(animal == null)
+			return;
 
 		// Create new animal and spawn in world.
 		animal.setLocationAndAngles(x + 0.5D, y + 0.1D, z + 0.5D,
 				world.rand.nextFloat() * 360.0F, 0F);
 		world.spawnEntityInWorld(animal);
+
+		// Show some special effects.
+		world.playAuxSFX(2004, x, y, z, 0);
 		}
 	}

@@ -1,3 +1,12 @@
+v0.25
+	- Buff spontaneous animal spawning.  It no longer requires a
+	  desert biome, doesn't take as long, and now consumes one loose
+	  food item.  A wheat item makes a sheep, and a carrot makes a
+	  pig.  This makes it more practical to get animals in skyblock
+	  worlds, and gives the player a little control over animal
+	  spawning, reducing frustrating waiting.
+
+
 v0.24
 	- Added diamond recycling recipe for jukebox.
 
