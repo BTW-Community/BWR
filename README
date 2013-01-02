@@ -70,11 +70,6 @@ Renewable Lily Pads:
 	on deep enough flowing water, so they can be farmed using pumps
 	with Hardcore Buckets, when water sources are scarce.
 
-Recyclable Diamonds:
-	Diamond equipment can be broken down into raw diamonds (for uses
-	in lenses and other tools) by dissolving the agents that bond
-	them in a very strong alkaline.
-
 Renewable Lapis Lazuli:
 	Lapis particles can be washed from the products of the genetic
 	mutants that create it. A fine mineral powder will bond to the
@@ -111,11 +106,16 @@ Renewable Cobwebs:
 	mess.
 
 Renewable Diamond:
-	Melt the tears of the damned with 9 souls of the damned, along
-	with an appropriately-colored dopant, at high temperatures. A
-	small amount of powdered hellfire is needed as a catalyst, but
-	this needs to be properly stabilized to prevent a dangerous
-	reaction.
+	Melt the tears of the damned along with an appropriately-
+	colored dopant, at high temperatures.  A small amount of
+	hellfire dust is needed as a catalyst, but it needs to be mixed
+	with a stabilizing agent, which is consumed in the reaction.
+	Failure to monitor or automate this reaction can be dangerous.
+
+Recyclable Diamonds:
+	Diamond equipment can be broken down into raw diamonds (for uses
+	in lenses and other tools) by dissolving the agents that bond
+	them in a very strong alkaline.
 
 Alternative Nether Portal Recipe:
 	A portal frame made of emerald can be tainted into a portal to
