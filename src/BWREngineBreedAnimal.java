@@ -215,13 +215,13 @@ public class BWREngineBreedAnimal {
 
 		// Add high probability that parents' genetic contribution
 		// is completely dominant and no mutation occurs.
-		addProb(weights, EntityList.getEntityID(self), 500);
-		addProb(weights, EntityList.getEntityID(found), 500);
+		addProb(weights, EntityList.getEntityID(self), 100);
+		addProb(weights, EntityList.getEntityID(found), 100);
 
 		// Add base probabilties of certain abominations.
-		addProb(weights, eidSilverfish, 100);
-		addProb(weights, eidCaveSpider, 50);
-		addProb(weights, eidSlime, 10);
+		addProb(weights, eidSilverfish, 200);
+		addProb(weights, eidCaveSpider, 100);
+		addProb(weights, eidSlime, 50);
 
 		// Calculate child's location, and measure environment there.
 		double cx = (self.posX + found.posX) / 2.0D;
