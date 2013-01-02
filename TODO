@@ -47,8 +47,13 @@ Snow/Ice
 	  no tundra.
 
 End Portal
-	Endstone as a prereq, as it can now be gathered from
-	endermen, even in the overworld.
+	- Endstone as a prereq, as it can now be gathered from
+	  endermen, even in the overworld.
+	- Alternatively, silverfish egg blocks instead; leads to
+	  interesting lore re: relationship between silverfish and
+	  the end.
+	- Place a beacon block in the center visible to sky.
+	- Could be interesting to automate silverfish crossbreeding.
 
 Dragon Egg
 	This is supposed to be unique, but what if it is lost, or
@@ -56,6 +61,10 @@ Dragon Egg
 	Ideas:
 	- Create replacement ender crystals; placing enough of these
 	  close to each other in the end will summon the dragon.
+
+Automatable Companion Cubes
+	Maybe allow wolves to enter love mode and breed if sitting,
+	and under a certain splash potion effect when fed?
 
 
 
