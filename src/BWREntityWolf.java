@@ -28,9 +28,12 @@ import java.util.Random;
 // Replacement animal class that supports cross-breeding.
 public class BWREntityWolf extends EntityWolf
 	{
+	public boolean isOnDrugs;
+
 	public BWREntityWolf(World world)
 		{
 		super(world);
+		this.isOnDrugs = false;
 		}
 
 	public void onLivingUpdate()
@@ -39,5 +42,68 @@ public class BWREntityWolf extends EntityWolf
 
 		// Do cross-breeding check.
 		BWREngineBreedAnimal.getInstance().tryBreed(this);
+
+		if(!this.isInLove())
+			this.isOnDrugs = false;
+		else if(this.isOnDrugs && (this.entityToAttack != null))
+			{
+			double dx = this.posX - this.entityToAttack.posX;
+			double dy = this.posY - this.entityToAttack.posY;
+			double dz = this.posZ - this.entityToAttack.posZ;
+			this.attackEntity(this.entityToAttack,
+				(float)Math.sqrt(dx * dx + dy * dy + dz * dz));
+			}
+		}
+
+	public void CheckForLooseFood()
+		{
+		if(this.isFed())
+			{
+			super.CheckForLooseFood();
+			return;
+			}
+		super.CheckForLooseFood();
+		if(!this.isFed())
+			return;
+
+		List list = this.worldObj.getEntitiesWithinAABB(EntityItem.class,
+			AxisAlignedBB.getAABBPool().addOrModifyAABBInPool(this.posX - 2.5D,
+			this.posY - 1.0D, this.posZ - 2.5D, this.posX + 2.5D, this.posY + 1.0D, this.posZ + 2.5D));
+         	if(!list.isEmpty())
+			for(int idx = 0; idx < list.size(); ++idx)
+				{
+				EntityItem ent = (EntityItem)list.get(idx);
+				ItemStack item = ent.func_92014_d();
+				if(ent.delayBeforeCanPickup > 0 || ent.isDead)
+					continue;
+				int id = item.itemID;
+				if(id != mod_FCBetterThanWolves.fcItemBlastingOil.shiftedIndex)
+					continue;
+
+				this.isOnDrugs = true;
+				this.setInLove(600);
+				this.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 600, 0));
+
+				item.stackSize--;
+				if(item.stackSize < 1)
+					ent.setDead();
+				break;
+				}
+
+		if(this.isOnDrugs && (this.entityToAttack == null))
+			{
+			list = this.worldObj.getEntitiesWithinAABB(EntityWolf.class,
+				this.boundingBox.expand(3.5F, 3.5F, 3.5F));
+         		if(!list.isEmpty())
+				for(int idx = 0; idx < list.size(); ++idx)
+					{
+					EntityWolf wolf = (EntityWolf)list.get(idx);
+					if(wolf.isInLove())
+						{
+						this.entityToAttack = wolf;
+						break;
+						}
+					}
+			}
 		}
 	}
