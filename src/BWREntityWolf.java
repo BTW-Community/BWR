@@ -28,6 +28,8 @@ import java.util.Random;
 // Replacement animal class that supports cross-breeding.
 public class BWREntityWolf extends EntityWolf
 	{
+	// True if the wolf is "on drugs," which allows it to mate
+	// while seated.
 	public boolean isOnDrugs;
 
 	public BWREntityWolf(World world)
@@ -36,6 +38,7 @@ public class BWREntityWolf extends EntityWolf
 		this.isOnDrugs = false;
 		}
 
+	// Called once per tick by the world.
 	public void onLivingUpdate()
 		{
 		super.onLivingUpdate();
@@ -43,6 +46,9 @@ public class BWREntityWolf extends EntityWolf
 		// Do cross-breeding check.
 		BWREngineBreedAnimal.getInstance().tryBreed(this);
 
+		// If love timer is empty, clear drugs out of system; if
+		// on drugs, and a mate has been chosen, trigger mating manually
+		// (since sitting disables the breeding AI).
 		if(!this.isInLove())
 			this.isOnDrugs = false;
 		else if(this.isOnDrugs && (this.entityToAttack != null))
@@ -55,8 +61,19 @@ public class BWREntityWolf extends EntityWolf
 			}
 		}
 
+	// When the wolf is on drugs, treat it as if it's wearing a breeding
+	// harness so that babies bred will spawn halfway between parents.
+	public boolean getWearingBreedingHarness()
+		{
+		return this.isOnDrugs || super.getWearingBreedingHarness();
+		}
+
+	// Called by BTW mod code to make wolves eat loose food off the ground
+	// when hungry.
 	public void CheckForLooseFood()
 		{
+		// Call base to eat food off the ground.  If the wolf was
+		// already fed, or found no food, do nothing further here.
 		if(this.isFed())
 			{
 			super.CheckForLooseFood();
@@ -66,12 +83,15 @@ public class BWREntityWolf extends EntityWolf
 		if(!this.isFed())
 			return;
 
+		// Do another search for loose items on the ground to find additional
+		// substances the wolves can consume as a recreational aphrodesiac.
 		List list = this.worldObj.getEntitiesWithinAABB(EntityItem.class,
 			AxisAlignedBB.getAABBPool().addOrModifyAABBInPool(this.posX - 2.5D,
 			this.posY - 1.0D, this.posZ - 2.5D, this.posX + 2.5D, this.posY + 1.0D, this.posZ + 2.5D));
          	if(!list.isEmpty())
 			for(int idx = 0; idx < list.size(); ++idx)
 				{
+				// Find out if the entity represents a stack of the correct item.
 				EntityItem ent = (EntityItem)list.get(idx);
 				ItemStack item = ent.func_92014_d();
 				if(ent.delayBeforeCanPickup > 0 || ent.isDead)
@@ -80,16 +100,21 @@ public class BWREntityWolf extends EntityWolf
 				if(id != mod_FCBetterThanWolves.fcItemBlastingOil.shiftedIndex)
 					continue;
 
+				// Set the dog as "on drugs."  In this state, it can breed while
+				// seated.  Potion effect is for visual purposes.
 				this.isOnDrugs = true;
 				this.setInLove(600);
 				this.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 600, 0));
 
+				// Consume one item from the stack.
 				item.stackSize--;
 				if(item.stackSize < 1)
 					ent.setDead();
 				break;
 				}
 
+		// If the wolf has succesfully consumed the aphrodesiac, we need to try to select
+		// a mate manually, because while seated, the AI is turned off and won't do it.
 		if(this.isOnDrugs && (this.entityToAttack == null))
 			{
 			list = this.worldObj.getEntitiesWithinAABB(EntityWolf.class,
@@ -98,7 +123,7 @@ public class BWREntityWolf extends EntityWolf
 				for(int idx = 0; idx < list.size(); ++idx)
 					{
 					EntityWolf wolf = (EntityWolf)list.get(idx);
-					if(wolf.isInLove())
+					if((wolf != this) && wolf.isInLove())
 						{
 						this.entityToAttack = wolf;
 						break;

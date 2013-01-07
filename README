@@ -140,6 +140,11 @@ Animals in the Desert:
 	grass, in full sunlight, if food is left out for them.  Combined
 	with animal cross-breeding, this makes desert-only superflat maps
 	playable.
+
+Wolf Breeding Automation:
+	When a certain organic chemical is fed to wolves with their
+	food, it will act as an aphrodisiac, making the wolves willing
+	to mate in awkward positions while under its influence.
 	
 Dung Block Automation:
 	Loose dung can now be stewed automatically into blocks.
