@@ -3,13 +3,10 @@ DEVELOPMENT TASKS
 ------------------------------------------------------------------------
 
 Renewable Blazes
-	- Use a "golem" construct to make them out of gold block, iron
-	  bars, and a head (possibly skeleton skull) and fire.
 	- Golems will consume fire in the nether to "breed" asexually,
 	  so they're sustainable without a spawner.
 	- Need to investigate making them NOT despawn under the right
 	  conditions, i.e. when they're being intentionally farmed.
-	- Remove blazes from animal cross-breeding.
 
 Obtainable Villagers
 	- Cross-breeding?
