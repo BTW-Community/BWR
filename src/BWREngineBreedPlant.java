@@ -183,10 +183,10 @@ public class BWREngineBreedPlant {
 		if(world.getBlockId(x, y, z) > 0)
 			return false;
 
-		// Plants need very high immediate light levels.  Fungus needs
-		// very low immediate light levels.  These will be stricter than
-		// the requirements necessary for normal survival, and will
-		// determine whether we try to grow plants or fungi.
+		// Check for appropriate light levels.  These pivot at the 8/9
+		// boundary to be consistent with mob spawning logic and
+		// ender specs, so an immersion-breaking light measuring method
+		// is not required.
 		int[][] blockTypes = null;
 		List<int[]>[] evoTree = null;
 		boolean isFungus = false;

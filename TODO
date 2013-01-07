@@ -2,6 +2,16 @@
 DEVELOPMENT TASKS
 ------------------------------------------------------------------------
 
+Wolf Breeding Bugs:
+	- Make wolves not fed after they've left drugged love mode.
+	- Woles on drugs should explode if damaged.
+	- Baby wolves on drugs should only get speed effect, not enter
+	  love mode.
+	- Drugged wolves, on coming down off drugs, should probably
+	  eject something like Foul Food (vomit/diarrhea) to add
+	  filtering challenge.
+	- Drugged wolf counter should be independent from love
+
 Renewable Blazes
 	- Golems will consume fire in the nether to "breed" asexually,
 	  so they're sustainable without a spawner.
@@ -32,6 +42,13 @@ Mob Spawners
 	  useable for cobblegen.
 	- Create an alternative to spawners for mossygen...?
 	  Maybe nether portals create mossy too, in some way.
+	- A device made of a companion cube surrounded by SFS.
+	  Apply redstone power atop each of the SFS blocks.
+	  Companion soul will be sent BACK to alternate
+	  dimension from which mobs come (turning it into wool),
+	  and mossy cobble radiation is emitted.  Creates an
+	  incentive to auto-farm companion cubes.
+	  - Catch-22 BD needed to make CC to make Mossy for BD!?
 
 Snow/Ice
 	- Peltier effect cooler using gold block -> repeater ->
