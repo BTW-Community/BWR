@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 # ==============================================================================
-# Copyright (C)2012 by Aaron Suen <warr1024@gmail.com>
+# Copyright (C)2013 by Aaron Suen <warr1024@gmail.com>
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal

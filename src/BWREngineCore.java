@@ -1,5 +1,5 @@
 // ==========================================================================
-// Copyright (C)2012 by Aaron Suen <warr1024@gmail.com>
+// Copyright (C)2013 by Aaron Suen <warr1024@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -39,7 +39,7 @@ public class BWREngineCore
 	// Central mod name and copyright strings.
 	public static final String BWR_PRODUCT = "Better With Renewables";
 	public static final String BWR_ABBREV = "BWR";
-	public static final String BWR_COPYRIGHT = "(C)2012, MIT License.  https://gitorious.org/bwr";
+	public static final String BWR_COPYRIGHT = "(C)2013, MIT License.  https://gitorious.org/bwr";
 
 	// Latest version announcement string, set by the auto update check thread.
 	public static volatile String versionUpdateAlert = null;
