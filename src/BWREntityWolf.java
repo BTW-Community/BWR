@@ -69,6 +69,20 @@ public class BWREntityWolf extends EntityWolf
 		return this.isOnDrugs || super.getWearingBreedingHarness();
 		}
 
+	// Called when unloading chunk and/or serializing entity.
+	public void writeToNBT(NBTTagCompound tag)
+		{
+		super.writeToNBT(tag);
+		tag.setBoolean("isOnDrugs", this.isOnDrugs);
+		}
+
+	// Called when loading chunk and/or deserializing entity.
+	public void readFromNBT(NBTTagCompound tag)
+		{
+		super.readFromNBT(tag);
+		isOnDrugs = tag.getBoolean("isOnDrugs");
+		}
+
 	// Called by BTW mod code to make wolves eat loose food off the ground
 	// when hungry.
 	public void CheckForLooseFood()
