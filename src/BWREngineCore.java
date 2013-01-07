@@ -211,6 +211,7 @@ public class BWREngineCore
 		replaceBlock(BlockSoulSand.class, BWRBlockSoulSand.class);
 		replaceBlock(BlockRedstoneWire.class, BWRBlockRedstoneWire.class);
 		replaceBlock(BlockTallGrass.class, BWRBlockTallGrass.class);
+		replaceBlock(BlockSkull.class, BWRBlockSkull.class);
 
 		// After replacing blocks, some tool items have references to the old blocks by reference instead
 		// of by ID in their list of blocks against which they're effective.  Search through and replace all

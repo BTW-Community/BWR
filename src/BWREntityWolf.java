@@ -25,7 +25,8 @@ package net.minecraft.src;
 import java.util.List;
 import java.util.Random;
 
-// Replacement animal class that supports cross-breeding.
+// Replacement wolf class that supports cross-breeding, and breeding
+// automation.
 public class BWREntityWolf extends EntityWolf
 	{
 	// True if the wolf is "on drugs," which allows it to mate
