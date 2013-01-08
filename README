@@ -127,7 +127,8 @@ Domesticated Blazes:
 	bars, an artificial blaze can be created.  These blazes do not
 	despawn, though they are not exactly tame either.  When fed an
 	appropriate fuel, blazes can reproduce asexually, giving birth
-	to another blaze in nearby fire.
+	to another blaze in nearby fire.  Blazes will only reproduce
+	in the Nether.
 
 Plant Crossbreeding:
 	A highly fertile space, left unplanted, will encourage the

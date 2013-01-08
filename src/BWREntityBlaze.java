@@ -83,57 +83,72 @@ public class BWREntityBlaze extends EntityBlaze
 			return;
 			}
 
-		// Select a random nearby block and check to see if it's fire.
+		// Select a random nearby block.
 		int x = MathHelper.floor_double(this.posX) + this.rand.nextInt(5) - 2;
 		int y = MathHelper.floor_double(this.posY) + this.rand.nextInt(5) - 2;
 		int z = MathHelper.floor_double(this.posZ) + this.rand.nextInt(5) - 2;
-		int blockid = this.worldObj.getBlockId(x, y, z);
-		if((blockid == Block.fire.blockID) || (blockid == mod_FCBetterThanWolves.fcBlockFireStoked.blockID))
+
+		// Make sure the block is in a Hell biome; blazes can be created
+		// in the overworld, but not farmed there.  Set a breeding delay if this
+		// happens to reduce the cost of running this code when this condition
+		// is not likely to change, except in rare circumstances.
+		if(!(this.worldObj.getWorldChunkManager().getBiomeGenAt(x, z) instanceof BiomeGenHell))
 			{
-			// Search for a nearby fuel item that can be consumed to create a new blaze.
-			// Blazes can "eat off the floor" in a slightly larger volume (vertically)
-			// due to their flight abilities.
-			List list = this.worldObj.getEntitiesWithinAABB(EntityItem.class,
-				this.boundingBox.expand(2F, 2F, 2F));
-			if(!list.isEmpty())
-				for(int idx = 0; idx < list.size(); idx++)
-				{
-				// Find out if the entity represents a stack of the correct item.
-				EntityItem ent = (EntityItem)list.get(idx);
-				ItemStack item = ent.func_92014_d();
-				if(ent.delayBeforeCanPickup > 0 || ent.isDead)
-					continue;
-				int id = item.itemID;
-				if((id != mod_FCBetterThanWolves.fcItemBlastingOil.shiftedIndex)
-					&& (id != mod_FCBetterThanWolves.fcNethercoal.shiftedIndex)
-					&& (id != mod_FCBetterThanWolves.fcCoalDust.shiftedIndex)
-					&& (id != Item.coal.shiftedIndex))
-					continue;
+			this.breedDelay = 6000;
+			return;
+			}
 
-				// Consume one item from the stack of fuel.
-				item.stackSize--;
-				if(item.stackSize < 1)
-					ent.setDead();
+		// Make sure the block is some kind of fire.  If not, no blaze can
+		// be born here.
+		int blockid = this.worldObj.getBlockId(x, y, z);
+		if((blockid != Block.fire.blockID) && (blockid != mod_FCBetterThanWolves.fcBlockFireStoked.blockID))
+			return;
 
-				// Consume the fire block.
-				this.worldObj.setBlockAndMetadataWithNotify(x, y, z, 0, 0);
+		// Search for a nearby fuel item that can be consumed to create a new blaze.
+		// Blazes can "eat off the floor" in a slightly larger volume (vertically)
+		// due to their flight abilities.
+		List list = this.worldObj.getEntitiesWithinAABB(EntityItem.class,
+			this.boundingBox.expand(2F, 2F, 2F));
+		if(!list.isEmpty())
+			for(int idx = 0; idx < list.size(); idx++)
+			{
+			// Find out if the entity represents a stack of the correct item.
+			EntityItem ent = (EntityItem)list.get(idx);
+			ItemStack item = ent.func_92014_d();
+			if(ent.delayBeforeCanPickup > 0 || ent.isDead)
+				continue;
+			int id = item.itemID;
+			if((id != mod_FCBetterThanWolves.fcItemBlastingOil.shiftedIndex)
+				&& (id != mod_FCBetterThanWolves.fcNethercoal.shiftedIndex)
+				&& (id != mod_FCBetterThanWolves.fcCoalDust.shiftedIndex)
+				&& (id != Item.coal.shiftedIndex))
+				continue;
 
-				// Create a new blaze where the fire block was.
-				BWREntityBlaze blaze = new BWREntityBlaze(this.worldObj);
-				blaze.isArtificial = this.isArtificial;
-				blaze.setLocationAndAngles(x + 0.5D, y, z + 0.5D, this.rotationYaw, this.rotationPitch);
-				this.worldObj.spawnEntityInWorld(blaze);
+			// Consume one item from the stack of fuel.
+			item.stackSize--;
+			if(item.stackSize < 1)
+				ent.setDead();
 
-				// Play sound and visual effects.
-				for(int i = 0; i < 3; i++)
-					this.worldObj.playAuxSFX(2004, x, y, z, 0);
-				this.worldObj.playAuxSFX(2222, x, y, z, 0);
-				this.worldObj.playSoundAtEntity(blaze, blaze.getDeathSound(), blaze.getSoundVolume(),
-					(this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-				}
+			// Consume the fire block.
+			this.worldObj.setBlockAndMetadataWithNotify(x, y, z, 0, 0);
+
+			// Create a new blaze where the fire block was.
+			BWREntityBlaze blaze = new BWREntityBlaze(this.worldObj);
+			blaze.isArtificial = this.isArtificial;
+			blaze.setLocationAndAngles(x + 0.5D, y, z + 0.5D, this.rotationYaw, this.rotationPitch);
+			this.worldObj.spawnEntityInWorld(blaze);
+
+			// Play sound and visual effects.
+			for(int i = 0; i < 3; i++)
+				this.worldObj.playAuxSFX(2004, x, y, z, 0);
+			this.worldObj.playAuxSFX(2222, x, y, z, 0);
+			this.worldObj.playSoundAtEntity(blaze, blaze.getDeathSound(), blaze.getSoundVolume(),
+				(this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
 
 			// Delay before breeding again.
 			this.breedDelay = 6000;
+
+			break;
 			}
 		}
 	}
