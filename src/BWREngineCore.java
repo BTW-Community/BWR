@@ -243,6 +243,7 @@ public class BWREngineCore
 
 		// Add mapping for custom Dragon Orb entities.
 		mapEntityReplacement(EntityXPOrb.class, BWREntityXPOrb.class, "XPOrb", 2);
+		mapEntityReplacement(EntityBlaze.class, BWREntityBlaze.class, "Blaze", 61);
 		mapEntityReplacement(EntitySheep.class, BWREntitySheep.class, "Sheep", 91);
 		mapEntityReplacement(EntityPig.class, BWREntityPig.class, "Pig", 90);
 		mapEntityReplacement(EntityCow.class, BWREntityCow.class, "Cow", 92);

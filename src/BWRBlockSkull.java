@@ -71,7 +71,8 @@ public class BWRBlockSkull extends BlockSkull
 		world.notifyBlockChange(x, y - 2, z, 0);
 
 		// Spawn a new blaze where the golem construct was.
-		EntityBlaze blaze = new EntityBlaze(world);
+		BWREntityBlaze blaze = new BWREntityBlaze(world);
+		blaze.isArtificial = true;
 		blaze.setLocationAndAngles(x + 0.5D, y, z + 0.5D, 0, 0);
 		world.spawnEntityInWorld(blaze);
 
