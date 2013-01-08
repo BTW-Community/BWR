@@ -33,6 +33,9 @@ public class BWREntityBlaze extends EntityBlaze
 	// gold, so they should probably not despawn on their own.
 	public boolean isArtificial;
 
+	// After breeding, delay this time before breeding again.
+	public int breedDelay;
+
 	public BWREntityBlaze(World world)
 		{
 		super(world);
@@ -51,17 +54,31 @@ public class BWREntityBlaze extends EntityBlaze
 		{
 		super.readEntityFromNBT(tag);
 		this.isArtificial = tag.getBoolean("isArtificial");
+		this.breedDelay = tag.getInteger("breedDelay");
 		}
 	public void writeEntityToNBT(NBTTagCompound tag)
 		{
 		super.writeEntityToNBT(tag);
 		tag.setBoolean("isArtificial", this.isArtificial);
+		tag.setInteger("breedDelay", this.breedDelay);
 		}
 
 	// Called once per tick by world.
 	public void onLivingUpdate()
 		{
 		super.onLivingUpdate();
+
+		// Add fire resistance to artificia blazes so they produce a special
+		// particle effect to identify them (they're already immune to fire damage).
+		if(this.isArtificial)
+			this.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 60000, 0));
+
+		// Delay before breeding again.
+		if(this.breedDelay > 0)
+			{
+			this.breedDelay--;
+			return;
+			}
 
 		// Select a random nearby block and check to see if it's fire.
 		int x = MathHelper.floor_double(this.posX) + this.rand.nextInt(5) - 2;
@@ -81,7 +98,6 @@ public class BWREntityBlaze extends EntityBlaze
 
 				// Create a new blaze where the fire block was.
 				BWREntityBlaze blaze = new BWREntityBlaze(this.worldObj);
-				blaze.isArtificial = this.isArtificial;
 				blaze.setLocationAndAngles(x + 0.5D, y, z + 0.5D, this.rotationYaw, this.rotationPitch);
 				this.worldObj.spawnEntityInWorld(blaze);
 
@@ -92,6 +108,9 @@ public class BWREntityBlaze extends EntityBlaze
 				this.worldObj.playSoundAtEntity(blaze, blaze.getDeathSound(), blaze.getSoundVolume(),
 					(this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
 				}
+
+			// Delay before breeding again.
+			this.breedDelay = 200 + this.rand.nextInt(600);
 			}
 		}
 	}
