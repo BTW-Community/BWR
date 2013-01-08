@@ -3,14 +3,9 @@ DEVELOPMENT TASKS
 ------------------------------------------------------------------------
 
 Wolf Breeding Bugs:
-	- Make wolves not fed after they've left drugged love mode.
-	- Woles on drugs should explode if damaged.
-	- Baby wolves on drugs should only get speed effect, not enter
-	  love mode.
 	- Drugged wolves, on coming down off drugs, should probably
 	  eject something like Foul Food (vomit/diarrhea) to add
 	  filtering challenge.
-	- Drugged wolf counter should be independent from love
 
 Renewable Blazes
 	- Golems will consume fire in the nether to "breed" asexually,

@@ -31,12 +31,12 @@ public class BWREntityWolf extends EntityWolf
 	{
 	// True if the wolf is "on drugs," which allows it to mate
 	// while seated.
-	public boolean isOnDrugs;
+	public int onDrugsTime;
 
 	public BWREntityWolf(World world)
 		{
 		super(world);
-		this.isOnDrugs = false;
+		this.onDrugsTime = 0;
 		}
 
 	// Called once per tick by the world.
@@ -50,15 +50,25 @@ public class BWREntityWolf extends EntityWolf
 		// If love timer is empty, clear drugs out of system; if
 		// on drugs, and a mate has been chosen, trigger mating manually
 		// (since sitting disables the breeding AI).
-		if(!this.isInLove())
-			this.isOnDrugs = false;
-		else if(this.isOnDrugs && (this.entityToAttack != null))
+		if(this.onDrugsTime > 0)
 			{
-			double dx = this.posX - this.entityToAttack.posX;
-			double dy = this.posY - this.entityToAttack.posY;
-			double dz = this.posZ - this.entityToAttack.posZ;
-			this.attackEntity(this.entityToAttack,
-				(float)Math.sqrt(dx * dx + dy * dy + dz * dz));
+			if(this.isInLove() && (this.entityToAttack != null))
+				{
+				double dx = this.posX - this.entityToAttack.posX;
+				double dy = this.posY - this.entityToAttack.posY;
+				double dz = this.posZ - this.entityToAttack.posZ;
+				this.attackEntity(this.entityToAttack,
+					(float)Math.sqrt(dx * dx + dy * dy + dz * dz));
+				}
+
+			// Count down drug effects.  When they run out, wolf
+			// will be left hungry again.
+			this.onDrugsTime--;
+			if(this.onDrugsTime <= 0)
+				{
+				this.onDrugsTime = 0;
+				this.setFed(false);
+				}
 			}
 		}
 
@@ -66,21 +76,37 @@ public class BWREntityWolf extends EntityWolf
 	// harness so that babies bred will spawn halfway between parents.
 	public boolean getWearingBreedingHarness()
 		{
-		return this.isOnDrugs || super.getWearingBreedingHarness();
+		return ((this.health > 0) && (this.onDrugsTime > 0))
+			|| super.getWearingBreedingHarness();
 		}
 
 	// Called when unloading chunk and/or serializing entity.
 	public void writeToNBT(NBTTagCompound tag)
 		{
 		super.writeToNBT(tag);
-		tag.setBoolean("isOnDrugs", this.isOnDrugs);
+		tag.setInteger("onDrugsTime", this.onDrugsTime);
 		}
 
 	// Called when loading chunk and/or deserializing entity.
 	public void readFromNBT(NBTTagCompound tag)
 		{
 		super.readFromNBT(tag);
-		isOnDrugs = tag.getBoolean("isOnDrugs");
+		this.onDrugsTime = tag.getInteger("onDrugsTime");
+		}
+
+	// Called whenever the wolf takes damage.
+	public boolean attackEntityFrom(DamageSource source, int amount)
+		{
+		boolean r = super.attackEntityFrom(source, amount);
+		if(!this.isDead && (this.onDrugsTime > 0))
+			{
+			// Wolves high on blasting oil will explode when hurt.
+			this.onDrugsTime = 0;
+			this.health = 0;
+			this.onDeath(DamageSource.explosion);
+			this.worldObj.createExplosion((Entity)null, this.posX, this.posY, this.posZ, 2, true);
+			}
+		return r;
 		}
 
 	// Called by BTW mod code to make wolves eat loose food off the ground
@@ -95,7 +121,7 @@ public class BWREntityWolf extends EntityWolf
 			return;
 			}
 		super.CheckForLooseFood();
-		if(!this.isFed())
+		if(!this.isFed() || (this.onDrugsTime > 0))
 			return;
 
 		// Do another search for loose items on the ground to find additional
@@ -117,7 +143,7 @@ public class BWREntityWolf extends EntityWolf
 
 				// Set the dog as "on drugs."  In this state, it can breed while
 				// seated.  Potion effect is for visual purposes.
-				this.isOnDrugs = true;
+				this.onDrugsTime = 600;
 				this.setInLove(600);
 				this.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 600, 0));
 
@@ -130,7 +156,7 @@ public class BWREntityWolf extends EntityWolf
 
 		// If the wolf has succesfully consumed the aphrodesiac, we need to try to select
 		// a mate manually, because while seated, the AI is turned off and won't do it.
-		if(this.isOnDrugs && (this.entityToAttack == null))
+		if((this.onDrugsTime > 0) && (this.entityToAttack == null))
 			{
 			list = this.worldObj.getEntitiesWithinAABB(EntityWolf.class,
 				this.boundingBox.expand(3.5F, 3.5F, 3.5F));
