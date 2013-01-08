@@ -40,6 +40,9 @@ public class BWREntityBlaze extends EntityBlaze
 		{
 		super(world);
 		this.isArtificial = false;
+
+		// Newly-spawned blazes cannot reproduce for a while.
+		this.breedDelay = 6000;
 		}
 
 	// Only blazes that were artificially-created, and their descendants, are
@@ -68,7 +71,7 @@ public class BWREntityBlaze extends EntityBlaze
 		{
 		super.onLivingUpdate();
 
-		// Add fire resistance to artificia blazes so they produce a special
+		// Add fire resistance to artificial blazes so they produce a special
 		// particle effect to identify them (they're already immune to fire damage).
 		if(this.isArtificial)
 			this.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 60000, 0));
@@ -84,20 +87,40 @@ public class BWREntityBlaze extends EntityBlaze
 		int x = MathHelper.floor_double(this.posX) + this.rand.nextInt(5) - 2;
 		int y = MathHelper.floor_double(this.posY) + this.rand.nextInt(5) - 2;
 		int z = MathHelper.floor_double(this.posZ) + this.rand.nextInt(5) - 2;
-		int id = this.worldObj.getBlockId(x, y, z);
-		if((id == Block.fire.blockID) || (id == mod_FCBetterThanWolves.fcBlockFireStoked.blockID))
+		int blockid = this.worldObj.getBlockId(x, y, z);
+		if((blockid == Block.fire.blockID) || (blockid == mod_FCBetterThanWolves.fcBlockFireStoked.blockID))
 			{
-			// Limit population density by reducing, and eventually stopping, the
-			// reproduction rate based on nearby population.
-			List list = this.worldObj.getEntitiesWithinAABB(EntityBlaze.class,
-				this.boundingBox.expand(8F, 8F, 8F));
-			if((list.size() + 56) < this.rand.nextInt(64))
+			// Search for a nearby fuel item that can be consumed to create a new blaze.
+			// Blazes can "eat off the floor" in a slightly larger volume (vertically)
+			// due to their flight abilities.
+			List list = this.worldObj.getEntitiesWithinAABB(EntityItem.class,
+				this.boundingBox.expand(2F, 2F, 2F));
+			if(!list.isEmpty())
+				for(int idx = 0; idx < list.size(); idx++)
 				{
+				// Find out if the entity represents a stack of the correct item.
+				EntityItem ent = (EntityItem)list.get(idx);
+				ItemStack item = ent.func_92014_d();
+				if(ent.delayBeforeCanPickup > 0 || ent.isDead)
+					continue;
+				int id = item.itemID;
+				if((id != mod_FCBetterThanWolves.fcItemBlastingOil.shiftedIndex)
+					&& (id != mod_FCBetterThanWolves.fcNethercoal.shiftedIndex)
+					&& (id != mod_FCBetterThanWolves.fcCoalDust.shiftedIndex)
+					&& (id != Item.coal.shiftedIndex))
+					continue;
+
+				// Consume one item from the stack of fuel.
+				item.stackSize--;
+				if(item.stackSize < 1)
+					ent.setDead();
+
 				// Consume the fire block.
 				this.worldObj.setBlockAndMetadataWithNotify(x, y, z, 0, 0);
 
 				// Create a new blaze where the fire block was.
 				BWREntityBlaze blaze = new BWREntityBlaze(this.worldObj);
+				blaze.isArtificial = this.isArtificial;
 				blaze.setLocationAndAngles(x + 0.5D, y, z + 0.5D, this.rotationYaw, this.rotationPitch);
 				this.worldObj.spawnEntityInWorld(blaze);
 
@@ -110,7 +133,7 @@ public class BWREntityBlaze extends EntityBlaze
 				}
 
 			// Delay before breeding again.
-			this.breedDelay = 200 + this.rand.nextInt(600);
+			this.breedDelay = 6000;
 			}
 		}
 	}

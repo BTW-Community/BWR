@@ -122,6 +122,13 @@ Alternative Nether Portal Recipe:
 	the underworld by a dark ritual, requiring the reading of an
 	arcane incantation over the sacrifice of a holy man.
 
+Domesticated Blazes:
+	By placing a skull atop a heart of gold, surrounded by vertical
+	bars, an artificial blaze can be created.  These blazes do not
+	despawn, though they are not exactly tame either.  When fed an
+	appropriate fuel, blazes can reproduce asexually, giving birth
+	to another blaze in nearby fire.
+
 Plant Crossbreeding:
 	A highly fertile space, left unplanted, will encourage the
 	growth of mutations from adjacent species.  Nearly every kind of
@@ -144,7 +151,9 @@ Animals in the Desert:
 Wolf Breeding Automation:
 	When a certain organic chemical is fed to wolves with their
 	food, it will act as an aphrodisiac, making the wolves willing
-	to mate in awkward positions while under its influence.
+	to mate in awkward positions while under its influence.  The
+	chemical fed to wolves is volatile, as will the wolves also be
+	while under its influence.
 	
 Dung Block Automation:
 	Loose dung can now be stewed automatically into blocks.

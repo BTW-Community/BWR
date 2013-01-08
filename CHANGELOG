@@ -16,6 +16,15 @@ v0.25
 	- Wolf breeding automation added.  Wolves consume recreational
 	  chemicals when fed to them with their food, which acts as
 	  an aphrodesiac that makes them willing to mate while seated.
+	  The chemical used is volatile, and so are wolves while under
+	  its influence
+
+	- Artificial blazes can be created using a "golem" construct,
+	  and blazes created this way will not despawn like normal
+	  hostile mobs.
+
+	- Blazes can be bred by feeding them an appropriate fuel item.
+	  They can only give birth in nearby fire in the nether.
 
 
 v0.24
