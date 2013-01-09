@@ -2,6 +2,8 @@
 DEVELOPMENT TASKS
 ------------------------------------------------------------------------
 
+Fix animal xb issues when animals are standing on half-slab.
+
 Obtainable Villagers
 	- Cross-breeding?
 	- Some other method?
