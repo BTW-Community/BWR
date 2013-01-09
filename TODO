@@ -4,10 +4,6 @@ DEVELOPMENT TASKS
 
 Fix animal xb issues when animals are standing on half-slab.
 
-Obtainable Villagers
-	- Cross-breeding?
-	- Some other method?
-
 Wither Skeletons
 	Not available without a Nether Fort.
 	Cross-breed them?
@@ -35,6 +31,17 @@ Mob Spawners
 	  and mossy cobble radiation is emitted.  Creates an
 	  incentive to auto-farm companion cubes.
 	  - Catch-22 BD needed to make CC to make Mossy for BD!?
+
+Obtainable Fungus
+	- Hydrated fertile soil at light level 0 grows mushrooms
+	  spontaneously, very slowly...?
+	- Will allow us to bootstrap netherrack without needing
+	  to seed mushrooms into world.
+	- Perhaps disallow netherrack XB when not in nether?
+
+Obtainable Villagers
+	- Cross-breeding?
+	- Some other method?
 
 Snow/Ice
 	- Peltier effect cooler using gold block -> repeater ->
