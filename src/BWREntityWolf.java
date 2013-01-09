@@ -124,6 +124,10 @@ public class BWREntityWolf extends EntityWolf
 		if(!this.isFed() || (this.onDrugsTime > 0))
 			return;
 
+		// Wolves will not consume drugs if they are not capable of mating after.
+		if(this.getGrowingAge() != 0)
+			return;
+
 		// Do another search for loose items on the ground to find additional
 		// substances the wolves can consume as a recreational aphrodesiac.
 		List list = this.worldObj.getEntitiesWithinAABB(EntityItem.class,
