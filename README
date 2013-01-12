@@ -125,7 +125,7 @@ Alternative Nether Portal Recipe:
 Domesticated Blazes:
 	By placing a skull atop a heart of gold, surrounded by vertical
 	bars, an artificial blaze can be created.  These blazes do not
-	despawn, though they are not exactly tame either.  When fed an
+	de-spawn, though they are not exactly tame either.  When fed an
 	appropriate fuel, blazes can reproduce asexually, giving birth
 	to another blaze in nearby fire.  Blazes will only reproduce
 	in the Nether.
@@ -143,11 +143,11 @@ Animal Crossbreeding:
 	environment to be a more suitable habitat for that species.
 	Some mutations, however, will be dangerous abominations.
 
-Animals in the Desert:
+Forced Animal Spawning:
 	A couple of species animals can now spawn, very rarely, on tall
-	grass, in full sunlight, if food is left out for them.  Combined
-	with animal cross-breeding, this makes desert-only superflat maps
-	playable.
+	grass, in full sunlight, if food is left out for them, and there
+	are no other animals nearby.  Combined with animal cross-
+	breeding, this makes desert-only custom map playable.
 
 Wolf Breeding Automation:
 	When a certain organic chemical is fed to wolves with their
