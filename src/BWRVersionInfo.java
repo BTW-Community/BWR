@@ -26,8 +26,8 @@ package net.minecraft.src;
 // been separated out from BWREngineCore to make update checking easier.
 public class BWRVersionInfo
 	{
-	public static final String BWR_VERSION = "0.26.0441";
+	public static final String BWR_VERSION = "0.26.0442";
 
 	// True if this is a development version, false if it's a public release.
-	public static final boolean BWR_IS_DEV = true;
+	public static final boolean BWR_IS_DEV = false;
 	}
