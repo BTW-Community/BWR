@@ -1,3 +1,9 @@
+v0.26
+	- Fix for animal cross-breeding when animals are on half-slab,
+	  which is commonly done because animal XB is done in dark
+	  conditions.
+
+
 v0.25
 	- Buff spontaneous animal spawning.  It no longer requires a
 	  desert biome, doesn't take as long, and now consumes one loose

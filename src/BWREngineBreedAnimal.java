@@ -230,7 +230,7 @@ public class BWREngineBreedAnimal {
 		int cbx = MathHelper.floor_double(cx);
 		int cby = MathHelper.floor_double(cy);
 		int cbz = MathHelper.floor_double(cz);
-		int[] habitat = scanHabitat(world, cbx, cby, cbz);
+		int[] habitat = scanHabitat(world, cbx, cby + (((cy - cby) > 0.45) ? 1 : 0), cbz);
 
 		// Choose a random child species based on weighted probabilities
 		// If the tile into which the child would spawn is water, then
