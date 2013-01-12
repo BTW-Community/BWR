@@ -142,7 +142,7 @@ public class BWREntityWolf extends EntityWolf
 				if(ent.delayBeforeCanPickup > 0 || ent.isDead)
 					continue;
 				int id = item.itemID;
-				if(id != mod_FCBetterThanWolves.fcItemBlastingOil.shiftedIndex)
+				if(id != mod_FCBetterThanWolves.fcItemBlastingOil.itemID)
 					continue;
 
 				// Set the dog as "on drugs."  In this state, it can breed while

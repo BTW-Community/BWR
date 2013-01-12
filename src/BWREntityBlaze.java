@@ -118,10 +118,10 @@ public class BWREntityBlaze extends EntityBlaze
 			if(ent.delayBeforeCanPickup > 0 || ent.isDead)
 				continue;
 			int id = item.itemID;
-			if((id != mod_FCBetterThanWolves.fcItemBlastingOil.shiftedIndex)
-				&& (id != mod_FCBetterThanWolves.fcNethercoal.shiftedIndex)
-				&& (id != mod_FCBetterThanWolves.fcCoalDust.shiftedIndex)
-				&& (id != Item.coal.shiftedIndex))
+			if((id != mod_FCBetterThanWolves.fcItemBlastingOil.itemID)
+				&& (id != mod_FCBetterThanWolves.fcNethercoal.itemID)
+				&& (id != mod_FCBetterThanWolves.fcCoalDust.itemID)
+				&& (id != Item.coal.itemID))
 				continue;
 
 			// Consume one item from the stack of fuel.

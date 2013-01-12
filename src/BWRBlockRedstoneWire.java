@@ -109,7 +109,7 @@ public class BWRBlockRedstoneWire extends BlockRedstoneWire
 		if(world.rand.nextInt(10) == 0)
 			{
 			FCUtilsItem.EjectSingleItemWithRandomOffset(world, x, y, z,
-				Item.lightStoneDust.shiftedIndex, 0);
+				Item.lightStoneDust.itemID, 0);
 			return;
 			}
 

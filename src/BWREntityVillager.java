@@ -43,46 +43,46 @@ public class BWREntityVillager extends EntityVillager
 			boolean[] wl = new boolean[Item.itemsList.length];
 
 			// Villagers can buy items for emeralds.
-			wl[Item.emerald.shiftedIndex] = true;
+			wl[Item.emerald.itemID] = true;
 
 			// Villagers can sell only finished products, nothing
 			// made of gold or diamond, and no raw materials.
 			// All meats must be cooked (no tallow sources).
-			wl[Item.shears.shiftedIndex] = true;
-			wl[Item.shovelSteel.shiftedIndex] = true;
-			wl[Item.pickaxeSteel.shiftedIndex] = true;
-			wl[Item.axeSteel.shiftedIndex] = true;
-			wl[Item.flintAndSteel.shiftedIndex] = true;
-			wl[Item.appleRed.shiftedIndex] = true;
-			wl[Item.swordSteel.shiftedIndex] = true;
-			wl[Item.swordWood.shiftedIndex] = true;
-			wl[Item.shovelWood.shiftedIndex] = true;
-			wl[Item.pickaxeWood.shiftedIndex] = true;
-			wl[Item.axeWood.shiftedIndex] = true;
-			wl[Item.swordStone.shiftedIndex] = true;
-			wl[Item.shovelStone.shiftedIndex] = true;
-			wl[Item.pickaxeStone.shiftedIndex] = true;
-			wl[Item.axeStone.shiftedIndex] = true;
-			wl[Item.hoeWood.shiftedIndex] = true;
-			wl[Item.hoeStone.shiftedIndex] = true;
-			wl[Item.hoeSteel.shiftedIndex] = true;
-			wl[Item.bread.shiftedIndex] = true;
-			wl[Item.helmetLeather.shiftedIndex] = true;
-			wl[Item.plateLeather.shiftedIndex] = true;
-			wl[Item.legsLeather.shiftedIndex] = true;
-			wl[Item.bootsLeather.shiftedIndex] = true;
-			wl[Item.helmetChain.shiftedIndex] = true;
-			wl[Item.plateChain.shiftedIndex] = true;
-			wl[Item.legsChain.shiftedIndex] = true;
-			wl[Item.bootsChain.shiftedIndex] = true;
-			wl[Item.helmetSteel.shiftedIndex] = true;
-			wl[Item.plateSteel.shiftedIndex] = true;
-			wl[Item.legsSteel.shiftedIndex] = true;
-			wl[Item.bootsSteel.shiftedIndex] = true;
-			wl[Item.saddle.shiftedIndex] = true;
-			wl[Item.fishCooked.shiftedIndex] = true;
-			wl[Item.chickenCooked.shiftedIndex] = true;
-			wl[Item.expBottle.shiftedIndex] = true;
+			wl[Item.shears.itemID] = true;
+			wl[Item.shovelSteel.itemID] = true;
+			wl[Item.pickaxeSteel.itemID] = true;
+			wl[Item.axeSteel.itemID] = true;
+			wl[Item.flintAndSteel.itemID] = true;
+			wl[Item.appleRed.itemID] = true;
+			wl[Item.swordSteel.itemID] = true;
+			wl[Item.swordWood.itemID] = true;
+			wl[Item.shovelWood.itemID] = true;
+			wl[Item.pickaxeWood.itemID] = true;
+			wl[Item.axeWood.itemID] = true;
+			wl[Item.swordStone.itemID] = true;
+			wl[Item.shovelStone.itemID] = true;
+			wl[Item.pickaxeStone.itemID] = true;
+			wl[Item.axeStone.itemID] = true;
+			wl[Item.hoeWood.itemID] = true;
+			wl[Item.hoeStone.itemID] = true;
+			wl[Item.hoeSteel.itemID] = true;
+			wl[Item.bread.itemID] = true;
+			wl[Item.helmetLeather.itemID] = true;
+			wl[Item.plateLeather.itemID] = true;
+			wl[Item.legsLeather.itemID] = true;
+			wl[Item.bootsLeather.itemID] = true;
+			wl[Item.helmetChain.itemID] = true;
+			wl[Item.plateChain.itemID] = true;
+			wl[Item.legsChain.itemID] = true;
+			wl[Item.bootsChain.itemID] = true;
+			wl[Item.helmetSteel.itemID] = true;
+			wl[Item.plateSteel.itemID] = true;
+			wl[Item.legsSteel.itemID] = true;
+			wl[Item.bootsSteel.itemID] = true;
+			wl[Item.saddle.itemID] = true;
+			wl[Item.fishCooked.itemID] = true;
+			wl[Item.chickenCooked.itemID] = true;
+			wl[Item.expBottle.itemID] = true;
 
 			tradingWhitelist = wl;
 			}
@@ -221,7 +221,7 @@ public class BWREntityVillager extends EntityVillager
 		// scroll, and the villager is a Priest, and on fire, then try to create a
 		// nether portal.
 		ItemStack tool = player.inventory.getCurrentItem();
-		if((tool != null) && (tool.itemID == mod_FCBetterThanWolves.fcArcaneScroll.shiftedIndex)
+		if((tool != null) && (tool.itemID == mod_FCBetterThanWolves.fcArcaneScroll.itemID)
 			&& (this.getProfession() == 2) && this.isBurning())
 			{
 			int bx = MathHelper.floor_double(this.posX);

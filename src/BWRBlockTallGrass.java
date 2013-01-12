@@ -75,9 +75,9 @@ public class BWRBlockTallGrass extends BlockTallGrass
 			ItemStack stack = item.func_92014_d();
 			if(stack.stackSize < 1)
 				continue;
-			if(stack.itemID == Item.wheat.shiftedIndex)
+			if(stack.itemID == Item.wheat.itemID)
 				animal = new EntitySheep(world);
-			else if(stack.itemID == Item.carrot.shiftedIndex)
+			else if(stack.itemID == Item.carrot.itemID)
 				animal = new EntityPig(world);
 			if(animal != null)
 				{
