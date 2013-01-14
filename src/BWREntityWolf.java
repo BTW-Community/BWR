@@ -138,7 +138,7 @@ public class BWREntityWolf extends EntityWolf
 				{
 				// Find out if the entity represents a stack of the correct item.
 				EntityItem ent = (EntityItem)list.get(idx);
-				ItemStack item = ent.func_92014_d();
+				ItemStack item = ent.func_92059_d();
 				if(ent.delayBeforeCanPickup > 0 || ent.isDead)
 					continue;
 				int id = item.itemID;
