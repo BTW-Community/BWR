@@ -3,6 +3,10 @@ v0.26
 	  which is commonly done because animal XB is done in dark
 	  conditions.
 
+	- Fix villagers sometimes not producing a new trade when the
+	  old one is used, and having to exhaust all trades first before
+	  getting a new one.
+
 
 v0.25
 	- Buff spontaneous animal spawning.  It no longer requires a

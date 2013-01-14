@@ -95,7 +95,7 @@ public class BWREntityVillager extends EntityVillager
 
 		// Search the villager's trade list and remove any contraband
 		// recipes.  Determine if there is at least one trade that is
-		// not exhausted.
+		// not used.
 		MerchantRecipeList merch = this.getRecipes(null);
 		boolean hasTrade = false;
 		for(int i = merch.size() - 1; i >= 0; i--)
@@ -103,7 +103,7 @@ public class BWREntityVillager extends EntityVillager
 			MerchantRecipe mr = (MerchantRecipe)merch.get(i);
 			if(!tradingWhitelist[mr.getItemToSell().itemID])
 				merch.remove(i);
-			else if(!mr.func_82784_g())
+			else if(mr.writeToTags().getInteger("uses") == 0)
 				hasTrade = true;
 			}
 
