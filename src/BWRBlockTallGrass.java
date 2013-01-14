@@ -72,7 +72,7 @@ public class BWRBlockTallGrass extends BlockTallGrass
 			EntityItem item = (EntityItem)found.get(i);
 			if(item.isDead)
 				continue;
-			ItemStack stack = item.func_92014_d();
+			ItemStack stack = item.func_92059_d();
 			if(stack.stackSize < 1)
 				continue;
 			if(stack.itemID == Item.wheat.itemID)
