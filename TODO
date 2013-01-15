@@ -2,6 +2,15 @@
 DEVELOPMENT TASKS
 ------------------------------------------------------------------------
 
+Villager Trading Fixes
+	Using a surrogate to create fresh trades is breaking because
+	trades being copied back do not replace existing trades.  This
+	may not be possible, though, as we cannot replace trades that
+	are not exhausted.  Try to figure out how this works in vanilla
+	and come up with something more compatible.  Instead of the
+	timer, perhaps keep a running count of trades that need to be
+	replaced.
+
 Wither Skeletons
 	Not available without a Nether Fort.
 	Cross-breed them?
