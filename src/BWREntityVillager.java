@@ -33,6 +33,12 @@ public class BWREntityVillager extends EntityVillager
 	// whose output is not one of the items on this list will be blocked.
 	private static boolean[] tradingWhitelist;
 
+	// Time counter for resetting merchant recipes after the last trade
+	// gets blacklisted and blocked, to allow the standard code enough
+	// time to add its own recipes.
+	final int RECIPE_RETRY_MAX = 60;
+	private int recipeRetryTime;
+
 	public BWREntityVillager(World world)
 		{
 		super(world);
@@ -102,10 +108,23 @@ public class BWREntityVillager extends EntityVillager
 			{
 			MerchantRecipe mr = (MerchantRecipe)merch.get(i);
 			if(!tradingWhitelist[mr.getItemToSell().itemID])
+				{
+				recipeRetryTime = 0;
 				merch.remove(i);
+				}
 			else if(mr.writeToTags().getInteger("uses") == 0)
 				hasTrade = true;
 			}
+
+		// Wait a minimum amount of time after blacklisting a trade, or
+		// loading the entity, before trying to add remedial recipes, as
+		// the standard villager code has its own delay before trying to add
+		// standard recipes.
+		if(recipeRetryTime >= RECIPE_RETRY_MAX)
+			return;
+		recipeRetryTime++;
+		if(recipeRetryTime < RECIPE_RETRY_MAX)
+			return;
 
 		// If all trades are exhausted, normally Vanilla would create a new
 		// trade, but it's possible that BWR blacklisted the trade, and the
@@ -131,7 +150,10 @@ public class BWREntityVillager extends EntityVillager
 				{
 				MerchantRecipe mr = (MerchantRecipe)smerch.get(i);
 				if(!tradingWhitelist[mr.getItemToSell().itemID])
+					{
+					recipeRetryTime = 0;
 					smerch.remove(i);
+					}
 				}
 
 			// Copy any valid trades from the surrogate back to the original.
