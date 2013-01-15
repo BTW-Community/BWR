@@ -33,15 +33,14 @@ public class BWREntityVillager extends EntityVillager
 	// whose output is not one of the items on this list will be blocked.
 	private static boolean[] tradingWhitelist;
 
-	// Time counter for resetting merchant recipes after the last trade
-	// gets blacklisted and blocked, to allow the standard code enough
-	// time to add its own recipes.
-	final int RECIPE_RETRY_MAX = 60;
-	private int recipeRetryTime;
+	// Number of recipes that were rejected contraband and need to be
+	// regenerated.
+	private int contrabandCount;
 
 	public BWREntityVillager(World world)
 		{
 		super(world);
+		this.contrabandCount = 0;
 
 		// If the trading whitelist is not initialized, initialize it.
 		if(tradingWhitelist == null)
@@ -94,6 +93,19 @@ public class BWREntityVillager extends EntityVillager
 			}
 		}
 
+	// Save/load the number of trades still pending replacement.
+	public void writeEntityToNBT(NBTTagCompound tag)
+		{
+		super.writeEntityToNBT(tag);
+		tag.setInteger("Contraband", this.contrabandCount);
+		}
+ 	public void readEntityFromNBT(NBTTagCompound tag)
+		{
+		super.readEntityFromNBT(tag);
+		if(tag.hasKey("Contraband"))
+			this.contrabandCount = tag.getInteger("Contraband");
+		}
+
 	// Called by entity AI subsystem.
 	protected void updateAITick()
 		{
@@ -109,21 +121,13 @@ public class BWREntityVillager extends EntityVillager
 			MerchantRecipe mr = (MerchantRecipe)merch.get(i);
 			if(!tradingWhitelist[mr.getItemToSell().itemID])
 				{
-				recipeRetryTime = 0;
+				this.contrabandCount++;
 				merch.remove(i);
 				}
-			else if(mr.writeToTags().getInteger("uses") == 0)
-				hasTrade = true;
 			}
 
-		// Wait a minimum amount of time after blacklisting a trade, or
-		// loading the entity, before trying to add remedial recipes, as
-		// the standard villager code has its own delay before trying to add
-		// standard recipes.
-		if(recipeRetryTime >= RECIPE_RETRY_MAX)
-			return;
-		recipeRetryTime++;
-		if(recipeRetryTime < RECIPE_RETRY_MAX)
+		// If we've replaced all contraband trades already, bail.
+		if(this.contrabandCount < 1)
 			return;
 
 		// If all trades are exhausted, normally Vanilla would create a new
@@ -150,15 +154,16 @@ public class BWREntityVillager extends EntityVillager
 				{
 				MerchantRecipe mr = (MerchantRecipe)smerch.get(i);
 				if(!tradingWhitelist[mr.getItemToSell().itemID])
-					{
-					recipeRetryTime = 0;
 					smerch.remove(i);
-					}
 				}
 
 			// Copy any valid trades from the surrogate back to the original.
 			for(int i = smerch.size() - 1; i >= 0; i--)
-				merch.add(smerch.get(i));
+				{
+				merch.addToListWithCheck((MerchantRecipe)smerch.get(i));
+				if((--this.contrabandCount) < 1)
+					break;
+				}
 
 			surrogate.setDead();
 			}
