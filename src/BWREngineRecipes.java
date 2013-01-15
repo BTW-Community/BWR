@@ -148,6 +148,14 @@ public class BWREngineRecipes {
 		// Netherrack can be created by mixing netherwart, cobblestone,
 		// and a source of souls (of which soul dust is renewable).
 		FCRecipes.AddCauldronRecipe(
+			new ItemStack(Block.netherrack, 8),
+			new ItemStack[]
+				{
+				new ItemStack(Block.cobblestone, 8, -1),
+				new ItemStack(Item.netherStalkSeeds, 8, -1),
+				new ItemStack(mod_FCBetterThanWolves.fcSoulUrn, 1, -1)
+				});
+		FCRecipes.AddCauldronRecipe(
 			new ItemStack[]
 				{
 				new ItemStack(Block.netherrack, 1),
@@ -158,14 +166,6 @@ public class BWREngineRecipes {
 				new ItemStack(Block.cobblestone, 1, -1),
 				new ItemStack(Item.netherStalkSeeds, 1, -1),
 				new ItemStack(mod_FCBetterThanWolves.fcSoulDust, 1, -1)
-				});
-		FCRecipes.AddCauldronRecipe(
-			new ItemStack(Block.netherrack, 8),
-			new ItemStack[]
-				{
-				new ItemStack(Block.cobblestone, 8, -1),
-				new ItemStack(Item.netherStalkSeeds, 8, -1),
-				new ItemStack(mod_FCBetterThanWolves.fcSoulUrn, 1, -1)
 				});
 
 		// Low-efficiency alternative way to obtain redstone from gold and hellfire.

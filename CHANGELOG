@@ -7,6 +7,10 @@ v0.26
 	  old one is used, and having to exhaust all trades first before
 	  getting a new one.
 
+	- Change order of Netherrack recipes so soul urns are consumed
+	  before soul dust, since this is more intuitive if both recipes
+	  are combined in the cauldron at the same time.
+
 
 v0.25
 	- Buff spontaneous animal spawning.  It no longer requires a
