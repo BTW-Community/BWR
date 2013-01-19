@@ -89,8 +89,10 @@ public class BWREngineBreedAnimal {
 			results[(id * 16) + meta]++;
 
 			// If the block is passable, record the depth at which we scanned it.
-			// If not, mark it so future passes will know not to continue.
-			if((id == 0) || !Block.blocksList[id].blockMaterial.isSolid())
+			// If not, mark it so future passes will know not to continue.  Blocks
+			// are passable if they are non-solid, or if they are not whole blocks
+			// e.g. fences or slabs that have air-gaps.
+			if((id == 0) || !Block.isNormalCube(id))
 				seen.put(key, depth);
 			else
 				seen.put(key, prev = MAX_SCAN_DEPTH);

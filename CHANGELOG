@@ -11,6 +11,10 @@ v0.26
 	  before soul dust, since this is more intuitive if both recipes
 	  are combined in the cauldron at the same time.
 
+	- Change animal xb to be a little more intuitive, and make
+	  slabs, fences, and other non-solid but permeable-to-air blocks
+	  "transparent" to the habitat scan.
+
 
 v0.25
 	- Buff spontaneous animal spawning.  It no longer requires a
