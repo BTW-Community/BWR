@@ -69,7 +69,7 @@ Multiplayer Server Installation
 1. Download Better With Renewables:
 	- Official site: https://gitorious.org/bwr
 	- Git clone: https://git.gitorious.org/bwr/bwr.git
-	- For users not using git, downloads of latest
+	- For users not using git, downloads of the latest
 	  development version are at:
 	    https://gitorious.org/bwr/bwr/trees/release
 	- Unpack the archive into a location of your choice.
