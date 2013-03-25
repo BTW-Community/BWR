@@ -20,7 +20,7 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
-BTW=BTWMod4-56.zip
+BTW=BTWMod4-62.zip
 MCP=mcp726a.zip
 SVR=minecraft_server.jar
 
@@ -50,6 +50,7 @@ mcp: tmp/btw_${SVR} ${MCP}
 	cd mcp &&\
 	unzip -o ../${MCP} &&\
 	cp -fR ../tmp/btw_${SVR} jars/minecraft_server.jar
+	patch -p0 -i mcp-patches.patch
 	perl -w mcppatch.pl
 	cd mcp &&\
 	python runtime/decompile.py --server --noreformat
