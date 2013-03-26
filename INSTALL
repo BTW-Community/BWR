@@ -61,6 +61,48 @@ Environment Setup on Windows
 	  mingw-get install msys-zip msys-unzip
 	
 
+========================================================================
+Environment Setup on OS X
+   (Verified on 10.8.2)
+------------------------------------------------------------------------
+
+1. Install Java from Apple:
+   follow the instructions here http://support.apple.com/kb/dl1572
+   Note this is for Java SE 6,  Java SE 7 may be usable, but the install
+      doesn't always setup the path properly when installed.
+      
+2. Install Xcode 4:
+   Open the App Store and search for Xcode
+   Install as you would any App from the store (it's free).
+   
+3. Install the command line tools:
+   Start XCode go to Preferences -> Downloads -> Components
+   Select Command Line Tools and click install
+   You can do the next step while this is downloading,
+      just keep the window open so you can make sure it installed.
+
+4. Download Better With Renewables
+   Go to File -> Source Control -> Repositories
+   Click on the + -> Checkout or Clone Repository...
+   Enter git://gitorious.org/bwr/bwr.git
+   Choose your save location..
+      This is not where you will run your minecraft server from,
+      just where you will build your server.jar
+   Once that is done I recommend using the release branch for stability.
+      Jump to the next step if you want to stick with the master branch.
+      Note: as of writing this the release branch was still at
+         BTW version 4.56
+   Expand the bwr Repository, select remotes
+   Expand origin, select release
+   Click Track Branch, check 'Automatically switch to this branch' and
+      click create
+   
+5. Continue the standard BWR installation:
+   *Make sure that the command line tools have finished downloading 
+      and installing.
+   You may now double click on the bwr folder in the repository to open
+   the folder you checked it out to and go to Step 2 of the
+   Multiplayer Server Installation section
 
 ========================================================================
 Multiplayer Server Installation
@@ -113,7 +155,7 @@ Multiplayer Server Installation
 5. Run make:
 	- Open a shell.  In Linux, you can use any terminal of your
 	  choice.  In Windows, you should open the MSYS prompt
-	  (default C:\MinGW\MSYS\1.0\msys.bat).
+	  (default C:\MinGW\MSYS\1.0\msys.bat). In OS X, open Terminal.
 	- Change directory (cd) to the root of the project.
 	- Run "make clean && make".
 	- Minecraft server will be patched with BTW, then decompiled,
