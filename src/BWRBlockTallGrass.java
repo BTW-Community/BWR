@@ -26,7 +26,7 @@ import java.util.Random;
 import java.util.List;
 
 // Replacement class for grass blocks.
-public class BWRBlockTallGrass extends BlockTallGrass
+public class BWRBlockTallGrass extends FCBlockTallGrass
 	{
 	public BWRBlockTallGrass(int id, int txridx)
 		{
