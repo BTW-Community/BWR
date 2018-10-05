@@ -32,7 +32,7 @@ import java.util.regex.Matcher;
 import net.minecraft.server.MinecraftServer;
 
 // This class represents a background thread that checks the BWR website
-// (currently hosted on gitorious) for a new version of BWR on server startup,
+// (currently hosted on gitlab) for a new version of BWR on server startup,
 // and once again periodically as the server is running.  Any update version
 // information found is reported to the mod_BetterWithRenewables class, to be
 // announced to users as appropriate.
@@ -60,7 +60,7 @@ public class BWRThreadUpdateCheck extends Thread {
 			// Contact the BWR website and start downloading the latest source code
 			// for the BWREngineCore class, which contains the static hard-coded
 			// version numbers.
-			URL Url = new URL("https://gitorious.org/bwr/bwr/blobs/raw/release/src/BWRVersionInfo.java");
+			URL Url = new URL("https://gitlab.com/btwbwr/bwr/raw/master/src/BWRVersionInfo.java");
 			URLConnection URLConn = Url.openConnection();
 			URLConn.setUseCaches(false);
 			BufferedReader BR = new BufferedReader(new InputStreamReader(URLConn.getInputStream()));
