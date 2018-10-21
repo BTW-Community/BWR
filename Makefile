@@ -33,7 +33,7 @@ dock: ${SVR} ${MCP} ${BTW}
 
 bwr.zip: src/* hooks/* hooks.pl mcp tmp/jar tmp/btw
 	cp -fR src/* mcp/src/minecraft_server/net/minecraft/src/
-	perl -w hooks.pl
+	perl -w hooks.pl hooks/*.pl
 	rm -rf mcp/bin
 	cd mcp &&\
 	python2.7 runtime/recompile.py --server
@@ -52,9 +52,8 @@ mcp: tmp/mc_btw.jar mcp.zip
 	mkdir -p mcp
 	cd mcp &&\
 	unzip -o ../mcp.zip  &&\
-	cp -fR ../tmp/mc_btw.jar jars/minecraft_server.jar
-	cd mcp &&\
-	python2.7 runtime/decompile.py --server --noreformat
+	cp -fR ../tmp/mc_btw.jar jars/minecraft_server.jar &&\
+	python2.7 runtime/decompile.py --server --noreformat --norecompile
 
 tmp/mc_btw.jar: tmp/btw tmp/jar
 	mkdir -p tmp/btwjar

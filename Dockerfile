@@ -8,9 +8,7 @@ RUN apt-get install -y make
 RUN apt-get install -y patch
 RUN apt-get install -y libdigest-md5-perl
 RUN useradd -m user
-RUN chown -R user /home/user
 WORKDIR /home/user
-USER user
 ARG SVR
 COPY $SVR svr.zip
 ARG MCP
@@ -22,3 +20,9 @@ COPY hooks.pl .
 COPY checkbin.pl .
 COPY src src
 COPY Makefile .
+RUN chown -R user /home/user
+USER user
+RUN make tmp/jar
+RUN make tmp/btw
+RUN make tmp/mc_btw.jar
+RUN make mcp

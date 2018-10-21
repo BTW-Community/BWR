@@ -19,13 +19,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # ------------------------------------------------------------------------------
-# Hooks that need to be installed into base classes for Better With Renewables.
 
-: src/World.java 7caacc4ace8a446b679723e469fc5204
-BWREngineCore.getInstance().initialize();
+srcload "AxisAlignedBB.java";
 
-: src/World.java ac21e31c83bddcfd956fb477b92376ee
-par1Entity = BWREngineCore.getInstance().transformEntityOnSpawn(par1Entity);
-
-: src/ServerConfigurationManager.java 432b0349a2432a7cf8ed4180845248bb
-BWREngineCore.getInstance().serverPlayerConnectionInitialized(var7, par2EntityPlayerMP);
+my $pos = srcfind('929c315a5285db8e17cbe8355b9b8511');
+my $ind = srcindent($pos);
+while(srcread($pos) =~ m#^\Q$ind\E\s*\S#) {
+	srcwrite($pos, 1);
+}
