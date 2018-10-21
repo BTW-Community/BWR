@@ -45,7 +45,7 @@ do {
 	sub srcload {
 		srcsaveauto();
 		($fpath) = @_;
-		$fpath = "mcp/src/minecraft_server/net/minecraft/src/$fpath";
+		$fpath = "tmp/mcp/src/minecraft_server/net/minecraft/src/$fpath";
 		warn("srcload: $fpath\n");
 		my $actual = -s "$fpath.orig" ? "$fpath.orig" : $fpath;
 		open(my $fh, "<", $actual) or die("$actual: $!");

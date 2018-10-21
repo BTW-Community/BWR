@@ -31,29 +31,34 @@ dock: ${SVR} ${MCP} ${BTW}
 		--build-arg SVR="${SVR}" \
 		--tag bwr:latest .
 
-bwr.zip: src/* hooks/* hooks.pl mcp tmp/jar tmp/btw
-	cp -fR src/* mcp/src/minecraft_server/net/minecraft/src/
-	perl -w hooks.pl hooks/*.pl
-	rm -rf mcp/bin
-	cd mcp &&\
+bwr.zip: src/* hooks/* hooks.pl tmp/mcp tmp/jar tmp/btw
+	cp -fR src/* tmp/mcp/src/minecraft_server/net/minecraft/src/
+	perl -w hooks.pl hooks/BWR.*.pl
+	rm -rf tmp/mcp/bin
+	cd tmp/mcp &&\
 	python2.7 runtime/recompile.py --server
 	perl -w checkbin.pl
-	cd mcp &&\
+	cd tmp/mcp &&\
 	python2.7 runtime/reobfuscate.py --server
 	mkdir -p tmp/bwrjar
 	cd tmp/bwrjar &&\
 	cp -fR ../jar/* . &&\
 	cp -fR ../btw/MINECRAFT_SERVER-JAR/* . &&\
-	cp -fR ../../mcp/reobf/minecraft_server/* . &&\
+	cp -fR ../mcp/reobf/minecraft_server/* . &&\
 	zip -r -1 ../../bwr_btw_${SVR}.new *
 	mv -f bwr_btw_${SVR}.new bwr_btw_${SVR}
 
-mcp: tmp/mc_btw.jar mcp.zip
-	mkdir -p mcp
-	cd mcp &&\
-	unzip -o ../mcp.zip  &&\
-	cp -fR ../tmp/mc_btw.jar jars/minecraft_server.jar &&\
+tmp/mcp: tmp/mc_btw.jar mcp.zip
+	mkdir -p tmp/mcp
+	cd tmp/mcp &&\
+	unzip -o ../../mcp.zip  &&\
+	cp -fR ../mc_btw.jar jars/minecraft_server.jar &&\
 	python2.7 runtime/decompile.py --server --noreformat --norecompile
+	perl -w hooks.pl hooks/MCP.*.pl
+	rm -rf tmp/mcp/bin
+	cd tmp/mcp &&\
+	python2.7 runtime/recompile.py --server
+	perl -w checkbin.pl
 
 tmp/mc_btw.jar: tmp/btw tmp/jar
 	mkdir -p tmp/btwjar

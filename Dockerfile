@@ -25,4 +25,4 @@ USER user
 RUN make tmp/jar
 RUN make tmp/btw
 RUN make tmp/mc_btw.jar
-RUN make mcp
+RUN make tmp/mcp

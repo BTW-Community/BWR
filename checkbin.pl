@@ -30,7 +30,7 @@ use warnings;
 
 # Paths for the compiled output, and BWR-specific
 # source, respectively.
-my $binpath = 'mcp/bin/minecraft_server/net/minecraft/src';
+my $binpath = 'tmp/mcp/bin/minecraft_server/net/minecraft/src';
 my $srcpath = 'src';
 
 my %classes = ( );
