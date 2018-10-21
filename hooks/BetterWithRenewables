@@ -1,5 +1,5 @@
 # ==============================================================================
-# Copyright (C)2013 by Aaron Suen <warr1024@gmail.com>
+# Copyright (C)2018 by Aaron Suen <warr1024@gmail.com>
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -21,11 +21,11 @@
 # ------------------------------------------------------------------------------
 # Hooks that need to be installed into base classes for Better With Renewables.
 
-: src/World.java 43a2251845cc22fe9c9f213b6f9dad98
+: src/World.java 7caacc4ace8a446b679723e469fc5204
 BWREngineCore.getInstance().initialize();
 
 : src/World.java ac21e31c83bddcfd956fb477b92376ee
-   par1Entity = BWREngineCore.getInstance().transformEntityOnSpawn(par1Entity);
+par1Entity = BWREngineCore.getInstance().transformEntityOnSpawn(par1Entity);
 
-: src/ServerConfigurationManager.java 4e716b9b8fdd574849aa84e8d51335f4
-BWREngineCore.getInstance().serverPlayerConnectionInitialized(var6, par2EntityPlayerMP);
+: src/ServerConfigurationManager.java 432b0349a2432a7cf8ed4180845248bb
+BWREngineCore.getInstance().serverPlayerConnectionInitialized(var7, par2EntityPlayerMP);
