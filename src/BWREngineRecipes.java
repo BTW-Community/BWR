@@ -1,5 +1,5 @@
 // ==========================================================================
-// Copyright (C)2013 by Aaron Suen <warr1024@gmail.com>
+// Copyright (C)2018 by Aaron Suen <warr1024@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -47,8 +47,8 @@ public class BWREngineRecipes {
 			new ItemStack[]
 				{
 				new ItemStack(tool, 1, -1),
-				new ItemStack(mod_FCBetterThanWolves.fcPotash, qty * 8, -1),
-				new ItemStack(mod_FCBetterThanWolves.fcConcentratedHellfire, qty, -1),
+				new ItemStack(FCBetterThanWolves.fcPotash, qty * 8, -1),
+				new ItemStack(FCBetterThanWolves.fcConcentratedHellfire, qty, -1),
 				});
 		}
 	public void addDiamondRecoveryRecipe(Block block, int qty)
@@ -58,8 +58,8 @@ public class BWREngineRecipes {
 			new ItemStack[]
 				{
 				new ItemStack(block, 1, -1),
-				new ItemStack(mod_FCBetterThanWolves.fcPotash, qty * 8, -1),
-				new ItemStack(mod_FCBetterThanWolves.fcConcentratedHellfire, qty, -1),
+				new ItemStack(FCBetterThanWolves.fcPotash, qty * 8, -1),
+				new ItemStack(FCBetterThanWolves.fcConcentratedHellfire, qty, -1),
 				});
 		}
 
@@ -94,7 +94,7 @@ public class BWREngineRecipes {
 			new ItemStack[]
 				{
 				new ItemStack(Block.cloth, 8 * qty, indmg),
-				new ItemStack(mod_FCBetterThanWolves.fcSoap, 2 * qty, -1),
+				new ItemStack(FCBetterThanWolves.fcSoap, 2 * qty, -1),
 				new ItemStack(Item.clay, 1, -1)
 				});
 		FCRecipes.AddStokedCauldronRecipe(
@@ -106,7 +106,7 @@ public class BWREngineRecipes {
 			new ItemStack[]
 				{
 				new ItemStack(Block.cloth, 8 * qty, indmg),
-				new ItemStack(mod_FCBetterThanWolves.fcSoap, 2 * qty, -1)
+				new ItemStack(FCBetterThanWolves.fcSoap, 2 * qty, -1)
 				});
 		}
 
@@ -153,19 +153,19 @@ public class BWREngineRecipes {
 				{
 				new ItemStack(Block.cobblestone, 8, -1),
 				new ItemStack(Item.netherStalkSeeds, 8, -1),
-				new ItemStack(mod_FCBetterThanWolves.fcSoulUrn, 1, -1)
+				new ItemStack(FCBetterThanWolves.fcSoulUrn, 1, -1)
 				});
 		FCRecipes.AddCauldronRecipe(
 			new ItemStack[]
 				{
 				new ItemStack(Block.netherrack, 1),
-				new ItemStack(mod_FCBetterThanWolves.fcSawDust, 1),
+				new ItemStack(FCBetterThanWolves.fcSawDust, 1),
 				},
 			new ItemStack[]
 				{
 				new ItemStack(Block.cobblestone, 1, -1),
 				new ItemStack(Item.netherStalkSeeds, 1, -1),
-				new ItemStack(mod_FCBetterThanWolves.fcSoulDust, 1, -1)
+				new ItemStack(FCBetterThanWolves.fcSoulDust, 1, -1)
 				});
 
 		// Low-efficiency alternative way to obtain redstone from gold and hellfire.
@@ -177,14 +177,14 @@ public class BWREngineRecipes {
 			new ItemStack[] { new ItemStack(Item.redstone, 63, 0) },
 			new ItemStack[]
 				{
-				new ItemStack(mod_FCBetterThanWolves.fcConcentratedHellfire, 9, -1),
+				new ItemStack(FCBetterThanWolves.fcConcentratedHellfire, 9, -1),
 				new ItemStack(Item.ingotGold, 3, -1)
 				});
 		FCRecipes.AddMillStoneRecipe(
 			new ItemStack[] { new ItemStack(Item.redstone, 7, 0) },
 			new ItemStack[]
 				{
-				new ItemStack(mod_FCBetterThanWolves.fcConcentratedHellfire, 1, -1),
+				new ItemStack(FCBetterThanWolves.fcConcentratedHellfire, 1, -1),
 				new ItemStack(Item.goldNugget, 3, -1)
 				});
 
@@ -196,17 +196,17 @@ public class BWREngineRecipes {
 		FCRecipes.AddMillStoneRecipe(
 			new ItemStack[]
 				{
-				new ItemStack(mod_FCBetterThanWolves.fcHellfireDust, 1, 0),
-				new ItemStack(mod_FCBetterThanWolves.fcSoulDust, 1, 0)
+				new ItemStack(FCBetterThanWolves.fcHellfireDust, 1, 0),
+				new ItemStack(FCBetterThanWolves.fcSoulDust, 1, 0)
 				},
 			new ItemStack[]
 				{
-				new ItemStack(mod_FCBetterThanWolves.fcGroundNetherrack, 1, 0),
-				new ItemStack(mod_FCBetterThanWolves.fcSawDust, 1, 0)
+				new ItemStack(FCBetterThanWolves.fcGroundNetherrack, 1, 0),
+				new ItemStack(FCBetterThanWolves.fcSawDust, 1, 0)
 				});
 		FCRecipes.AddMillStoneRecipe(
-			new ItemStack[] { new ItemStack(mod_FCBetterThanWolves.fcHellfireDust, 1, 0) },
-			new ItemStack[] { new ItemStack(mod_FCBetterThanWolves.fcGroundNetherrack, 1, 0) });
+			new ItemStack[] { new ItemStack(FCBetterThanWolves.fcHellfireDust, 1, 0) },
+			new ItemStack[] { new ItemStack(FCBetterThanWolves.fcGroundNetherrack, 1, 0) });
 
 		// Dead bushes can be trivially created from oak saplings.
 		// Birch is the wrong color (and horizontally reversed), and pine
@@ -220,18 +220,18 @@ public class BWREngineRecipes {
 		// back up again so the leather can be tanned, preventing automatic tanning
 		// machines from jamming on a dung backlog.
 		FCRecipes.AddCauldronRecipe(
-			new ItemStack(mod_FCBetterThanWolves.fcAestheticOpaque, 1, FCBlockAestheticOpaque.m_iSubtypeDung),
-			new ItemStack[] { new ItemStack(mod_FCBetterThanWolves.fcDung, 9) });
+			new ItemStack(FCBetterThanWolves.fcAestheticOpaque, 1, FCBlockAestheticOpaque.m_iSubtypeDung),
+			new ItemStack[] { new ItemStack(FCBetterThanWolves.fcDung, 9) });
 		FCRecipes.AddCauldronRecipe(
 			new ItemStack[]
 				{
-				new ItemStack(mod_FCBetterThanWolves.fcTannedLeather, 1, 0),
-				new ItemStack(mod_FCBetterThanWolves.fcDung, 8, 0)
+				new ItemStack(FCBetterThanWolves.fcTannedLeather, 1, 0),
+				new ItemStack(FCBetterThanWolves.fcDung, 8, 0)
 				},
 			new ItemStack[]
 				{
-				new ItemStack(mod_FCBetterThanWolves.fcScouredLeather, 1, -1),
-				new ItemStack(mod_FCBetterThanWolves.fcAestheticOpaque, 1, FCBlockAestheticOpaque.m_iSubtypeDung)
+				new ItemStack(FCBetterThanWolves.fcScouredLeather, 1, -1),
+				new ItemStack(FCBetterThanWolves.fcAestheticOpaque, 1, FCBlockAestheticOpaque.m_iSubtypeDung)
 				});
 
 		// Allow the creation of webs for builds and aesthetic purposes.
@@ -249,13 +249,13 @@ public class BWREngineRecipes {
 			new ItemStack[]
 				{
 				new ItemStack(Item.diamond, 1),
-				new ItemStack(mod_FCBetterThanWolves.fcHellfireDust, 1)
+				new ItemStack(FCBetterThanWolves.fcHellfireDust, 1)
 				},
 			new ItemStack[]
 				{
 				new ItemStack(Item.ghastTear, 1, -1),
 				new ItemStack(Item.dyePowder, 1, 6),
-				new ItemStack(mod_FCBetterThanWolves.fcGroundNetherrack, 1, -1)
+				new ItemStack(FCBetterThanWolves.fcGroundNetherrack, 1, -1)
 				});
 		}
 	}

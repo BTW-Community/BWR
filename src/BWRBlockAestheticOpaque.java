@@ -1,5 +1,5 @@
 // ==========================================================================
-// Copyright (C)2013 by Aaron Suen <warr1024@gmail.com>
+// Copyright (C)2018 by Aaron Suen <warr1024@gmail.com>
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -67,7 +67,7 @@ public class BWRBlockAestheticOpaque extends FCBlockAestheticOpaque
 							for(int dz = -1; dz <= 1; dz++)
 								{
 								int b = world.getBlockId(x + dy, y - dy, z);
-								if(b == mod_FCBetterThanWolves.fcBlockFireStoked.blockID)
+								if(b == FCBetterThanWolves.fcBlockFireStoked.blockID)
 									heat += 3;
 								else if(b == Block.fire.blockID)
 									heat += 1;

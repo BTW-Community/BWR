@@ -1,5 +1,5 @@
 // ==========================================================================
-// Copyright (C)2013 by Aaron Suen <warr1024@gmail.com>
+// Copyright (C)2018 by Aaron Suen <warr1024@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -45,7 +45,7 @@ public class BWRBlockSkull extends BlockSkull
 			|| (world.getBlockId(x, y - 1, z + 1) != Block.fenceIron.blockID)
 			|| (world.getBlockId(x, y - 1, z - 1) != Block.fenceIron.blockID)
 			|| ((world.getBlockId(x, y - 2, z) != Block.fire.blockID)
-				&& (world.getBlockId(x, y - 2, z) != mod_FCBetterThanWolves.fcBlockFireStoked.blockID)))
+				&& (world.getBlockId(x, y - 2, z) != FCBetterThanWolves.fcBlockFireStoked.blockID)))
 			return;
 
 		// Set a special metadata flag on the skull block that prevents

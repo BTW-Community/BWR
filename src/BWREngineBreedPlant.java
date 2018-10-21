@@ -1,5 +1,5 @@
 // ==========================================================================
-// Copyright (C)2013 by Aaron Suen <warr1024@gmail.com>
+// Copyright (C)2018 by Aaron Suen <warr1024@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -98,7 +98,7 @@ public class BWREngineBreedPlant {
 			// 1: Wheat
 			new int[] { Block.crops.blockID, -1 },
 			// 2: Hemp
-			new int[] { mod_FCBetterThanWolves.fcHempCrop.blockID, -1 },
+			new int[] { FCBetterThanWolves.fcHempCrop.blockID, -1 },
 			// 3: Dandelion
 			new int[] { Block.plantYellow.blockID, -1 },
 
@@ -296,7 +296,7 @@ public class BWREngineBreedPlant {
 			{
 			// If the block below is farmland, try converting it back to dirt
 			// to see if the block can stay on dirt.
-			if((belowID == mod_FCBetterThanWolves.fcBlockFarmlandFertilized.blockID)
+			if((belowID == FCBetterThanWolves.fcBlockFarmlandFertilized.blockID)
 				|| (belowID == Block.tilledField.blockID))
 				{
 				// Save the old blockID and metadata; if the dirt attempt
@@ -337,7 +337,7 @@ public class BWREngineBreedPlant {
 				return false;
 				}
 			}
-		else if(belowID == mod_FCBetterThanWolves.fcBlockFarmlandFertilized.blockID)
+		else if(belowID == FCBetterThanWolves.fcBlockFarmlandFertilized.blockID)
 			{
 			// If the florum was able to stay, remove fertilization from farmland
 			// underneath.  Additionally, fungus will convert the block below
@@ -351,7 +351,7 @@ public class BWREngineBreedPlant {
 				newBelowID = Block.tilledField.blockID;
 			world.setBlockAndMetadata(x, y - 1, z, newBelowID, 0);
 			}
-		else if(belowID ==  mod_FCBetterThanWolves.fcPlanter.blockID)
+		else if(belowID ==  FCBetterThanWolves.fcPlanter.blockID)
 			{
 			// If the florum was able to stay, remove fertilization from planters
 			// underneath.  Additionally, tall grass / ferns will convert the

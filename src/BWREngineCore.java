@@ -1,5 +1,5 @@
 // ==========================================================================
-// Copyright (C)2013 by Aaron Suen <warr1024@gmail.com>
+// Copyright (C)2018 by Aaron Suen <warr1024@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -39,7 +39,7 @@ public class BWREngineCore
 	// Central mod name and copyright strings.
 	public static final String BWR_PRODUCT = "Better With Renewables";
 	public static final String BWR_ABBREV = "BWR";
-	public static final String BWR_COPYRIGHT = "(C)2013, MIT License.  https://gitlab.com/btwbwr";
+	public static final String BWR_COPYRIGHT = "(C)2018, MIT License.  https://gitlab.com/btwbwr";
 
 	// Latest version announcement string, set by the auto update check thread.
 	public static volatile String versionUpdateAlert = null;
@@ -204,9 +204,9 @@ public class BWREngineCore
 			
 		// Replace some upstream block definitions with our custom ones, so our
 		// custom logic is run for these blocks.
-		mod_FCBetterThanWolves.fcAestheticOpaque = replaceBlock(FCBlockAestheticOpaque.class, BWRBlockAestheticOpaque.class);
-		mod_FCBetterThanWolves.fcBlockFarmlandFertilized = replaceBlock(FCBlockFarmlandFertilized.class, BWRBlockFarmlandFertilized.class);
-		mod_FCBetterThanWolves.fcPlanter = replaceBlock(FCBlockPlanter.class, BWRBlockPlanter.class);
+		FCBetterThanWolves.fcAestheticOpaque = replaceBlock(FCBlockAestheticOpaque.class, BWRBlockAestheticOpaque.class);
+		FCBetterThanWolves.fcBlockFarmlandFertilized = replaceBlock(FCBlockFarmlandFertilized.class, BWRBlockFarmlandFertilized.class);
+		FCBetterThanWolves.fcPlanter = replaceBlock(FCBlockPlanter.class, BWRBlockPlanter.class);
 		replaceBlock(BlockLilyPad.class, BWRBlockLilyPad.class);
 		replaceBlock(BlockSoulSand.class, BWRBlockSoulSand.class);
 		replaceBlock(BlockRedstoneWire.class, BWRBlockRedstoneWire.class);
@@ -239,7 +239,7 @@ public class BWREngineCore
 			}
 			
 		// Replace upstream item definitions.
-		mod_FCBetterThanWolves.fcBreedingHarness = replaceItem(FCItemBreedingHarness.class, BWRItemBreedingHarness.class);
+		FCBetterThanWolves.fcBreedingHarness = replaceItem(FCItemBreedingHarness.class, BWRItemBreedingHarness.class);
 
 		// Add mapping for custom Dragon Orb entities.
 		mapEntityReplacement(EntityXPOrb.class, BWREntityXPOrb.class, "XPOrb", 2);

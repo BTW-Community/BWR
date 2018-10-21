@@ -1,5 +1,5 @@
 // ==========================================================================
-// Copyright (C)2013 by Aaron Suen <warr1024@gmail.com>
+// Copyright (C)2018 by Aaron Suen <warr1024@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -101,7 +101,7 @@ public class BWREntityBlaze extends EntityBlaze
 		// Make sure the block is some kind of fire.  If not, no blaze can
 		// be born here.
 		int blockid = this.worldObj.getBlockId(x, y, z);
-		if((blockid != Block.fire.blockID) && (blockid != mod_FCBetterThanWolves.fcBlockFireStoked.blockID))
+		if((blockid != Block.fire.blockID) && (blockid != FCBetterThanWolves.fcBlockFireStoked.blockID))
 			return;
 
 		// Search for a nearby fuel item that can be consumed to create a new blaze.
@@ -118,9 +118,9 @@ public class BWREntityBlaze extends EntityBlaze
 			if(ent.delayBeforeCanPickup > 0 || ent.isDead)
 				continue;
 			int id = item.itemID;
-			if((id != mod_FCBetterThanWolves.fcItemBlastingOil.itemID)
-				&& (id != mod_FCBetterThanWolves.fcNethercoal.itemID)
-				&& (id != mod_FCBetterThanWolves.fcCoalDust.itemID)
+			if((id != FCBetterThanWolves.fcItemBlastingOil.itemID)
+				&& (id != FCBetterThanWolves.fcNethercoal.itemID)
+				&& (id != FCBetterThanWolves.fcCoalDust.itemID)
 				&& (id != Item.coal.itemID))
 				continue;
 

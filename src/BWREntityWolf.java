@@ -1,5 +1,5 @@
 // ==========================================================================
-// Copyright (C)2013 by Aaron Suen <warr1024@gmail.com>
+// Copyright (C)2018 by Aaron Suen <warr1024@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -142,7 +142,7 @@ public class BWREntityWolf extends EntityWolf
 				if(ent.delayBeforeCanPickup > 0 || ent.isDead)
 					continue;
 				int id = item.itemID;
-				if(id != mod_FCBetterThanWolves.fcItemBlastingOil.itemID)
+				if(id != FCBetterThanWolves.fcItemBlastingOil.itemID)
 					continue;
 
 				// Set the dog as "on drugs."  In this state, it can breed while

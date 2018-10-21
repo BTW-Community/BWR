@@ -1,5 +1,5 @@
 // ==========================================================================
-// Copyright (C)2013 by Aaron Suen <warr1024@gmail.com>
+// Copyright (C)2018 by Aaron Suen <warr1024@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -248,7 +248,7 @@ public class BWREntityVillager extends EntityVillager
 		// scroll, and the villager is a Priest, and on fire, then try to create a
 		// nether portal.
 		ItemStack tool = player.inventory.getCurrentItem();
-		if((tool != null) && (tool.itemID == mod_FCBetterThanWolves.fcArcaneScroll.itemID)
+		if((tool != null) && (tool.itemID == FCBetterThanWolves.fcArcaneScroll.itemID)
 			&& (this.getProfession() == 2) && this.isBurning())
 			{
 			int bx = MathHelper.floor_double(this.posX);

@@ -1,5 +1,5 @@
 // ==========================================================================
-// Copyright (C)2013 by Aaron Suen <warr1024@gmail.com>
+// Copyright (C)2018 by Aaron Suen <warr1024@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -68,7 +68,7 @@ public class BWREntityXPOrb extends EntityXPOrb
 		int by = MathHelper.floor_double(y);
 		int bz = MathHelper.floor_double(z);
 		if(isDead || !m_bNotPlayerOwned
-			|| (this.worldObj.getBlockId(bx, by, bz) != mod_FCBetterThanWolves.fcAestheticOpaque.blockID)
+			|| (this.worldObj.getBlockId(bx, by, bz) != FCBetterThanWolves.fcAestheticOpaque.blockID)
 			|| (this.worldObj.getBlockMetadata(bx, by, bz) != FCBlockAestheticOpaque.m_iSubtypeDung)
 			|| !soulPressBlocksAllowed[this.worldObj.getBlockId(bx - 1, by, bz)]
 			|| !soulPressBlocksAllowed[this.worldObj.getBlockId(bx + 1, by, bz)]

@@ -1,5 +1,5 @@
 // ==========================================================================
-// Copyright (C)2013 by Aaron Suen <warr1024@gmail.com>
+// Copyright (C)2018 by Aaron Suen <warr1024@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -50,7 +50,7 @@ public class BWRBlockRedstoneWire extends BlockRedstoneWire
 		// wire to concentrate sunlight into it, and that we have the requisite sunlight.
 		if((y >= 255)
 			|| world.provider.hasNoSky
-			|| (world.getBlockId(x, y + 1, z) != mod_FCBetterThanWolves.fcLens.blockID)
+			|| (world.getBlockId(x, y + 1, z) != FCBetterThanWolves.fcLens.blockID)
 			|| (world.getBlockMetadata(x, y + 1, z) != 0)
 			|| !world.isDaytime()
 			|| world.isRaining()
@@ -92,7 +92,7 @@ public class BWRBlockRedstoneWire extends BlockRedstoneWire
 		// has changed since the initial power injection.
 		if((y >= 255)
 			|| world.provider.hasNoSky
-			|| (world.getBlockId(x, y + 1, z) != mod_FCBetterThanWolves.fcLens.blockID)
+			|| (world.getBlockId(x, y + 1, z) != FCBetterThanWolves.fcLens.blockID)
 			|| (world.getBlockMetadata(x, y + 1, z) != 0)
 			|| !world.isDaytime()
 			|| world.isRaining()
