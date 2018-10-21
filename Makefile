@@ -58,7 +58,8 @@ tmp/mcp: tmp/mc_btw.jar mcp.zip
 	rm -rf tmp/mcp/bin
 	cd tmp/mcp &&\
 	python2.7 runtime/recompile.py --server
-	perl -w checkbin.pl
+	cd tmp/mcp &&\
+	python2.7 runtime/reobfuscate.py --server
 
 tmp/mc_btw.jar: tmp/btw tmp/jar
 	mkdir -p tmp/btwjar
