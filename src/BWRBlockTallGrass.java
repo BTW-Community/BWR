@@ -28,11 +28,10 @@ import java.util.List;
 // Replacement class for grass blocks.
 public class BWRBlockTallGrass extends FCBlockTallGrass
 	{
-	public BWRBlockTallGrass(int id, int txridx)
+	public BWRBlockTallGrass(int id)
 		{
-		super(id, txridx);
+		super(id);
 		this.setTickRandomly(true);
-		this.setRequiresSelfNotify();
 		}
 
 	// Called randomly by World.
@@ -55,7 +54,7 @@ public class BWRBlockTallGrass extends FCBlockTallGrass
 		// spontaneously here.
 		Double r = 32.0D;
 		List near = world.getEntitiesWithinAABB(EntityAnimal.class,
-			AxisAlignedBB.getAABBPool().addOrModifyAABBInPool(
+			AxisAlignedBB.getAABBPool().getAABB(
 			x - r, y - r, z - r, x + r, y + r, z + r));
 		if(near.size() > 0)
 			return;
@@ -65,7 +64,7 @@ public class BWRBlockTallGrass extends FCBlockTallGrass
 		// are available this way; all others must be cross-bred.
 		EntityAnimal animal = null;
 		List found = world.getEntitiesWithinAABB(EntityItem.class,
-			AxisAlignedBB.getAABBPool().addOrModifyAABBInPool(x - 2, y, z - 2, x + 3, y + 1, z + 3));
+			AxisAlignedBB.getAABBPool().getAABB(x - 2, y, z - 2, x + 3, y + 1, z + 3));
 		if((found != null) && (found.size() > 0))
 			for(int i = 0; i < found.size(); i++)
 			{

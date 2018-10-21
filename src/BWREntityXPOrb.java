@@ -83,7 +83,7 @@ public class BWREntityXPOrb extends EntityXPOrb
 		int xp = this.xpValue;
 		this.setDead();
 		List found = this.worldObj.getEntitiesWithinAABB(BWREntityXPOrb.class,
-			AxisAlignedBB.getAABBPool().addOrModifyAABBInPool(bx, by, bz, bx + 1, by + 1, bz + 1));
+			AxisAlignedBB.getAABBPool().getAABB(bx, by, bz, bx + 1, by + 1, bz + 1));
 		if((found != null) && (found.size() > 0))
 			for(int i = 0; i < found.size(); i++)
 				{
@@ -101,7 +101,7 @@ public class BWREntityXPOrb extends EntityXPOrb
 			{
 			// Burn all entities that are too close to the press.
 			List hurt = this.worldObj.getEntitiesWithinAABB(Entity.class,
-				AxisAlignedBB.getAABBPool().addOrModifyAABBInPool(bx - 2, by - 2, bz - 2, bx + 3, by + 4, bz + 3));
+				AxisAlignedBB.getAABBPool().getAABB(bx - 2, by - 2, bz - 2, bx + 3, by + 4, bz + 3));
 			if((hurt != null) && (hurt.size() > 0))
 				for(int i = 0; i < hurt.size(); i++)
 					{

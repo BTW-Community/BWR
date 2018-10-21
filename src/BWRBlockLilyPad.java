@@ -24,14 +24,13 @@ package net.minecraft.src;
 
 import java.util.Random;
 
-// Replacement class for Vanilla lilypad block that adds some new behavior.
-public class BWRBlockLilyPad extends BlockLilyPad
+// Replacement class for BTW lilypad block that adds some new behavior.
+public class BWRBlockLilyPad extends FCBlockLilyPad
 	{
-	public BWRBlockLilyPad(int id, int txridx)
+	public BWRBlockLilyPad(int id)
 		{
-		super(id, txridx);
+		super(id);
 		this.setTickRandomly(true);
-		this.setRequiresSelfNotify();
 		}
 
 	// Used by BlockFlower superclass code as a quick check if the

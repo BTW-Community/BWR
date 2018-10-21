@@ -62,8 +62,7 @@ public class BWREngineCore
 	// log a message to the server console log.
 	public void log(String message)
 		{
-		MinecraftServer.getServer();
-		MinecraftServer.logger.info(BWR_ABBREV + ": " + message);
+		MinecraftServer.getServer().logInfo(BWR_ABBREV + ": " + message);
 		}
 
 	// Find a block definition matching the old class type, and replace it with
@@ -88,23 +87,13 @@ public class BWREngineCore
 				log("Install " + newType.toString() + " @ " + index);
 				float hardness = block.blockHardness;
 				float resistance = block.blockResistance;
-				String blockName = block.getBlockName();
+				String blockName = block.getUnlocalizedName();
 				Block.blocksList[index] = null;
 				try
 					{
-					try
-						{
-						block = (Block)newType
-							.getConstructor(new Class[] { Integer.TYPE })
-							.newInstance(new Object[] { index });
-						}
-					catch(NoSuchMethodException ex)
-						{
-						int blockIndexInTexture = block.blockIndexInTexture;
-						block = (Block)newType
-							.getConstructor(new Class[] { Integer.TYPE, Integer.TYPE })
-							.newInstance(new Object[] { index, blockIndexInTexture });
-						}
+					block = (Block)newType
+						.getConstructor(new Class[] { Integer.TYPE })
+						.newInstance(new Object[] { index });
 					}
 				catch(NoSuchMethodException ex) { throw new RuntimeException(ex); }
 				catch(InvocationTargetException ex) { throw new RuntimeException(ex); }
@@ -112,7 +101,7 @@ public class BWREngineCore
 				catch(InstantiationException ex) { throw new RuntimeException(ex); }
 
 				// Preserve some stats that are defined outside of the constructor.
-				return block.setHardness(hardness).setResistance(resistance).setBlockName(blockName);
+				return block.setHardness(hardness).setResistance(resistance).setUnlocalizedName(blockName);
 				}
 			}
 

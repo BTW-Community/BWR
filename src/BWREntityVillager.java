@@ -54,12 +54,12 @@ public class BWREntityVillager extends EntityVillager
 			// made of gold or diamond, and no raw materials.
 			// All meats must be cooked (no tallow sources).
 			wl[Item.shears.itemID] = true;
-			wl[Item.shovelSteel.itemID] = true;
-			wl[Item.pickaxeSteel.itemID] = true;
-			wl[Item.axeSteel.itemID] = true;
+			wl[Item.shovelIron.itemID] = true;
+			wl[Item.pickaxeIron.itemID] = true;
+			wl[Item.axeIron.itemID] = true;
 			wl[Item.flintAndSteel.itemID] = true;
 			wl[Item.appleRed.itemID] = true;
-			wl[Item.swordSteel.itemID] = true;
+			wl[Item.swordIron.itemID] = true;
 			wl[Item.swordWood.itemID] = true;
 			wl[Item.shovelWood.itemID] = true;
 			wl[Item.pickaxeWood.itemID] = true;
@@ -70,7 +70,7 @@ public class BWREntityVillager extends EntityVillager
 			wl[Item.axeStone.itemID] = true;
 			wl[Item.hoeWood.itemID] = true;
 			wl[Item.hoeStone.itemID] = true;
-			wl[Item.hoeSteel.itemID] = true;
+			wl[Item.hoeIron.itemID] = true;
 			wl[Item.bread.itemID] = true;
 			wl[Item.helmetLeather.itemID] = true;
 			wl[Item.plateLeather.itemID] = true;
@@ -80,10 +80,10 @@ public class BWREntityVillager extends EntityVillager
 			wl[Item.plateChain.itemID] = true;
 			wl[Item.legsChain.itemID] = true;
 			wl[Item.bootsChain.itemID] = true;
-			wl[Item.helmetSteel.itemID] = true;
-			wl[Item.plateSteel.itemID] = true;
-			wl[Item.legsSteel.itemID] = true;
-			wl[Item.bootsSteel.itemID] = true;
+			wl[Item.helmetIron.itemID] = true;
+			wl[Item.plateIron.itemID] = true;
+			wl[Item.legsIron.itemID] = true;
+			wl[Item.bootsIron.itemID] = true;
 			wl[Item.saddle.itemID] = true;
 			wl[Item.fishCooked.itemID] = true;
 			wl[Item.chickenCooked.itemID] = true;

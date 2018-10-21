@@ -25,13 +25,12 @@ package net.minecraft.src;
 import java.util.Random;
 
 // Replacement class for Vanilla soul sand, which adds some new behavior.
-public class BWRBlockSoulSand extends BlockSoulSand
+public class BWRBlockSoulSand extends FCBlockSoulSand
 	{
-	public BWRBlockSoulSand(int id, int txridx)
+	public BWRBlockSoulSand(int id)
 		{
-		super(id, txridx);
+		super(id);
 		this.setTickRandomly(true);
-		this.setRequiresSelfNotify();
 		}
 
 	public void updateTick(World world, int x, int y, int z, Random r)

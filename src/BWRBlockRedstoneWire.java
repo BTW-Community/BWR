@@ -25,11 +25,11 @@ package net.minecraft.src;
 import java.util.Random;
 
 // Replacement class for redstone wire that adds glowstone creation recipe.
-public class BWRBlockRedstoneWire extends BlockRedstoneWire
+public class BWRBlockRedstoneWire extends FCBlockRedstoneWire
 	{
-	public BWRBlockRedstoneWire(int id, int txridx)
+	public BWRBlockRedstoneWire(int id)
 		{
-		super(id, txridx);
+		super(id);
 		this.setTickRandomly(false);
 		}
 

@@ -37,7 +37,6 @@ public class BWRBlockAestheticOpaque extends FCBlockAestheticOpaque
 		// Make sure this block is set to tick randomly, as certain
 		// subtypes (e.g. dung, hellfire) have custom BWR code.
 		this.setTickRandomly(true);
-		this.setRequiresSelfNotify();
 		}
 
 	// Called randomly by World.

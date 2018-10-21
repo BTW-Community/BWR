@@ -159,7 +159,7 @@ public class BWREngineRecipes {
 			new ItemStack[]
 				{
 				new ItemStack(Block.netherrack, 1),
-				new ItemStack(FCBetterThanWolves.fcSawDust, 1),
+				new ItemStack(FCBetterThanWolves.fcItemSawDust, 1),
 				},
 			new ItemStack[]
 				{
@@ -202,7 +202,7 @@ public class BWREngineRecipes {
 			new ItemStack[]
 				{
 				new ItemStack(FCBetterThanWolves.fcGroundNetherrack, 1, 0),
-				new ItemStack(FCBetterThanWolves.fcSawDust, 1, 0)
+				new ItemStack(FCBetterThanWolves.fcItemSawDust, 1, 0)
 				});
 		FCRecipes.AddMillStoneRecipe(
 			new ItemStack[] { new ItemStack(FCBetterThanWolves.fcHellfireDust, 1, 0) },

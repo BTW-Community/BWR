@@ -67,7 +67,7 @@ public class BWREntityWolf extends EntityWolf
 			if(this.onDrugsTime <= 0)
 				{
 				this.onDrugsTime = 0;
-				this.setFed(false);
+				this.SetHungerLevel(1);
 				}
 			}
 		}
@@ -103,7 +103,7 @@ public class BWREntityWolf extends EntityWolf
 			// Wolves high on blasting oil will explode when hurt.
 			this.onDrugsTime = 0;
 			this.health = 0;
-			this.onDeath(DamageSource.explosion);
+			this.onDeath(source.setExplosion());
 			this.worldObj.createExplosion((Entity)null, this.posX, this.posY, this.posZ, 2, true);
 			}
 		return r;
@@ -115,13 +115,13 @@ public class BWREntityWolf extends EntityWolf
 		{
 		// Call base to eat food off the ground.  If the wolf was
 		// already fed, or found no food, do nothing further here.
-		if(this.isFed())
+		if(this.IsFullyFed())
 			{
 			super.CheckForLooseFood();
 			return;
 			}
 		super.CheckForLooseFood();
-		if(!this.isFed() || (this.onDrugsTime > 0))
+		if(!this.IsFullyFed() || (this.onDrugsTime > 0))
 			return;
 
 		// Puppies do not consume drugs.
@@ -131,7 +131,7 @@ public class BWREntityWolf extends EntityWolf
 		// Do another search for loose items on the ground to find additional
 		// substances the wolves can consume as a recreational aphrodesiac.
 		List list = this.worldObj.getEntitiesWithinAABB(EntityItem.class,
-			AxisAlignedBB.getAABBPool().addOrModifyAABBInPool(this.posX - 2.5D,
+			AxisAlignedBB.getAABBPool().getAABB(this.posX - 2.5D,
 			this.posY - 1.0D, this.posZ - 2.5D, this.posX + 2.5D, this.posY + 1.0D, this.posZ + 2.5D));
          	if(!list.isEmpty())
 			for(int idx = 0; idx < list.size(); ++idx)
