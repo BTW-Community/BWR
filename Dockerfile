@@ -26,3 +26,4 @@ RUN make tmp/jar
 RUN make tmp/btw
 RUN make tmp/mc_btw.jar
 RUN make tmp/mcp
+RUN make bwr.zip

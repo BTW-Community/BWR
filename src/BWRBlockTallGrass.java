@@ -71,7 +71,7 @@ public class BWRBlockTallGrass extends FCBlockTallGrass
 			EntityItem item = (EntityItem)found.get(i);
 			if(item.isDead)
 				continue;
-			ItemStack stack = item.func_92059_d();
+			ItemStack stack = item.getEntityItem();
 			if(stack.stackSize < 1)
 				continue;
 			if(stack.itemID == Item.wheat.itemID)

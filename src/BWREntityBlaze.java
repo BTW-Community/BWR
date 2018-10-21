@@ -114,7 +114,7 @@ public class BWREntityBlaze extends EntityBlaze
 			{
 			// Find out if the entity represents a stack of the correct item.
 			EntityItem ent = (EntityItem)list.get(idx);
-			ItemStack item = ent.func_92059_d();
+			ItemStack item = ent.getEntityItem();
 			if(ent.delayBeforeCanPickup > 0 || ent.isDead)
 				continue;
 			int id = item.itemID;

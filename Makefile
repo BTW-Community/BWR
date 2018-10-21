@@ -30,6 +30,8 @@ dock: ${SVR} ${MCP} ${BTW}
 		--build-arg MCP="${MCP}" \
 		--build-arg SVR="${SVR}" \
 		--tag bwr:latest .
+	docker run -i --rm bwr:latest cat bwr.zip \
+		>bwr_btw_minecraft_server.jar
 
 bwr.zip: src/* hooks/* hooks.pl tmp/mcp tmp/jar tmp/btw
 	cp -fR src/* tmp/mcp/src/minecraft_server/net/minecraft/src/
@@ -45,8 +47,8 @@ bwr.zip: src/* hooks/* hooks.pl tmp/mcp tmp/jar tmp/btw
 	cp -fR ../jar/* . &&\
 	cp -fR ../btw/MINECRAFT_SERVER-JAR/* . &&\
 	cp -fR ../mcp/reobf/minecraft_server/* . &&\
-	zip -r -1 ../../bwr_btw_${SVR}.new *
-	mv -f bwr_btw_${SVR}.new bwr_btw_${SVR}
+	zip -r -1 ../../new.zip *
+	mv -f new.zip bwr.zip
 
 tmp/mcp: tmp/mc_btw.jar mcp.zip
 	mkdir -p tmp/mcp
@@ -60,6 +62,8 @@ tmp/mcp: tmp/mc_btw.jar mcp.zip
 	python2.7 runtime/recompile.py --server
 	cd tmp/mcp &&\
 	python2.7 runtime/reobfuscate.py --server
+	cd tmp/mcp &&\
+	python2.7 runtime/updatemd5.py --server
 
 tmp/mc_btw.jar: tmp/btw tmp/jar
 	mkdir -p tmp/btwjar
