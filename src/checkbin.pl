@@ -31,7 +31,7 @@ use warnings;
 # Paths for the compiled output, and BWR-specific
 # source, respectively.
 my $binpath = 'tmp/mcp/bin/minecraft_server/net/minecraft/src';
-my $srcpath = 'src';
+my $srcpath = 'mod';
 
 my %classes = ( );
 my $dh;

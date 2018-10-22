@@ -24,69 +24,16 @@ BTW=BTWMod4-ABCEEFABc.zip
 MCP=mcp751.zip
 SVR=minecraft_server.jar
 
-dock: ${SVR} ${MCP} ${BTW}
-	docker build \
-		--build-arg BTW="${BTW}" \
-		--build-arg MCP="${MCP}" \
-		--build-arg SVR="${SVR}" \
-		--tag bwr:latest .
-	mkdir -p tmp
-	docker run -i --rm -v `pwd`/tmp:/home/user/tmp bwr:latest make tmp/bwr.zip
-	[ -s tmp/bwr.zip ] && ln -f tmp/bwr.zip bwr_btw_minecraft_server.jar
-
-tmp/bwr.zip: src/* hooks/* hooks.pl tmp/mcp tmp/jar tmp/btw
-	cp -fR src/* tmp/mcp/src/minecraft_server/net/minecraft/src/
-	perl -w hooks.pl hooks/BWR.*.pl
-	rm -rf tmp/mcp/bin
-	cd tmp/mcp &&\
-	python2.7 runtime/recompile.py --server
-	perl -w checkbin.pl
-	cd tmp/mcp &&\
-	python2.7 runtime/reobfuscate.py --server
-	mkdir -p tmp/bwrjar
-	cd tmp/bwrjar &&\
-	cp -fR ../jar/* . &&\
-	cp -fR ../btw/MINECRAFT_SERVER-JAR/* . &&\
-	cp -fR ../mcp/reobf/minecraft_server/* . &&\
-	zip -r -1 ../new.zip *
-	mv -f tmp/new.zip tmp/bwr.zip
-
-tmp/mcp: tmp/mc_btw.jar mcp.zip
-	mkdir -p tmp/mcp
-	cd tmp/mcp &&\
-	unzip -o ../../mcp.zip  &&\
-	cp -fR ../mc_btw.jar jars/minecraft_server.jar &&\
-	python2.7 runtime/decompile.py --server --noreformat --norecompile
-	perl -w hooks.pl hooks/MCP.*.pl
-	rm -rf tmp/mcp/bin
-	cd tmp/mcp &&\
-	python2.7 runtime/recompile.py --server
-	cd tmp/mcp &&\
-	python2.7 runtime/reobfuscate.py --server
-	cd tmp/mcp &&\
-	python2.7 runtime/updatemd5.py --server
-
-tmp/mc_btw.jar: tmp/btw tmp/jar
-	mkdir -p tmp/btwjar
-	cd tmp/btwjar &&\
-	cp -fR ../jar/* . &&\
-	cp -fR ../btw/MINECRAFT_SERVER-JAR/* . &&\
-	zip -r -1 ../mc_btw.jar *
-
-tmp/btw:
-	rm -rf tmp/btw
-	mkdir -p tmp/btw
-	cd tmp/btw &&\
-	unzip -o ../../btw.zip
-
-tmp/jar:
-	rm -rf tmp/jar
-	mkdir -p tmp/jar
-	cd tmp/jar &&\
-	unzip -o ../../svr.zip
-
-clean:
-	rm -rf bwr_btw_minecraft_server.jar tmp
+build: ${SVR} ${MCP} ${BTW} dockimg
+	cd src && docker build --tag bwr:latest .
+	docker rm -f bwr ||:
+	docker run -d --name bwr bwr:latest tail -f /dev/null
+	docker exec -i bwr sh -c 'cat >svr.zip' <${SVR}
+	docker exec -i bwr sh -c 'cat >btw.zip' <${BTW}
+	docker exec -i bwr sh -c 'cat >mcp.zip' <${MCP}
+	docker exec -i bwr make
+	docker exec -i bwr cat bwr.zip >bwr_btw_minecraft_server.jar
+	[ -s bwr_btw_minecraft_server.jar ]
 
 ${SVR}:
 	#------------------------------------------------------------------------ 
