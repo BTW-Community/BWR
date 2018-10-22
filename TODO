@@ -1,29 +1,29 @@
-========================================================================
-DEVELOPMENT TASKS
 ------------------------------------------------------------------------
 
-Allow Animal Summoning with Light Blocks?
-	- Could still be consistent with hemp.
-	- Light blocks don't have to be a substitute for sunlight for
-	  glowstone synth.
-	- Would help out Pfilson on 404 world.
-	- Would work out well with Violent Sun mixin.
+Docker Stuff:
+	- Separate build processes.
+		- One for development of the mod itself.
+		- One for release to public.
+			- Use Docker Hub?
+	- Helper GUI, node express?
+	- Update install instructions.
 
-Add smallest magma cubes to animal xb, as they don't drop shit, and
-	can set parents comically on fire.
+Testing:
+	- Create a comprehensive feature test plan.
+	- Test all features.
+	- Build a test world?
+
+Known/Suspected Broken Features:
+	- Soul Press
+	- Dung Washer
+	- Cauldron Recipes
+	- Lossy Grinding (multi-ingredient recipes)
 
 Make Plant XB Less Boring
 	- Creepers near plant xb increas probability of parent/child
 	  species relative to clone, i.e. they accelerate mutation.
 	- Creepers can sometimes be bred from plant xb.
 	- Make creeper heads an xb result...?
-
-Wither Skeletons
-	Not available without a Nether Fort.
-	Cross-breed them?
-	Some ritual to convert a regular skeleton? e.g. throw coal
-	dust at them?  Require netherbrick in ritual?
-	Poison a skeleton with splash potion?
 
 Mob Spawners
 	Need to be able to make these in custom maps, minimally
@@ -46,27 +46,6 @@ Mob Spawners
 	  incentive to auto-farm companion cubes.
 	  - Catch-22 BD needed to make CC to make Mossy for BD!?
 
-Obtainable Fungus
-	- Hydrated fertile soil at light level 0 grows mushrooms
-	  spontaneously, very slowly...?
-	- Will allow us to bootstrap netherrack without needing
-	  to seed mushrooms into world.
-	- Perhaps disallow netherrack XB when not in nether?
-
-Obtainable Villagers
-	- Cross-breeding?
-	- Some other method?
-
-Snow/Ice
-	- Peltier effect cooler using gold block -> repeater ->
-	  gold block, pass current through repeater.  Freezes
-	  water near input side, evaporates water or sets fires
-	  near the output side.
-	- Ice is collectable using a BD.
-	- Grind ice in millstone into snowballs.
-	- Allows access to snow golems and snowballs on maps with
-	  no tundra.
-
 End Portal
 	- Endstone as a prereq, as it can now be gathered from
 	  endermen, even in the overworld.
@@ -84,19 +63,4 @@ Dragon Egg
 	- Create replacement ender crystals; placing enough of these
 	  close to each other in the end will summon the dragon.
 
-Nether Quartz
-
-
-
-========================================================================
-DOCUMENTATION/SUPPORT TASKS
 ------------------------------------------------------------------------
-
-Update BWR OP on Sargunster's BTW Forums with latest README data.
-
-Test building and create instructions for OSX.
-
-Create an extremely specific install guide for Windows users who have
-limited understanding of operating systems basics that are necessary to
-follow the process in INSTALL.  A guide with pictures and specific
-per-click instructions would help, plus possibly a video.
