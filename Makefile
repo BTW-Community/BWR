@@ -30,10 +30,11 @@ dock: ${SVR} ${MCP} ${BTW}
 		--build-arg MCP="${MCP}" \
 		--build-arg SVR="${SVR}" \
 		--tag bwr:latest .
-	docker run -i --rm bwr:latest cat bwr.zip \
-		>bwr_btw_minecraft_server.jar
+	mkdir -p tmp
+	docker run -i --rm -v `pwd`/tmp:/home/user/tmp bwr:latest make tmp/bwr.zip
+	[ -s tmp/bwr.zip ] && ln -f tmp/bwr.zip bwr_btw_minecraft_server.jar
 
-bwr.zip: src/* hooks/* hooks.pl tmp/mcp tmp/jar tmp/btw
+tmp/bwr.zip: src/* hooks/* hooks.pl tmp/mcp tmp/jar tmp/btw
 	cp -fR src/* tmp/mcp/src/minecraft_server/net/minecraft/src/
 	perl -w hooks.pl hooks/BWR.*.pl
 	rm -rf tmp/mcp/bin
@@ -47,8 +48,8 @@ bwr.zip: src/* hooks/* hooks.pl tmp/mcp tmp/jar tmp/btw
 	cp -fR ../jar/* . &&\
 	cp -fR ../btw/MINECRAFT_SERVER-JAR/* . &&\
 	cp -fR ../mcp/reobf/minecraft_server/* . &&\
-	zip -r -1 ../../new.zip *
-	mv -f new.zip bwr.zip
+	zip -r -1 ../new.zip *
+	mv -f tmp/new.zip tmp/bwr.zip
 
 tmp/mcp: tmp/mc_btw.jar mcp.zip
 	mkdir -p tmp/mcp
@@ -83,6 +84,9 @@ tmp/jar:
 	mkdir -p tmp/jar
 	cd tmp/jar &&\
 	unzip -o ../../svr.zip
+
+clean:
+	rm -rf bwr_btw_minecraft_server.jar tmp
 
 ${SVR}:
 	#------------------------------------------------------------------------ 
