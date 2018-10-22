@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Random;
 
 // Replacement animal class that supports cross-breeding.
-public class BWREntityPig extends EntityPig
+public class BWREntityPig extends FCEntityPig
 	{
 	public BWREntityPig(World world)
 		{

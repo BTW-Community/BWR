@@ -25,7 +25,7 @@ package net.minecraft.src;
 import java.util.Random;
 
 // Replacement class for Vanilla severed heads.
-public class BWRBlockSkull extends BlockSkull
+public class BWRBlockSkull extends FCBlockSkull
 	{
 	public BWRBlockSkull(int id)
 		{
