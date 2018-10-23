@@ -1,0 +1,25 @@
+FROM openjdk:8-jdk-slim
+RUN useradd -m bwr
+WORKDIR /home/bwr
+
+RUN apt-get update
+RUN apt-get upgrade -y
+
+# For jar file manipulations:
+RUN apt-get install -y unzip
+RUN apt-get install -y zip
+# For MCP:
+RUN apt-get install -y python2.7
+RUN apt-get install -y patch
+# For hook patching:
+RUN apt-get install -y libdigest-md5-perl
+
+COPY build.sh .
+COPY checkbin.pl .
+COPY hooks.pl .
+COPY hooks hooks
+COPY mod mod
+RUN chown -R bwr:bwr .
+
+USER bwr
+CMD tail -f /dev/null

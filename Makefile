@@ -24,16 +24,24 @@ BTW=BTWMod4-ABCEEFABc.zip
 MCP=mcp751.zip
 SVR=minecraft_server.jar
 
-build: ${SVR} ${MCP} ${BTW} dockimg
-	cd src && docker build --tag bwr:latest .
+build: img-build ${SVR} ${MCP} ${BTW}
 	docker rm -f bwr ||:
-	docker run -d --name bwr bwr:latest tail -f /dev/null
+	docker run -d --name bwrbuild bwr:build
 	docker exec -i bwr sh -c 'cat >svr.zip' <${SVR}
 	docker exec -i bwr sh -c 'cat >btw.zip' <${BTW}
 	docker exec -i bwr sh -c 'cat >mcp.zip' <${MCP}
-	docker exec -i bwr make
+	docker exec -i bwr sh build.sh
 	docker exec -i bwr cat bwr.zip >bwr_btw_minecraft_server.jar
 	[ -s bwr_btw_minecraft_server.jar ]
+	
+gui: img-gui
+	docker run -it --rm --name bwrgui -p 127.0.0.1:4280:4280/tcp bwr:latest
+
+img-gui: img-build
+	cd src && docker build --tag bwr:latest -f Dockerfile.gui .
+	
+img-build:
+	cd src && docker build --tag bwr:build -f Dockerfile.build .
 
 ${SVR}:
 	#------------------------------------------------------------------------ 

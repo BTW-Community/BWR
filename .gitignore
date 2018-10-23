@@ -2,8 +2,6 @@
 /mcp*.zip
 /minecraft_server.jar
 /bwr_btw_minecraft_server.jar
-/mcp
-/tmp
 *~
 *.swp
 *.bak

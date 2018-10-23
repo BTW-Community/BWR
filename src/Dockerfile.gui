@@ -1,0 +1,21 @@
+FROM bwr:build
+USER root
+	
+# For installing nodejs for gui:
+RUN apt-get install -y curl
+RUN apt-get install -y gnupg
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
+RUN apt-get install -y nodejs
+
+RUN mkdir -p gui
+COPY gui/package.json gui/
+COPY gui/package-lock.json gui/
+RUN chown -R bwr:bwr gui
+USER bwr
+RUN cd gui && npm install
+
+USER root
+COPY gui gui
+
+USER bwr
+CMD cd gui && node index
