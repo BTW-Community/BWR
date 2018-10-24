@@ -1,176 +1,37 @@
 ========================================================================
-Environment Setup on OpenBSD
-------------------------------------------------------------------------
-
-The Better With Renewables build process has been tested on OpenBSD
-release 5.0+.  To install the additional prerequisite packages:
-
-	sudo pkg_add -i python zip unzip jdk
-
-Perl and make are part of the base system and do not need to be
-installed separately.
-
-
-
-========================================================================
-Environment Setup on Debian-Based Linux Distributions
-------------------------------------------------------------------------
-
-The Better With Renewables build process has been tested on Debian 6,
-and is believed to work on similar Debian-based distributions such as
-Ubuntu.  To install the additional prerequisite packages:
-
-	sudo apt-get install perl-base zip unzip make python default-jdk
-
-
-
-========================================================================
-Environment Setup on Windows
-------------------------------------------------------------------------
-
-1. Install Java Development Kit:
-	- Obtain the latest Java Development Kit (JDK) from:
-	  http://www.oracle.com/technetwork/java/javase/downloads/index.html
-	- Run the self-installer to install JDK on your system.
-	  Default options are OK.
-
-2. Install MinGW:
-	- Obtain a copy of the MinGW installer from:
-	  http://sourceforge.net/projects/mingw/files/
-	- Run the self-installer.
-	- Make sure that the MSYS option is checked.
-	- Make sure that the MinGW Development Kit option is checked.
-	- The default installation location is OK.
-	- Complete the installation.
-
-3. Install Python from MCP into MSYS:
-	- Obtain correct version of MCP from the MCP wiki, at either:
-	    http://mcp.ocean-labs.de/index.php/MCP_Releases#Releases
-	    http://mcp.ocean-labs.de/index.php/MCP_Old_Releases#History
-	- Unpack the MCP archive into a temporary folder.
-	- Open the MCP folder, then navigate to the runtime -> bin
-	  -> python folder.
-	- Copy all of these files into the bin folder inside the
-	  MSYS distribution inside MinGW (default location is
-	  C:\MinGW\MSYS\1.0\bin).
-	- Rename the python_mcp.exe file you just copied to python.exe.
-
-4. Install Final MSYS Utilities:
-	- Open the MSYS Prompt (default C:\MinGW\MSYS\1.0\msys.bat).
-	- Install the prerequisite zip/unzip utilities with the command:
-	  mingw-get install msys-zip msys-unzip
-	
-
-========================================================================
-Environment Setup on OS X
-   (Verified on 10.8.2)
-------------------------------------------------------------------------
-
-1. Install Java from Apple:
-   follow the instructions here http://support.apple.com/kb/dl1572
-   Note this is for Java SE 6,  Java SE 7 may be usable, but the install
-      doesn't always setup the path properly when installed.
-      
-2. Install Xcode 4:
-   Open the App Store and search for Xcode
-   Install as you would any App from the store (it's free).
-   
-3. Install the command line tools:
-   Start XCode go to Preferences -> Downloads -> Components
-   Select Command Line Tools and click install
-   You can do the next step while this is downloading,
-      just keep the window open so you can make sure it installed.
-
-4. Download Better With Renewables
-   Go to File -> Source Control -> Repositories
-   Click on the + -> Checkout or Clone Repository...
-   Enter git://gitorious.org/bwr/bwr.git
-   Choose your save location..
-      This is not where you will run your minecraft server from,
-      just where you will build your server.jar
-   Once that is done I recommend using the release branch for stability.
-      Jump to the next step if you want to stick with the master branch.
-      Note: as of writing this the release branch was still at
-         BTW version 4.56
-   Expand the bwr Repository, select remotes
-   Expand origin, select release
-   Click Track Branch, check 'Automatically switch to this branch' and
-      click create
-   
-5. Continue the standard BWR installation:
-   *Make sure that the command line tools have finished downloading 
-      and installing.
-   You may now double click on the bwr folder in the repository to open
-   the folder you checked it out to and go to Step 2 of the
-   Multiplayer Server Installation section
-
-========================================================================
 Multiplayer Server Installation
 ------------------------------------------------------------------------
 
-1. Download Better With Renewables:
-	- Official site: https://gitorious.org/bwr
-	- Git clone: https://git.gitorious.org/bwr/bwr.git
-	- For users not using git, downloads of the latest
-	  development version are at:
-	    https://gitorious.org/bwr/bwr/trees/release
-	- Unpack the archive into a location of your choice.
-	- For Windows (MSYS) users, you will want to unpack this
-	  somewhere inside your MSYS install (default
-	  C:\MinGW\MSYS\1.0).
-	
-2. Download Better Than Wolves:
-	- Check the Makefile to determine the version of BTW that BWR
-	  depends on.
-	- Obtain correct version of BTW from forums on sargunster.com
-	  http://sargunster.com/btwforum/viewforum.php?f=3
-	- If a newer version is available, you can try downloading it
-	  and changing the expected version in the Makefile, but results
-	  are not guaranteed.
-	- Place the BTWMod*.zip file in the root of the project.
+1. Install Docker (from docker.com).  Distributions should be available
+   for Windows, Linux, and Mac.
 
-3. Download Minecraft Server JAR:
-	- You need the appropriate version of Minecraft on which Better
-	  Than Wolves depends.
-	- Latest version of Minecraft Server can be obtained from:
-	    https://minecraft.net/download
-	  You will need the jar, not the exe, near the bottom of the
-	  page.
-	- Links to download older versions are on the Minecraft wiki:
-	    http://www.minecraftwiki.net/wiki/Version_history/Development_versions
-	- Place minecraft_server.jar in the root of the project.
+2. Create a new folder.
 
-4. Download Minecraft Coder's Pack:
-	- Check the Makefile to determine the version of MCP that BWR
-	  depends on; this will also correspond to the Minecraft and
-	  BTW versions.
-	- Obtain correct version of MCP from the MCP wiki, at either:
-	    http://mcp.ocean-labs.de/index.php/MCP_Releases#Releases
-	    http://mcp.ocean-labs.de/index.php/MCP_Old_Releases#History
-	- If a newer version is available, you can try downloading it
-	  and changing the expected version in the Makefile, but results
-	  are not guaranteed.
-	- Place the mcp*.zip file in the root of the project.
+3. Download components and put them in the folder.  Each file should be
+   placed in the folder unmodified, and named exactly as found.  You
+   will need:
 
-5. Run make:
-	- Open a shell.  In Linux, you can use any terminal of your
-	  choice.  In Windows, you should open the MSYS prompt
-	  (default C:\MinGW\MSYS\1.0\msys.bat). In OS X, open Terminal.
-	- Change directory (cd) to the root of the project.
-	- Run "make clean && make".
-	- Minecraft server will be patched with BTW, then decompiled,
-	  the source code will be patched with BWR, then recompiled.
+	- Minecraft Server (minecraft_server.jar)
+	- The Mod Coder's Pack (mcp751.zip)
+	- Better Than Wolves (BTWMod4-*******.zip)
 
-6. Install bwr_btw_minecraft_server.jar:
-	- The bwr_btw_minecraft_server.jar file is the final output.
-	- Install this wherever you want your multiplayer server to be
-	  (or update and restart your existing server).
-	- Note that this file contains code that is copyright by third
-	  parties, and thus is NOT redistributable under the terms of
-	  the BWR license.
-	- The server JAR can be used on any operating system, regardless
-	  of which operating system you used to build it, e.g. a JAR
-	  built on Windows can be used on a Linux server.
+4. Create a new text file named "docker.txt" in the folder, and put
+   the following lines of text in it:
+
+	FROM warr1024/btwbwr:latest
+	COPY --chown=bwr:bwr . .
+
+5. Open a docker command line (Windows) or other shell from which
+   you can run docker commands (Linux/Mac) and run these commands:
+
+	docker pull warr1024/btwbwr
+	docker build --tag bwr .
+	docker run -i --rm bwr >bwr.jar
+
+6. Check for error messages.  Look for a "bwr.jar" file in the folder
+   and make sure it's size is not zero.
+
+7. Use the "bwr.jar" file as your new minecraft server jar.
 
 
 
