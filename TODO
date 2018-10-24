@@ -1,12 +1,10 @@
 ------------------------------------------------------------------------
 
-Docker Stuff:
-	- Separate build processes.
-		- One for development of the mod itself.
-		- One for release to public.
-			- Use Docker Hub?
-	- Helper GUI, node express?
-	- Update install instructions.
+UPDATE DIST DOCS, esp. README, INSTALL
+
+Update gitlab project descriptions (no longer defunct...?)
+
+Publish dist image to docker hub.
 
 Testing:
 	- Create a comprehensive feature test plan.
