@@ -25,6 +25,7 @@ set -ex
 
 # Install BWR customizations.
 cp -fR mod/* tmp/mcp/src/minecraft_server/net/minecraft/src/
+sed "s/ZZZ/$BWR/" <BWRVersionInfo.java >tmp/mcp/src/minecraft_server/net/minecraft/src/BWRVersionInfo.java
 perl -w hooks.pl hooks-bwr/*.pl
 
 # Recompile, check, and reobfuscate.

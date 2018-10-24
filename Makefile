@@ -24,7 +24,7 @@ BWR=0.27.04ABCEEFABc
 BTW=BTWMod4-ABCEEFABc.zip
 MCP=mcp751.zip
 SVR=minecraft_server.jar
-REPO=btwbwr
+REPO=warr1024/btwbwr
 
 DOCKARGS=	--build-arg BWR="${BWR}" \
 		--build-arg BTW="${BTW}" \
@@ -42,6 +42,12 @@ devpre: base
 	docker build --tag "${REPO}-dev:pre" \
 		${DOCKARGS} -f Dockerfile.devpre .
 
+release: dist
+	docker tag "${REPO}:dist" "${REPO}:${BWR}"
+	docker push "${REPO}:${BWR}"
+	docker tag "${REPO}:dist" "${REPO}:latest"
+	docker push "${REPO}:latest"
+	
 testdist: dist
 	docker build --tag "${REPO}-dev:testdist" \
 		${DOCKARGS} -f Dockerfile.testdist .
