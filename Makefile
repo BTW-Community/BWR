@@ -32,11 +32,15 @@ DOCKARGS=	--build-arg BWR="${BWR}" \
 		--build-arg SVR="${SVR}" \
 		--build-arg REPO="${REPO}"
 
+test: dev
+	cd tmp && java -jar bwr.jar nogui
+
 dev: devpre
 	docker build --tag "${REPO}-dev:latest" \
 		${DOCKARGS} -f Dockerfile.dev .
-	docker run -i --rm "${REPO}-dev:latest" cat bwr.zip >bwr_btw_minecraft_server.jar
-	unzip -t bwr_btw_minecraft_server.jar
+	mkdir -p tmp
+	docker run -i --rm "${REPO}-dev:latest" cat bwr.zip >tmp/bwr.jar
+	unzip -t tmp/bwr.jar
 	
 devpre: base
 	docker build --tag "${REPO}-dev:pre" \
@@ -51,8 +55,9 @@ release: dist
 testdist: dist
 	docker build --tag "${REPO}-dev:testdist" \
 		${DOCKARGS} -f Dockerfile.testdist .
-	docker run -i --rm "${REPO}-dev:testdist" >bwr_btw_minecraft_server.jar
-	unzip -t bwr_btw_minecraft_server.jar
+	mkdir -p tmp
+	docker run -i --rm "${REPO}-dev:testdist" >tmp/bwr.jar
+	unzip -t tmp/bwr.jar
 	
 dist: base
 	cd src && docker build --tag "${REPO}:dist" \
@@ -63,7 +68,7 @@ base:
 		${DOCKARGS} -f Dockerfile.base .
 
 clean:
-	rm -f bwr_btw_minecraft_server.jar
+	rm -rf tmp
 	docker image rm "${REPO}:base" "${REPO}:dist" "${REPO}-dev:pre" "${REPO}-dev:latest" "${REPO}-dev:testdist"
 
 ${SVR}:

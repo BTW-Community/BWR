@@ -52,15 +52,13 @@ public class BWRThreadUpdateCheck extends Thread {
 		try
 			{
 			log("Starting...");
-			Pattern VerRx = Pattern.compile("BWR_VERSION\\s*=\\s*\"([^\"]+)\";");
-			Pattern DevRx = Pattern.compile("BWR_IS_DEV\\s*=\\s*(true|false);");
+			Pattern VerRx = Pattern.compile("^\\s*BWR\\s*=\\s*(0\\..*)");
 			String UpdVer = null;
-			boolean UpdDev = false;
 
 			// Contact the BWR website and start downloading the latest source code
 			// for the BWREngineCore class, which contains the static hard-coded
 			// version numbers.
-			URL Url = new URL("https://gitlab.com/btwbwr/bwr/raw/master/src/BWRVersionInfo.java");
+			URL Url = new URL("https://gitlab.com/btwbwr/bwr/raw/master/Makefile");
 			URLConnection URLConn = Url.openConnection();
 			URLConn.setUseCaches(false);
 			BufferedReader BR = new BufferedReader(new InputStreamReader(URLConn.getInputStream()));
@@ -76,29 +74,8 @@ public class BWRThreadUpdateCheck extends Thread {
 					{
 					UpdVer = VerMatch.group(1);
 					log("Found version " + UpdVer);
-					}
-
-				// Check to see if the "development pre-release version"
-				// flag is set.  This should never be true on a "release"
-				// version on this branch, but if it is, it's not REALLY
-				// a true "release", so ignore this version.
-				Matcher DevMatch = DevRx.matcher(Line);
-				while(DevMatch.find())
-					{
-					if(Boolean.valueOf(DevMatch.group(1)))
-						{
-						log("Invalid release; aborting");
-						return;
-						}
-					log("Release check OK");
-					UpdDev = true;
-					}
-
-				// If we've already found the places where the version and
-				// the release flag are specified, there's no reason to
-				// keep scanning the rest of the file.
-				if((UpdVer != null) && UpdDev)
 					break;
+					}
 				}
 			BR.close();
 
