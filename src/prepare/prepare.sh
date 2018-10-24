@@ -20,19 +20,31 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # ------------------------------------------------------------------------------
+
+die() {
+	echo "ERROR: $*"
+	exit 1
+}
+[ -n "$SVR" ] || die "env SVR not set"
+[ -s "$SVR" ] || die "Minecraft server jar '$SVR' not found"
+[ -n "$MCP" ] || die "env MCP not set"
+[ -s "$MCP" ] || die "Mod Coder's Pack '$MCP' not found"
+[ -n "$BTW" ] || die "env BTW not set"
+[ -s "$BTW" ] || die "Better Than Wolves zip '$BTW' not found"
+
 set -ex
 
 # Unpack minecraft server.
 rm -rf tmp/jar
 mkdir -p tmp/jar
 ( cd tmp/jar &&\
-  unzip -o ../../svr.zip )
+  unzip -o ../../"$SVR" )
 
 # Unpack BTW.
 rm -rf tmp/btw
 mkdir -p tmp/btw
 ( cd tmp/btw &&\
-  unzip -o ../../btw.zip )
+  unzip -o ../../"$BTW" )
 
 # Create vanilla server patched with BTW.
 rm -rf tmp/btwjar
@@ -46,12 +58,12 @@ mkdir -p tmp/btwjar
 rm -rf tmp/mcp
 mkdir -p tmp/mcp
 ( cd tmp/mcp &&\
-  unzip -o ../../mcp.zip &&\
+  unzip -o ../../"$MCP" &&\
   cp -fR ../mc_btw.jar jars/minecraft_server.jar &&\
 python2.7 runtime/decompile.py --server --noreformat --norecompile )
 
 # Apply MCP hotfixes.
-perl -w hooks.pl hooks/MCP.*.pl
+perl -w hooks.pl hooks-mcp/*.pl
 
 # Recompile vanilla + BTW server, generate checksums.
 rm -rf tmp/mcp/bin
@@ -59,24 +71,3 @@ rm -rf tmp/mcp/bin
   python2.7 runtime/recompile.py --server &&\
   python2.7 runtime/reobfuscate.py --server &&\
   python2.7 runtime/updatemd5.py --server )
-
-# Install BWR customizations.
-cp -fR mod/* tmp/mcp/src/minecraft_server/net/minecraft/src/
-perl -w hooks.pl hooks/BWR.*.pl
-
-# Recompile, check, and reobfuscate.
-rm -rf tmp/mcp/bin
-( cd tmp/mcp &&\
-  python2.7 runtime/recompile.py --server )
-perl -w checkbin.pl
-( cd tmp/mcp &&\
-  python2.7 runtime/reobfuscate.py --server )
-
-# Build final output archive.
-rm -rf tmp/bwrjar
-mkdir -p tmp/bwrjar
-( cd tmp/bwrjar &&\
-  cp -fR ../jar/* . &&\
-  cp -fR ../btw/MINECRAFT_SERVER-JAR/* . &&\
-  cp -fR ../mcp/reobf/minecraft_server/* . &&\
-  zip -r -1 ../../bwr.zip * )

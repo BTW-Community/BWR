@@ -1,0 +1,9 @@
+ARG REPO
+FROM $REPO:base
+ARG SVR
+COPY --chown=bwr:bwr $SVR .
+ARG MCP
+COPY --chown=bwr:bwr $MCP .
+ARG BTW
+COPY --chown=bwr:bwr $BTW .
+RUN /bin/sh prepare.sh

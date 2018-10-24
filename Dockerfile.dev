@@ -1,0 +1,5 @@
+ARG REPO
+FROM $REPO-dev:pre
+ARG SVR
+COPY --chown=bwr:bwr src/build .
+RUN /bin/sh finish.sh

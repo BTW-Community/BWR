@@ -14,12 +14,16 @@ RUN apt-get install -y patch
 # For hook patching:
 RUN apt-get install -y libdigest-md5-perl
 
-COPY build.sh .
-COPY checkbin.pl .
-COPY hooks.pl .
-COPY hooks hooks
-COPY mod mod
-RUN chown -R bwr:bwr .
+ARG BWR
+ENV BWR=$BWR
+ARG BTW
+ENV BTW=$BTW
+ARG MCP
+ENV MCP=$MCP
+ARG SVR
+ENV SVR=$SVR
+ARG REPO
+ENV REPO=$REPO
 
 USER bwr
-CMD tail -f /dev/null
+COPY --chown=bwr:bwr prepare .

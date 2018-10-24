@@ -20,28 +20,45 @@
 # SOFTWARE.
 # ------------------------------------------------------------------------------
 
+BWR=0.27.04ABCEEFABc
 BTW=BTWMod4-ABCEEFABc.zip
 MCP=mcp751.zip
 SVR=minecraft_server.jar
+REPO=btwbwr
 
-build: img-build ${SVR} ${MCP} ${BTW}
-	docker rm -f bwrbuild ||:
-	docker run -d --name bwrbuild bwr:build
-	docker exec -i bwrbuild sh -c 'cat >svr.zip' <${SVR}
-	docker exec -i bwrbuild sh -c 'cat >btw.zip' <${BTW}
-	docker exec -i bwrbuild sh -c 'cat >mcp.zip' <${MCP}
-	docker exec -i bwrbuild sh build.sh
-	docker exec -i bwrbuild cat bwr.zip >bwr_btw_minecraft_server.jar
-	[ -s bwr_btw_minecraft_server.jar ]
-	
-gui: img-gui
-	docker run -it --rm --name bwrgui -p 127.0.0.1:4280:4280/tcp bwr:latest
+DOCKARGS=	--build-arg BWR="${BWR}" \
+		--build-arg BTW="${BTW}" \
+		--build-arg MCP="${MCP}" \
+		--build-arg SVR="${SVR}" \
+		--build-arg REPO="${REPO}"
 
-img-gui: img-build
-	cd src && docker build --tag bwr:latest -f Dockerfile.gui .
+dev: devpre
+	docker build --tag "${REPO}-dev:latest" \
+		${DOCKARGS} -f Dockerfile.dev .
+	docker run -i --rm "${REPO}-dev:latest" cat bwr.zip >bwr_btw_minecraft_server.jar
+	unzip -t bwr_btw_minecraft_server.jar
 	
-img-build:
-	cd src && docker build --tag bwr:build -f Dockerfile.build .
+devpre: base
+	docker build --tag "${REPO}-dev:pre" \
+		${DOCKARGS} -f Dockerfile.devpre .
+
+testdist: dist
+	docker build --tag "${REPO}-dev:testdist" \
+		${DOCKARGS} -f Dockerfile.testdist .
+	docker run -i --rm "${REPO}-dev:testdist" >bwr_btw_minecraft_server.jar
+	unzip -t bwr_btw_minecraft_server.jar
+	
+dist: base
+	cd src && docker build --tag "${REPO}:dist" \
+		${DOCKARGS} -f Dockerfile.dist .
+
+base:
+	cd src && docker build --tag "${REPO}:base" \
+		${DOCKARGS} -f Dockerfile.base .
+
+clean:
+	rm -f bwr_btw_minecraft_server.jar
+	docker image rm "${REPO}:base" "${REPO}:dist" "${REPO}-dev:pre" "${REPO}-dev:latest" "${REPO}-dev:testdist"
 
 ${SVR}:
 	#------------------------------------------------------------------------ 

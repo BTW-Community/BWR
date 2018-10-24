@@ -1,0 +1,4 @@
+ARG REPO
+FROM $REPO:base
+COPY --chown=bwr:bwr build ./
+CMD /bin/sh build.sh
