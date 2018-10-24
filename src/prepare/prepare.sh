@@ -23,6 +23,7 @@
 
 die() {
 	echo "ERROR: $*"
+	cat instruct.txt
 	exit 1
 }
 [ -n "$SVR" ] || die "env SVR not set"

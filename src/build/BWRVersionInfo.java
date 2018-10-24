@@ -29,5 +29,5 @@ public class BWRVersionInfo
 	public static final String BWR_VERSION = "ZZZ";
 
 	// True if this is a development version, false if it's a public release.
-	public static final boolean BWR_IS_DEV = true;
+	public static final boolean BWR_IS_DEV = false;
 	}
