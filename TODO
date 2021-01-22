@@ -1,24 +1,25 @@
-Fix Redstone (game crashes on placement (var7 is null))
-Fix Wolves (Render invisisble) // Might not be fixed. need to test breeding 
-Fix Millstone Recipes
-	Gold balance issues
-	millstone no longer has multiple inventory slots, ergo it cannot be used for redstone synthesis
+Update BWR to use Dawn Library for Entity mapping and replacement:
+	- Fix Redstone (game crashes on placement (var7 is null)) (fixed the issue)
+	- Fix Wolves (Render invisisble) // Might not be fixed. need to test breeding 
+	
+Known/Suspected Broken Features:
+	- Soul Press (Dragon Orbs dont combine, and the dung doesnt become soulsand)
+	- Lossy Grinding (multi-ingredient recipes) (Gold DEFINITELY NEEDS BALANCING)
+	- Harnesses are broken, but Cross Breeding still works, so its possible we dont need
+	  to worry about it
+	- Blaze spawning is possibly glitched. only worked once
+	- Villager Spawning causes crashes, not entirely sure why
+	- Villagers currently replace the entire trade list, and most likely remove 
+	  the leveling system they have (needs more testing, but the trades are definitely broken)
 	
 Balance Issues
 	
 Fix BWR VersionUpdateThread
 
-Update BWR to use Dawn Library for Entity mapping and replacing
 Testing:
 	- Create a comprehensive feature test plan.
 	- Test all features.
 	- Build a test world?
-
-Known/Suspected Broken Features:
-	- Soul Press
-	- Dung Washer
-	- Cauldron Recipes
-	- Lossy Grinding (multi-ingredient recipes)
 
 Make Plant XB Less Boring
 	- Creepers near plant xb increas probability of parent/child
@@ -30,6 +31,12 @@ Mob Spawners
 	Need to be able to make these in custom maps, minimally
 	for mossy cobble gen, or BD's are out.
 	Ideas:
+	
+	- Probable Idea: Mob infront of block dispenser gets picked up,
+	  creates an "artificial" spawner (can be differentiated with NBT).
+	  This artificial spawner needs to be mechanically powered. 
+	  probably needs to be balanced still, but its a good start
+	
 	- Trap sufficient number of target mobs in a space, in-
 	  world build.
 	- Complex in-world build of expensive materials, type of
