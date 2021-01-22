@@ -50,10 +50,8 @@ Other Testers and Contributors:
 - Do not break existing BTW or Vanilla builds or maps, do not modify
   world generation.
 
-- Run entirely on SMP server, require no further changes to the
-  Minecraft client with BTW mod installed.
 
-- Remain backwards-compatible with BTW server, and forwards-compatible
+- Remain backwards-compatible with BTW, and forwards-compatible
   with future expansion of BTW.  Removing BWR will cause only BWR-
   specific builds to break, but the world will still load and run with
   standard BTW functionality.
