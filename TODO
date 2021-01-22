@@ -1,11 +1,14 @@
-------------------------------------------------------------------------
+Fix Redstone (game crashes on placement (var7 is null))
+Fix Wolves (Render invisisble) // Might not be fixed. need to test breeding 
+Fix Millstone Recipes
+	Gold balance issues
+	millstone no longer has multiple inventory slots, ergo it cannot be used for redstone synthesis
+	
+Balance Issues
+	
+Fix BWR VersionUpdateThread
 
-UPDATE DIST DOCS, esp. README, INSTALL
-
-Update gitlab project descriptions (no longer defunct...?)
-
-Publish dist image to docker hub.
-
+Update BWR to use Dawn Library for Entity mapping and replacing
 Testing:
 	- Create a comprehensive feature test plan.
 	- Test all features.
