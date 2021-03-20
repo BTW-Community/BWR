@@ -3,14 +3,13 @@ package net.minecraft.src;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
 // Main singleton representing overall BWR add-on, which receives events from
 // external hooks and manages overall mod functionality.
-public class BWREngineCore extends DawnAddon {
+public class BWREngineCore extends AddonExt {
 	// Central mod name and copyright strings.
 	public static final String BWR_PRODUCT = "Better With Renewables";
 	public static final String BWR_ABBREV = "BWR";
@@ -161,92 +160,33 @@ public class BWREngineCore extends DawnAddon {
 		if (BWRVersionInfo.BWR_IS_DEV)
 			log("THIS IS A PRE-RELEASE VERSION, NOT FOR PRODUCTION USE");
 
-		//
-		//
-		//
 		// Start auto-update check.
 		// BWRThreadUpdateCheck.launch();
-		//
-		//
-
-		// The following methods can be used to replace the replaceBlock Method, it is a
-		// part of Dawn Library
-		// you must copy the details of the block you copy, and you need to register the
-		// obfuscation map. to do so you must look at fields.csv, find the name of the
-		// obfuscated field,
-		// and then look it up in the client.srg and find the obfuscated name
-
-		/*
-		 * BlockDoor doorIron = (BlockDoor) new
-		 * DecoBlockDoorIron(DecoManager.ReplaceBlockID(Block.doorIron)).setHardness(5.
-		 * 0F).setStepSound(Block.soundMetalFootstep).setUnlocalizedName("doorIron").
-		 * disableStats(); DawnUtilsReflection.replaceVanillaBlock("doorIron",
-		 * Block.doorIron, doorIron);
-		 */
-
-		/*
-		 * DawnUtilsReflection.registerBlockObfuscationMappping("doorIron", "aP");
-		 */
 
 		// Replace some upstream block definitions with our custom ones, so our
 		// custom logic is run for these blocks.
 
-		BlockRedstoneWire redstoneWire = (BlockRedstoneWire) new BWRBlockRedstoneWire(
-				DawnAddon.ReplaceBlockID(Block.redstoneWire)).setHardness(0.0F).setStepSound(Block.soundPowderFootstep)
-						.setUnlocalizedName("redstoneWire").disableStats();
-		DawnUtilsReflection.replaceVanillaBlock("redstoneWire", Block.redstoneWire, redstoneWire);
+		Block.redstoneWire = (BlockRedstoneWire) Block.replaceBlock(Block.redstoneWire.blockID,
+				BWRBlockRedstoneWire.class);
 
-		BlockSkull skull = (BlockSkull) new BWRBlockSkull(DawnAddon.ReplaceBlockID(Block.skull)).setHardness(1.0F)
-				.setStepSound(Block.soundStoneFootstep).setUnlocalizedName("skull").disableStats();
-		DawnUtilsReflection.replaceVanillaBlock("skull", Block.skull, skull);
+		Block.skull = (BlockSkull) Block.replaceBlock(Block.skull.blockID, BWRBlockSkull.class);
 
-		BlockLilyPad waterlily = (BlockLilyPad) new BWRBlockLilyPad(DawnAddon.ReplaceBlockID(Block.waterlily))
-				.setHardness(0.0F).setStepSound(Block.soundGrassFootstep).setUnlocalizedName("waterlily")
-				.disableStats();
-		DawnUtilsReflection.replaceVanillaBlock("waterlily", Block.waterlily, waterlily);
+		Block.waterlily = (BlockLilyPad) Block.replaceBlock(Block.waterlily.blockID, BWRBlockLilyPad.class);
 
-		BlockSoulSand slowSand = (BlockSoulSand) new BWRBlockSoulSand(DawnAddon.ReplaceBlockID(Block.slowSand))
-				.setHardness(0.0F).setStepSound(Block.soundSandFootstep).setUnlocalizedName("slowSand").disableStats();
-		DawnUtilsReflection.replaceVanillaBlock("slowSand", Block.slowSand, slowSand);
+		Block.slowSand = (BlockSoulSand) Block.replaceBlock(Block.slowSand.blockID, BWRBlockSoulSand.class);
 
-		FCBetterThanWolves.fcAestheticOpaque = replaceBlock(FCBlockAestheticOpaque.class,
-				BWRBlockAestheticOpaque.class);
-
-		FCBetterThanWolves.fcBlockFarmlandFertilized = (FCBlockFarmlandFertilized) replaceBlock(
-				FCBlockFarmlandFertilized.class, BWRBlockFarmlandFertilized.class);
-
-		FCBetterThanWolves.fcPlanter = replaceBlock(FCBlockPlanter.class, BWRBlockPlanter.class);
-
-		// Ask Dawn about how to replace this method, as she helped me fix it but then
-		// we are changing the whole shebang
-		replaceBlock(BlockTallGrass.class, BWRBlockTallGrass.class);
+		Block.tallGrass = (BlockTallGrass) Block.replaceBlock(Block.tallGrass.blockID, BWRBlockTallGrass.class);
 		Item.itemsList[Block.tallGrass.blockID] = (new ItemColored(Block.tallGrass.blockID - 256, true))
 				.setBlockNames(new String[] { "shrub", "grass", "fern" });
 
-		// After replacing blocks, some tool items have references to the old blocks by
-		// reference instead
-		// of by ID in their list of blocks against which they're effective. Search
-		// through and replace all
-		// blocks with the current instances.
-		Field blockField = null;
-		for (Field field : ItemTool.class.getDeclaredFields())
-			if (field.getType() == Block[].class) {
-				blockField = field;
-				break;
-			}
-		blockField.setAccessible(true);
-		for (int index = 0; index < Item.itemsList.length; index++) {
-			Item item = Item.itemsList[index];
-			if ((item != null) && (item instanceof ItemTool))
-				try {
-					Block[] blocks = (Block[]) blockField.get(item);
-					if (blocks != null)
-						for (int blockIndex = 0; blockIndex < blocks.length; blockIndex++)
-							blocks[blockIndex] = Block.blocksList[blocks[blockIndex].blockID];
-				} catch (IllegalAccessException ex) {
-					throw new RuntimeException(ex);
-				}
-		}
+		FCBetterThanWolves.fcBlockFarmlandFertilized = (FCBlockFarmlandFertilized) Block
+				.replaceBlock(FCBetterThanWolves.fcBlockFarmlandFertilized.blockID, BWRBlockFarmlandFertilized.class);
+
+		FCBetterThanWolves.fcAestheticOpaque = (FCBlockAestheticOpaque) Block
+				.replaceBlock(FCBetterThanWolves.fcAestheticOpaque.blockID, BWRBlockAestheticOpaque.class);
+
+		FCBetterThanWolves.fcPlanter = (FCBlockPlanter) Block.replaceBlock(FCBetterThanWolves.fcPlanter.blockID,
+				BWRBlockPlanter.class);
 
 		// Replace upstream item definitions.
 		FCBetterThanWolves.fcItemBreedingHarness = replaceItem(FCItemBreedingHarness.class,
@@ -261,16 +201,7 @@ public class BWREngineCore extends DawnAddon {
 		mapEntityReplacement(EntityWolf.class, BWREntityWolf.class, "Wolf", 95);
 		mapEntityReplacement(EntityMooshroom.class, BWREntityMooshroom.class, "MushroomCow", 96);
 		mapEntityReplacement(EntityOcelot.class, BWREntityOcelot.class, "Ozelot", 98);
-		// mapEntityReplacement(EntityVillager.class, BWREntityVillager.class,
-		// "Villager", 120);
-
-		// This replaces the non-obfuscated file name with the obfuscated name, so it
-		// will work after recompiled
-		DawnUtilsReflection.registerBlockObfuscationMappping("waterLily", "bD");
-		DawnUtilsReflection.registerBlockObfuscationMappping("tallGrass", "ab");
-		DawnUtilsReflection.registerBlockObfuscationMappping("slowSand", "bg");
-		DawnUtilsReflection.registerBlockObfuscationMappping("skull", "ck");
-		DawnUtilsReflection.registerBlockObfuscationMappping("redstoneWire", "az");
+		mapEntityReplacement(EntityVillager.class, BWREntityVillager.class, "Villager", 120);
 
 		// Add custom BWR recipes.
 		BWREngineRecipes.getInstance().addRecipes();

@@ -1,16 +1,14 @@
 Update BWR to use Dawn Library for Entity mapping and replacement:
-	- Fix Redstone (game crashes on placement (var7 is null)) (fixed the issue)
-	- Fix Wolves (Render invisisble) // Might not be fixed. need to test breeding 
 	
 Known/Suspected Broken Features:
 	- Soul Press (Dragon Orbs dont combine, and the dung doesnt become soulsand)
 	- Lossy Grinding (multi-ingredient recipes) (Gold DEFINITELY NEEDS BALANCING)
 	- Harnesses are broken, but Cross Breeding still works, so its possible we dont need
 	  to worry about it
-	- Blaze spawning is possibly glitched. only worked once
-	- Villager Spawning causes crashes, not entirely sure why
-	- Villagers currently replace the entire trade list, and most likely remove 
-	  the leveling system they have (needs more testing, but the trades are definitely broken)
+	- Blaze breeding is possibly glitched. only worked once
+	- Crossbreeding in planters no longer works
+	- Wheat cannot be crossbred. The current code links to the legacy wheat, and since FC
+	  has update the item/ block. it needs to be changed in the BWR plant breeding class
 	
 Balance Issues
 	
@@ -26,6 +24,10 @@ Make Plant XB Less Boring
 	  species relative to clone, i.e. they accelerate mutation.
 	- Creepers can sometimes be bred from plant xb.
 	- Make creeper heads an xb result...?
+	
+	- plants now grow weeds if they arent tended
+	  what if to get fungi you had to let weedsd overtake a grown hemp plant
+	  and it was only a chance of spawning fungi, like 10% fungi, 90% chance of tall grass
 
 Mob Spawners
 	Need to be able to make these in custom maps, minimally

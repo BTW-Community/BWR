@@ -5113,3 +5113,11 @@ src/minecraft_server/net/minecraft/src/WorldSettings.java
 src/minecraft_server/net/minecraft/src/WorldType.java
 
 src/minecraft_server/net/minecraft/src/WrongUsageException.java
+
+src/minecraft/net/minecraft/src/AddonExt.java
+
+src/minecraft/net/minecraft/src/AddonExtHandler.java
+
+src/minecraft_server/net/minecraft/src/AddonExt.java
+
+src/minecraft_server/net/minecraft/src/AddonExtHandler.java

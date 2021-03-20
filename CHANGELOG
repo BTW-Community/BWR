@@ -1,3 +1,11 @@
+v0.27
+	- Updated the mod to use Addon-Ext
+	
+	- Updated BWR to BTW v4.B0000003
+		- Fixed a bug with bug stewing giving an unnamed dung block 
+		- Fixed a crash when redstone was present in the world
+		- Fixed a crash with Tall Grass when rendered
+		
 v0.26
 	- Fix for animal cross-breeding when animals are on half-slab,
 	  which is commonly done because animal XB is done in dark
