@@ -9,7 +9,7 @@ import java.util.Map;
 
 // Main singleton representing overall BWR add-on, which receives events from
 // external hooks and manages overall mod functionality.
-public class BWREngineCore extends AddonExt {
+public class BWREngineCore extends FCAddOn {
 	// Central mod name and copyright strings.
 	public static final String BWR_PRODUCT = "Better With Renewables";
 	public static final String BWR_ABBREV = "BWR";
@@ -193,6 +193,9 @@ public class BWREngineCore extends AddonExt {
 				BWRItemBreedingHarness.class);
 
 		// Add mapping for custom Dragon Orb entities.
+		// Dawn Addon entity mapping \/
+		// EntityList.replaceEntityMappingSafe()
+
 		mapEntityReplacement(EntityXPOrb.class, BWREntityXPOrb.class, "XPOrb", 2);
 		mapEntityReplacement(EntityBlaze.class, BWREntityBlaze.class, "Blaze", 61);
 		mapEntityReplacement(EntitySheep.class, BWREntitySheep.class, "Sheep", 91);

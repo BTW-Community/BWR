@@ -65,7 +65,7 @@ public class BWREntityXPOrb extends EntityXPOrb {
 
 		// 2% probability per trapped XP point of converting sand to soulsand.
 		// Large flame particle effect from soulsand conversion.
-		if (this.worldObj.rand.nextInt(50) < xp) {
+		if (this.worldObj.rand.nextInt(1) < xp) {
 			// Burn all entities that are too close to the press.
 			List hurt = this.worldObj.getEntitiesWithinAABB(Entity.class,
 					AxisAlignedBB.getAABBPool().getAABB(bx - 2, by - 2, bz - 2, bx + 3, by + 4, bz + 3));
