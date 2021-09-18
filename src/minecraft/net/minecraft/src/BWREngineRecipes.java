@@ -68,16 +68,19 @@ public class BWREngineRecipes {
 	// add-on initialization.
 	public void addRecipes() {
 		// Add recipes to the stoked pot for recovering diamond from equipment.
-		addDiamondRecoveryRecipe(Item.plateDiamond, 8);
-		addDiamondRecoveryRecipe(Item.legsDiamond, 7);
-		addDiamondRecoveryRecipe(Item.helmetDiamond, 5);
-		addDiamondRecoveryRecipe(Item.bootsDiamond, 4);
-		addDiamondRecoveryRecipe(Item.axeDiamond, 3);
-		addDiamondRecoveryRecipe(Item.pickaxeDiamond, 3);
-		addDiamondRecoveryRecipe(Item.swordDiamond, 2);
-		addDiamondRecoveryRecipe(Item.hoeDiamond, 2);
-		addDiamondRecoveryRecipe(Item.shovelDiamond, 1);
-		addDiamondRecoveryRecipe(Block.jukebox, 1);
+		/*
+		 * These recipes are redundant as BTW already has diamond recovery
+		 * addDiamondRecoveryRecipe(Item.plateDiamond, 8);
+		 * addDiamondRecoveryRecipe(Item.legsDiamond, 7);
+		 * addDiamondRecoveryRecipe(Item.helmetDiamond, 5);
+		 * addDiamondRecoveryRecipe(Item.bootsDiamond, 4);
+		 * addDiamondRecoveryRecipe(Item.axeDiamond, 3);
+		 * addDiamondRecoveryRecipe(Item.pickaxeDiamond, 3);
+		 * addDiamondRecoveryRecipe(Item.swordDiamond, 2);
+		 * addDiamondRecoveryRecipe(Item.hoeDiamond, 2);
+		 * addDiamondRecoveryRecipe(Item.shovelDiamond, 1);
+		 * addDiamondRecoveryRecipe(Block.jukebox, 1);
+		 */
 
 		// Add low-efficiency gold recycling recipes.
 		addGoldGrindingRecipe(Item.plateGold, 8);
@@ -145,16 +148,17 @@ public class BWREngineRecipes {
 		// back up again so the leather can be tanned, preventing automatic tanning
 		// machines from jamming on a dung backlog.
 		FCRecipes.AddCauldronRecipe(
-				new ItemStack(FCBetterThanWolves.fcAestheticOpaque, 1, FCBlockAestheticOpaque.m_iSubtypeDung),
+				new ItemStack(FCBlockAestheticOpaqueEarth.m_iSubtypeDung, 1,
+						FCBlockAestheticOpaqueEarth.m_iSubtypeDung),
 				new ItemStack[] { new ItemStack(FCBetterThanWolves.fcItemDung, 9) });
 		FCRecipes.AddCauldronRecipe(
 				new ItemStack[] { new ItemStack(FCBetterThanWolves.fcItemTannedLeather, 1, 0),
 						new ItemStack(FCBetterThanWolves.fcItemDung, 8, 0) },
 				new ItemStack[] { new ItemStack(FCBetterThanWolves.fcItemScouredLeather, 1, -1), new ItemStack(
-						FCBetterThanWolves.fcAestheticOpaque, 1, FCBlockAestheticOpaque.m_iSubtypeDung) });
+						FCBetterThanWolves.fcAestheticOpaque, 1, FCBlockAestheticOpaqueEarth.m_iSubtypeDung) });
 
 		// Allow the creation of webs for builds and aesthetic purposes.
-		FCRecipes.AddCauldronRecipe(new ItemStack(Block.web, 1),
+		FCRecipes.AddCauldronRecipe(new ItemStack(FCBetterThanWolves.fcBlockWeb, 1),
 				new ItemStack[] { new ItemStack(Item.silk, 3, -1), new ItemStack(Item.slimeBall, 1, -1) });
 
 		// Diamond synthesis from ghast tears as the principal ingredient, with

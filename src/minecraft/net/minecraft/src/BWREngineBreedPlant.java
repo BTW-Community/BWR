@@ -68,7 +68,7 @@ public class BWREngineBreedPlant {
 				new int[] { Block.tallGrass.blockID, 1 },
 
 				// 1: Wheat
-				new int[] { Block.crops.blockID, -1 },
+				new int[] { FCBetterThanWolves.fcBlockWheatCrop.blockID, -1 },
 				// 2: Hemp
 				new int[] { FCBetterThanWolves.fcBlockHempCrop.blockID, -1 },
 				// 3: Dandelion
@@ -172,7 +172,7 @@ public class BWREngineBreedPlant {
 		// making it more important to plan, and cuts down on the performance
 		// cost cross-breed checks.
 		if (world.rand.nextInt(480) != 0)
-			return false;
+		return false;
 
 		// Look at neighboring blocks and determine the probabilities of each type
 		// of florum to grow based on its evolutionary neighbors.
@@ -302,12 +302,12 @@ public class BWREngineBreedPlant {
 			else
 				newBelowID = Block.tilledField.blockID;
 			world.setBlockAndMetadata(x, y - 1, z, newBelowID, 0);
-		} else if (belowID == FCBetterThanWolves.fcPlanter.blockID) {
+		} else if (belowID == FCBetterThanWolves.fcBlockPlanterSoil.blockID) {
 			// If the florum was able to stay, remove fertilization from planters
 			// underneath. Additionally, tall grass / ferns will convert the
 			// soil inside the planter into grass.
 			int belowMeta = world.getBlockMetadata(x, y - 1, z);
-			if (belowMeta == FCBlockPlanter.m_iTypeSoilFertilized) {
+			if ((belowMeta & 2) != 0) {
 				if (createID == Block.tallGrass.blockID)
 					world.setBlockMetadata(x, y - 1, z, FCBlockPlanter.m_iTypeGrass0);
 				else

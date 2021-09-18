@@ -1,18 +1,22 @@
-Update BWR to use Dawn Library for Entity mapping and replacement:
-	
 Known/Suspected Broken Features:
-	- Soul Press (Dragon Orbs dont combine, and the dung doesnt become soulsand)
+	-FC added a new dung block to replace the old, therefore anything referencing the old Dung block will be broken
+		- Soul Press (Dragon Orbs dont combine, and the dung doesnt become soulsand) 
+		(seems like this is caused by using the old Dung Block.	
+	  
+		- Clay Washing doesnt seem to work, probably for the same reason that the soul press doesnt work
+		
+	- Lava creation doesnt work, because i changed the 
+	   to replace FCBlockOpaqueEArth to work with the new dung, 
+	   but that class doesnt have hellfire blocks within it.
+	   this could be fixed by just creating a new class for dung 
+	   or a new class for hellfire blocks.
+	   
 	- Lossy Grinding (multi-ingredient recipes) (Gold DEFINITELY NEEDS BALANCING)
-	- Harnesses are broken, but Cross Breeding still works, so its possible we dont need
-	  to worry about it
 	- Blaze breeding is possibly glitched. only worked once
 	- Crossbreeding in planters no longer works
-	- Wheat cannot be crossbred. The current code links to the legacy wheat, and since FC
-	  has update the item/ block. it needs to be changed in the BWR plant breeding class
+
 	
 Balance Issues
-	
-Fix BWR VersionUpdateThread
 
 Testing:
 	- Create a comprehensive feature test plan.

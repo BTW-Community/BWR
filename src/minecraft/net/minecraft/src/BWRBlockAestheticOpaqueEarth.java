@@ -6,8 +6,8 @@ import java.util.Random;
 //blocks such as dung, hellfire, rope, and wicker.  This class adds some
 //custom behavior when these blocks are placed in the world, so they aren't
 //just for storage anymore.
-public class BWRBlockAestheticOpaque extends FCBlockAestheticOpaque {
-	public BWRBlockAestheticOpaque(int id) {
+public class BWRBlockAestheticOpaqueEarth extends FCBlockAestheticOpaqueEarth {
+	public BWRBlockAestheticOpaqueEarth(int id) {
 		super(id);
 
 		// Make sure this block is set to tick randomly, as certain
@@ -20,7 +20,7 @@ public class BWRBlockAestheticOpaque extends FCBlockAestheticOpaque {
 		super.updateTick(world, x, y, z, r);
 
 		int type = world.getBlockMetadata(x, y, z);
-		if (type == FCBlockAestheticOpaque.m_iSubtypeDung) {
+		if (type == FCBlockAestheticOpaqueEarth.m_iSubtypeDung) {
 			// For dung blocks to create dirt/clay, they must have water above.
 			int above = world.getBlockId(x, y + 1, z);
 			if ((above == Block.waterStill.blockID) || (above == Block.waterMoving.blockID)) {
@@ -46,8 +46,8 @@ public class BWRBlockAestheticOpaque extends FCBlockAestheticOpaque {
 				}
 
 				// Reaction proceeds stochastically, with probability proportional to heat,
-				// so adding 3x3 stoked flame shortens the half-life by almost 75%.
-				if (r.nextInt(4800) < heat) {
+				// so adding 3x3 stoked flame shortens the half-life by almost 75%. 4800
+				if (r.nextInt(1) < heat) {
 					// Acid is washed from dung block, leaving behind dirt suitable for
 					// farming applications.
 					world.setBlockAndMetadataWithNotify(x, y, z, Block.dirt.blockID, 0);
@@ -63,34 +63,24 @@ public class BWRBlockAestheticOpaque extends FCBlockAestheticOpaque {
 					}
 				}
 			}
-		} else if (type == m_iSubtypeHellfire) {
-			// Concentrated hellfire blocks can turn into lava source blocks when
-			// placed near existing lava. Count the number of lava and source
-			// blocks nearby.
-			int nearby = 0;
-			int sources = 0;
-			for (int dx = -1; dx <= 1; dx++)
-				for (int dy = -1; dy <= 1; dy++)
-					for (int dz = -1; dz <= 1; dz++) {
-						int id = world.getBlockId(x + dx, y + dy, z + dz);
-						if (id == Block.lavaStill.blockID) {
-							sources++;
-							nearby++;
-						} else if (id == Block.lavaMoving.blockID)
-							nearby++;
-					}
-
-			// There must be at least one lava source block adjacent to the hellfire,
-			// but flowing lava also counts towards reaction heat, so reflowing lava
-			// to surround the hellfire produces the fastest reaction speed.
-			if ((sources > 0) && (r.nextInt(1200) < nearby)) {
-				// Create some fire visual and sound effects, and replace
-				// the hellfire block with a lava source block.
-				for (int i = 0; i < 3; i++)
-					world.playAuxSFX(2004, x, y, z, 0);
-				world.playSoundEffect(x, y, z, "lava.pop", 1.0F, world.rand.nextFloat() * 0.5F);
-				world.setBlockAndMetadataWithNotify(x, y, z, Block.lavaStill.blockID, 0);
-			}
-		}
+		} /*
+			 * else if (type == m_iSubtypeHellfire) { // Concentrated hellfire blocks can
+			 * turn into lava source blocks when // placed near existing lava. Count the
+			 * number of lava and source // blocks nearby. int nearby = 0; int sources = 0;
+			 * for (int dx = -1; dx <= 1; dx++) for (int dy = -1; dy <= 1; dy++) for (int dz
+			 * = -1; dz <= 1; dz++) { int id = world.getBlockId(x + dx, y + dy, z + dz); if
+			 * (id == Block.lavaStill.blockID) { sources++; nearby++; } else if (id ==
+			 * Block.lavaMoving.blockID) nearby++; }
+			 * 
+			 * // There must be at least one lava source block adjacent to the hellfire, //
+			 * but flowing lava also counts towards reaction heat, so reflowing lava // to
+			 * surround the hellfire produces the fastest reaction speed. if ((sources > 0)
+			 * && (r.nextInt(1200) < nearby)) { // Create some fire visual and sound
+			 * effects, and replace // the hellfire block with a lava source block. for (int
+			 * i = 0; i < 3; i++) world.playAuxSFX(2004, x, y, z, 0);
+			 * world.playSoundEffect(x, y, z, "lava.pop", 1.0F, world.rand.nextFloat() *
+			 * 0.5F); world.setBlockAndMetadataWithNotify(x, y, z, Block.lavaStill.blockID,
+			 * 0); } }
+			 */
 	}
 }

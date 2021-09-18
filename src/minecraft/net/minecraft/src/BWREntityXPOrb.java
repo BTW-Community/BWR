@@ -9,7 +9,6 @@ public class BWREntityXPOrb extends EntityXPOrb {
 
 	public BWREntityXPOrb(World world) {
 		super(world);
-
 		// On first instance, create, and cache, a list of all
 		// block ID's that are allowed as materials in the press
 		// mechanism.
@@ -17,7 +16,7 @@ public class BWREntityXPOrb extends EntityXPOrb {
 			boolean[] allow = new boolean[Block.blocksList.length];
 			for (int idx = 0; idx < Block.blocksList.length; idx++) {
 				Block block = Block.blocksList[idx];
-				allow[idx] = (block != null) && (block.blockHardness >= 5.0F) && block.isNormalCube(idx);
+				allow[idx] = (block != null) && (block.blockHardness >= 0.3F) && block.isNormalCube(idx);
 			}
 			soulPressBlocksAllowed = allow;
 		}
@@ -37,16 +36,19 @@ public class BWREntityXPOrb extends EntityXPOrb {
 		int bx = MathHelper.floor_double(x);
 		int by = MathHelper.floor_double(y);
 		int bz = MathHelper.floor_double(z);
+
 		if (isDead || !m_bNotPlayerOwned
 				|| (this.worldObj.getBlockId(bx, by, bz) != FCBetterThanWolves.fcAestheticOpaque.blockID)
-				|| (this.worldObj.getBlockMetadata(bx, by, bz) != FCBlockAestheticOpaque.m_iSubtypeDung)
+				|| (this.worldObj.getBlockMetadata(bx, by, bz) != FCBlockAestheticOpaqueEarth.m_iSubtypeDung)
 				|| !soulPressBlocksAllowed[this.worldObj.getBlockId(bx - 1, by, bz)]
 				|| !soulPressBlocksAllowed[this.worldObj.getBlockId(bx + 1, by, bz)]
 				|| !soulPressBlocksAllowed[this.worldObj.getBlockId(bx, by - 1, bz)]
 				|| !soulPressBlocksAllowed[this.worldObj.getBlockId(bx, by + 1, bz)]
 				|| !soulPressBlocksAllowed[this.worldObj.getBlockId(bx, by, bz - 1)]
-				|| !soulPressBlocksAllowed[this.worldObj.getBlockId(bx, by, bz + 1)])
+				|| !soulPressBlocksAllowed[this.worldObj.getBlockId(bx, by, bz + 1)]) {
+			System.out.println("penis");
 			return true;
+		}
 
 		// If trapped in sand, destroy this XP orb and any others trapped
 		// in the same block, and add up total XP value.
@@ -62,7 +64,6 @@ public class BWREntityXPOrb extends EntityXPOrb {
 					orb.setDead();
 				}
 			}
-
 		// 2% probability per trapped XP point of converting sand to soulsand.
 		// Large flame particle effect from soulsand conversion.
 		if (this.worldObj.rand.nextInt(1) < xp) {
@@ -71,6 +72,7 @@ public class BWREntityXPOrb extends EntityXPOrb {
 					AxisAlignedBB.getAABBPool().getAABB(bx - 2, by - 2, bz - 2, bx + 3, by + 4, bz + 3));
 			if ((hurt != null) && (hurt.size() > 0))
 				for (int i = 0; i < hurt.size(); i++) {
+
 					Entity ent = (Entity) hurt.get(i);
 					ent.attackEntityFrom(DamageSource.onFire, 1);
 					ent.setFire(9);
