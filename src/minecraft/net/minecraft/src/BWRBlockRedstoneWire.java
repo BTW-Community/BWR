@@ -4,6 +4,7 @@ import java.util.Random;
 
 // Replacement class for redstone wire that adds glowstone creation recipe.
 public class BWRBlockRedstoneWire extends FCBlockRedstoneWire {
+
 	public BWRBlockRedstoneWire(int id) {
 		super(id);
 		this.setTickRandomly(false);
@@ -86,4 +87,5 @@ public class BWRBlockRedstoneWire extends FCBlockRedstoneWire {
 		// detecting the reaction more challenging, as a buddy block won't work.
 		world.setBlockAndMetadata(x, y, z, this.blockID, meta);
 	}
+
 }
