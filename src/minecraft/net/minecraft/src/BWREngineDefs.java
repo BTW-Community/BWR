@@ -17,8 +17,6 @@ public class BWREngineDefs {
 		// block replacement
 
 		// ASK DAWN ABOUT THE DRAGON ORB CLASS, HOW TO CREATE ITEMS AND BLOCKS, AND IF
-		// IM REPLACING THESE PROPERLY
-		// ALSO MAKE SURE TO ASK HOW IF SHE KNOWS A GOOD DEBUG COURSE
 
 		Block.redstoneWire = (BlockRedstoneWire) Block.replaceBlock(Block.redstoneWire.blockID,
 				BWRBlockRedstoneWire.class);

@@ -148,7 +148,7 @@ public class BWREngineRecipes {
 		// back up again so the leather can be tanned, preventing automatic tanning
 		// machines from jamming on a dung backlog.
 		FCRecipes.AddCauldronRecipe(
-				new ItemStack(FCBlockAestheticOpaqueEarth.m_iSubtypeDung, 1,
+				new ItemStack(FCBetterThanWolves.fcBlockAestheticOpaqueEarth.blockID, 1,
 						FCBlockAestheticOpaqueEarth.m_iSubtypeDung),
 				new ItemStack[] { new ItemStack(FCBetterThanWolves.fcItemDung, 9) });
 		FCRecipes.AddCauldronRecipe(

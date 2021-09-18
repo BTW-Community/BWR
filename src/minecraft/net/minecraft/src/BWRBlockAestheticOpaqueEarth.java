@@ -7,12 +7,18 @@ import java.util.Random;
 //custom behavior when these blocks are placed in the world, so they aren't
 //just for storage anymore.
 public class BWRBlockAestheticOpaqueEarth extends FCBlockAestheticOpaqueEarth {
+
 	public BWRBlockAestheticOpaqueEarth(int id) {
 		super(id);
 
 		// Make sure this block is set to tick randomly, as certain
 		// subtypes (e.g. dung, hellfire) have custom BWR code.
 		this.setTickRandomly(true);
+	}
+
+	// ASK DAWN WHY UPDATE TICK ISNT BEING CALLED
+	public void onNeighborBlockChange(World world, int i, int j, int k, int iBlockID) {
+		updateTick(world, i, j, k, new Random());
 	}
 
 	// Called randomly by World.
@@ -35,7 +41,7 @@ public class BWRBlockAestheticOpaqueEarth extends FCBlockAestheticOpaqueEarth {
 					if (!world.isBlockNormalCube(x, y - dy, z)) {
 						for (int dx = -1; dx <= 1; dx++)
 							for (int dz = -1; dz <= 1; dz++) {
-								int b = world.getBlockId(x + dy, y - dy, z);
+								int b = world.getBlockId(x + dx, y - dy, z + dz);
 								if (b == FCBetterThanWolves.fcBlockFireStoked.blockID)
 									heat += 3;
 								else if (b == Block.fire.blockID)
@@ -47,10 +53,10 @@ public class BWRBlockAestheticOpaqueEarth extends FCBlockAestheticOpaqueEarth {
 
 				// Reaction proceeds stochastically, with probability proportional to heat,
 				// so adding 3x3 stoked flame shortens the half-life by almost 75%. 4800
-				if (r.nextInt(1) < heat) {
+				if (r.nextInt(480) < heat) {
 					// Acid is washed from dung block, leaving behind dirt suitable for
 					// farming applications.
-					world.setBlockAndMetadataWithNotify(x, y, z, Block.dirt.blockID, 0);
+					world.setBlockAndMetadataWithNotify(x, y, z, FCBetterThanWolves.fcBlockDirtLoose.blockID, 0);
 
 					// Check for sand below the dung.
 					int b = world.getBlockId(x, y - 1, z);

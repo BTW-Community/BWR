@@ -2,8 +2,6 @@ Known/Suspected Broken Features:
 	-FC added a new dung block to replace the old, therefore anything referencing the old Dung block will be broken
 		- Soul Press (Dragon Orbs dont combine, and the dung doesnt become soulsand) 
 		(seems like this is caused by using the old Dung Block.	
-	  
-		- Clay Washing doesnt seem to work, probably for the same reason that the soul press doesnt work
 		
 	- Lava creation doesnt work, because i changed the 
 	   to replace FCBlockOpaqueEArth to work with the new dung, 
@@ -11,12 +9,15 @@ Known/Suspected Broken Features:
 	   this could be fixed by just creating a new class for dung 
 	   or a new class for hellfire blocks.
 	   
-	- Lossy Grinding (multi-ingredient recipes) (Gold DEFINITELY NEEDS BALANCING)
-	- Blaze breeding is possibly glitched. only worked once
+	- Lossy Grinding (multi-ingredient recipes)
+	- Blaze breeding is possibly glitched, upon saving and exiting, all asexually produced blazes are removed
+	  the game doesnt save them as new entities
 	- Crossbreeding in planters no longer works
 
 	
 Balance Issues
+	-Lossy Grinding Gold Balancing
+
 
 Testing:
 	- Create a comprehensive feature test plan.
