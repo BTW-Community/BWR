@@ -26,10 +26,6 @@ public class BWREntityXPOrb extends EntityXPOrb {
 	// if the entity is trapped inside solid blocks, and should be
 	// pushed out in any direction.
 	protected boolean pushOutOfBlocks(double x, double y, double z) {
-		// Run normal check; if not in a solid block, do nothing.
-		if (!super.pushOutOfBlocks(x, y, z))
-			return false;
-
 		// Detect if this XP orb is not destroyed, and trapped
 		// inside a sand block that's surrounded by suitable blocks
 		// to form a "press."
@@ -37,17 +33,14 @@ public class BWREntityXPOrb extends EntityXPOrb {
 		int by = MathHelper.floor_double(y);
 		int bz = MathHelper.floor_double(z);
 
-		if (isDead || !m_bNotPlayerOwned
-				|| (this.worldObj.getBlockId(bx, by, bz) != FCBetterThanWolves.fcAestheticOpaque.blockID)
-				|| (this.worldObj.getBlockMetadata(bx, by, bz) != FCBlockAestheticOpaqueEarth.m_iSubtypeDung)
+		if (isDead || !m_bNotPlayerOwned || (this.worldObj.getBlockId(bx, by, bz) != Block.sand.blockID)
 				|| !soulPressBlocksAllowed[this.worldObj.getBlockId(bx - 1, by, bz)]
 				|| !soulPressBlocksAllowed[this.worldObj.getBlockId(bx + 1, by, bz)]
 				|| !soulPressBlocksAllowed[this.worldObj.getBlockId(bx, by - 1, bz)]
 				|| !soulPressBlocksAllowed[this.worldObj.getBlockId(bx, by + 1, bz)]
 				|| !soulPressBlocksAllowed[this.worldObj.getBlockId(bx, by, bz - 1)]
 				|| !soulPressBlocksAllowed[this.worldObj.getBlockId(bx, by, bz + 1)]) {
-			System.out.println("penis");
-			return true;
+			return super.pushOutOfBlocks(x, y, z);
 		}
 
 		// If trapped in sand, destroy this XP orb and any others trapped
@@ -106,6 +99,6 @@ public class BWREntityXPOrb extends EntityXPOrb {
 			this.worldObj.setBlockAndMetadataWithNotify(bx, by, bz, Block.slowSand.blockID, 0);
 		}
 
-		return true;
+		return super.pushOutOfBlocks(x, y, z);
 	}
 }
