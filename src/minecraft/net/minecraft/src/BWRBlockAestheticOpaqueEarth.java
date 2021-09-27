@@ -2,27 +2,16 @@ package net.minecraft.src;
 
 import java.util.Random;
 
-//Replacement class for BTW Aesthetic Opaque block, which includes "storage"
-//blocks such as dung, hellfire, rope, and wicker.  This class adds some
-//custom behavior when these blocks are placed in the world, so they aren't
-//just for storage anymore.
 public class BWRBlockAestheticOpaqueEarth extends FCBlockAestheticOpaqueEarth {
 
 	public BWRBlockAestheticOpaqueEarth(int id) {
 		super(id);
 
-		// Make sure this block is set to tick randomly, as certain
-		// subtypes (e.g. dung, hellfire) have custom BWR code.
 		this.setTickRandomly(true);
 	}
 
-	// ASK DAWN WHY UPDATE TICK ISNT BEING CALLED
-	public void onNeighborBlockChange(World world, int i, int j, int k, int iBlockID) {
-		updateTick(world, i, j, k, new Random());
-	}
-
 	// Called randomly by World.
-	public void updateTick(World world, int x, int y, int z, Random r) {
+	public void RandomUpdateTick(World world, int x, int y, int z, Random r) {
 		super.updateTick(world, x, y, z, r);
 
 		int type = world.getBlockMetadata(x, y, z);
@@ -53,7 +42,7 @@ public class BWRBlockAestheticOpaqueEarth extends FCBlockAestheticOpaqueEarth {
 
 				// Reaction proceeds stochastically, with probability proportional to heat,
 				// so adding 3x3 stoked flame shortens the half-life by almost 75%. 4800
-				if (r.nextInt(480) < heat) {
+				if (r.nextInt(4800) < heat) {
 					// Acid is washed from dung block, leaving behind dirt suitable for
 					// farming applications.
 					world.setBlockAndMetadataWithNotify(x, y, z, FCBetterThanWolves.fcBlockDirtLoose.blockID, 0);

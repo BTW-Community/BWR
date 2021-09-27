@@ -7,12 +7,11 @@ public class BWRBlockAestheticOpaque extends FCBlockAestheticOpaque {
 	public BWRBlockAestheticOpaque(int id) {
 		super(id);
 
-		// Make sure this block is set to tick randomly, as certain
-		// subtypes (e.g. dung, hellfire) have custom BWR code.
 		this.setTickRandomly(true);
 	}
 
 	// Called randomly by World.
+	@Override
 	public void updateTick(World world, int x, int y, int z, Random r) {
 		super.updateTick(world, x, y, z, r);
 

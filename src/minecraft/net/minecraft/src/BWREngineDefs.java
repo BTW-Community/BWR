@@ -46,7 +46,6 @@ public class BWREngineDefs {
 		// Entity Replacement
 		EntityList.replaceExistingMappingSafe(BWREntityXPOrb.class, "XPOrb");
 		EntityList.replaceExistingMappingSafe(BWREntityBlaze.class, "Blaze");
-		EntityList.replaceExistingMappingSafe(BWREntityVillager.class, "addonVillagerPriest");
 		EntityList.replaceExistingMappingSafe(BWREntitySheep.class, "Sheep");
 		EntityList.replaceExistingMappingSafe(BWREntityPig.class, "Pig");
 		EntityList.replaceExistingMappingSafe(BWREntityCow.class, "Cow");
