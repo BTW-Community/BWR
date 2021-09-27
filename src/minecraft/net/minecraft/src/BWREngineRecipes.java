@@ -11,26 +11,6 @@ public class BWREngineRecipes {
 		return instance_;
 	}
 
-	// Adds a recipe to the stoked cauldron to recover the specified number of
-	// diamonds
-	// from the specified item. Calculates the amount of potash and hellfire that
-	// would be required. Potash + hellfire are kind of like "Drano Crystals" that
-	// form a strong alkaline, sufficient to destroy sticks and other bonding
-	// materials.
-	public void addDiamondRecoveryRecipe(Item tool, int qty) {
-		FCRecipes.AddStokedCauldronRecipe(new ItemStack(Item.diamond, qty),
-				new ItemStack[] { new ItemStack(tool, 1, -1),
-						new ItemStack(FCBetterThanWolves.fcItemPotash, qty * 8, -1),
-						new ItemStack(FCBetterThanWolves.fcItemConcentratedHellfire, qty, -1), });
-	}
-
-	public void addDiamondRecoveryRecipe(Block block, int qty) {
-		FCRecipes.AddStokedCauldronRecipe(new ItemStack(Item.diamond, qty),
-				new ItemStack[] { new ItemStack(block, 1, -1),
-						new ItemStack(FCBetterThanWolves.fcItemPotash, qty * 8, -1),
-						new ItemStack(FCBetterThanWolves.fcItemConcentratedHellfire, qty, -1), });
-	}
-
 	// Add low-tech low-efficiency alternative to melting gold in the crucible.
 	// Grinding it in a millstone recovers about one third of the original gold, and
 	// can be used to obtain raw gold from tools dropped by mobs. Only gold
@@ -39,7 +19,7 @@ public class BWREngineRecipes {
 	public void addGoldGrindingRecipe(Item tool, int qty) {
 		ItemStack[] stax = new ItemStack[qty];
 		for (int I = 0; I < qty; I++)
-			stax[I] = new ItemStack(Item.goldNugget, 3);
+			stax[I] = new ItemStack(FCBetterThanWolves.fcItemPileGoldOre, 3);
 		FCRecipes.AddMillStoneRecipe(stax, new ItemStack[] { new ItemStack(tool, 1, -1) });
 	}
 
@@ -67,20 +47,6 @@ public class BWREngineRecipes {
 	// Add all BWR recipes to the BTW/Vanilla crafting managers. Called on
 	// add-on initialization.
 	public void addRecipes() {
-		// Add recipes to the stoked pot for recovering diamond from equipment.
-		/*
-		 * These recipes are redundant as BTW already has diamond recovery
-		 * addDiamondRecoveryRecipe(Item.plateDiamond, 8);
-		 * addDiamondRecoveryRecipe(Item.legsDiamond, 7);
-		 * addDiamondRecoveryRecipe(Item.helmetDiamond, 5);
-		 * addDiamondRecoveryRecipe(Item.bootsDiamond, 4);
-		 * addDiamondRecoveryRecipe(Item.axeDiamond, 3);
-		 * addDiamondRecoveryRecipe(Item.pickaxeDiamond, 3);
-		 * addDiamondRecoveryRecipe(Item.swordDiamond, 2);
-		 * addDiamondRecoveryRecipe(Item.hoeDiamond, 2);
-		 * addDiamondRecoveryRecipe(Item.shovelDiamond, 1);
-		 * addDiamondRecoveryRecipe(Block.jukebox, 1);
-		 */
 
 		// Add low-efficiency gold recycling recipes.
 		addGoldGrindingRecipe(Item.plateGold, 8);
@@ -106,36 +72,34 @@ public class BWREngineRecipes {
 		FCRecipes.AddCauldronRecipe(new ItemStack(Block.netherrack, 8),
 				new ItemStack[] { new ItemStack(Block.cobblestone, 8, -1), new ItemStack(Item.netherStalkSeeds, 8, -1),
 						new ItemStack(FCBetterThanWolves.fcItemSoulUrn, 1, -1) });
+
 		FCRecipes.AddCauldronRecipe(
 				new ItemStack[] { new ItemStack(Block.netherrack, 1),
 						new ItemStack(FCBetterThanWolves.fcItemSawDust, 1), },
 				new ItemStack[] { new ItemStack(Block.cobblestone, 1, -1), new ItemStack(Item.netherStalkSeeds, 1, -1),
 						new ItemStack(FCBetterThanWolves.fcItemSoulDust, 1, -1) });
 
-		// Low-efficiency alternative way to obtain redstone from gold and hellfire.
-		// Hibachis cannot be made without redstone, but are necessary to make
-		// redstone in a stoked crucible without it being available from worldgen.
-		// Instead, redstone dust can be made in a millstone, but it requires 3x as
-		// much gold for the same amount of redstone.
-		FCRecipes.AddMillStoneRecipe(new ItemStack[] { new ItemStack(Item.redstone, 63, 0) },
-				new ItemStack[] { new ItemStack(FCBetterThanWolves.fcItemConcentratedHellfire, 9, -1),
-						new ItemStack(Item.ingotGold, 3, -1) });
-		FCRecipes.AddMillStoneRecipe(new ItemStack[] { new ItemStack(Item.redstone, 7, 0) },
-				new ItemStack[] { new ItemStack(FCBetterThanWolves.fcItemConcentratedHellfire, 1, -1),
-						new ItemStack(Item.goldNugget, 3, -1) });
-
-		// Method for extracting hellfire from netherrack earlier in the tech tree
-		// than necessary to bottle souls. Grind the netherrack in the millstone a
-		// second time to extract hellfire. If sawdust is present, souls are absorbed
-		// by it, producing souldust. If not, souls dissipate harmlessly (since
-		// they are not trapped by soulsand).
-		FCRecipes.AddMillStoneRecipe(
-				new ItemStack[] { new ItemStack(FCBetterThanWolves.fcItemHellfireDust, 1, 0),
-						new ItemStack(FCBetterThanWolves.fcItemSoulDust, 1, 0) },
-				new ItemStack[] { new ItemStack(FCBetterThanWolves.fcItemGroundNetherrack, 1, 0),
-						new ItemStack(FCBetterThanWolves.fcItemSawDust, 1, 0) });
-		FCRecipes.AddMillStoneRecipe(new ItemStack[] { new ItemStack(FCBetterThanWolves.fcItemHellfireDust, 1, 0) },
-				new ItemStack[] { new ItemStack(FCBetterThanWolves.fcItemGroundNetherrack, 1, 0) });
+		/*
+		 * Commented Out as there seems to be no reason for any of this, but we shall
+		 * see eventually
+		 * 
+		 * 
+		 * // Method for extracting hellfire from netherrack earlier in the tech tree //
+		 * than necessary to bottle souls. Grind the netherrack in the millstone a //
+		 * second time to extract hellfire. If sawdust is present, souls are absorbed //
+		 * by it, producing souldust. If not, souls dissipate harmlessly (since // they
+		 * are not trapped by soulsand).
+		 * 
+		 * FCRecipes.AddMillStoneRecipe( new ItemStack[] { new
+		 * ItemStack(FCBetterThanWolves.fcItemHellfireDust, 1, 0), new
+		 * ItemStack(FCBetterThanWolves.fcItemSoulDust, 1, 0) }, new ItemStack[] { new
+		 * ItemStack(FCBetterThanWolves.fcItemGroundNetherrack, 1, 0), new
+		 * ItemStack(FCBetterThanWolves.fcItemSawDust, 1, 0) });
+		 * 
+		 * FCRecipes.AddMillStoneRecipe(new ItemStack[] { new
+		 * ItemStack(FCBetterThanWolves.fcItemHellfireDust, 1, 0) }, new ItemStack[] {
+		 * new ItemStack(FCBetterThanWolves.fcItemGroundNetherrack, 1, 0) });
+		 */
 
 		// Dead bushes can be trivially created from oak saplings.
 		// Birch is the wrong color (and horizontally reversed), and pine
@@ -151,11 +115,6 @@ public class BWREngineRecipes {
 				new ItemStack(FCBetterThanWolves.fcBlockAestheticOpaqueEarth.blockID, 1,
 						FCBlockAestheticOpaqueEarth.m_iSubtypeDung),
 				new ItemStack[] { new ItemStack(FCBetterThanWolves.fcItemDung, 9) });
-		FCRecipes.AddCauldronRecipe(
-				new ItemStack[] { new ItemStack(FCBetterThanWolves.fcItemTannedLeather, 1, 0),
-						new ItemStack(FCBetterThanWolves.fcItemDung, 8, 0) },
-				new ItemStack[] { new ItemStack(FCBetterThanWolves.fcItemScouredLeather, 1, -1), new ItemStack(
-						FCBetterThanWolves.fcAestheticOpaque, 1, FCBlockAestheticOpaqueEarth.m_iSubtypeDung) });
 
 		// Allow the creation of webs for builds and aesthetic purposes.
 		FCRecipes.AddCauldronRecipe(new ItemStack(FCBetterThanWolves.fcBlockWeb, 1),
@@ -168,5 +127,10 @@ public class BWREngineRecipes {
 						new ItemStack(FCBetterThanWolves.fcItemHellfireDust, 1) },
 				new ItemStack[] { new ItemStack(Item.ghastTear, 1, -1), new ItemStack(Item.dyePowder, 1, 6),
 						new ItemStack(FCBetterThanWolves.fcItemGroundNetherrack, 1, -1) });
+
+		FCRecipes.AddCauldronRecipe(new ItemStack(Item.redstone, 1),
+				new ItemStack[] { new ItemStack(FCBetterThanWolves.fcItemPileGoldOre, 1),
+						new ItemStack(FCBetterThanWolves.fcItemHellfireDust, 1),
+						new ItemStack(FCBetterThanWolves.fcItemPileIronOre, 7) });
 	}
 }

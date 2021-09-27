@@ -14,10 +14,7 @@ public class BWREngineDefs {
 	}
 
 	public void addReplacements() {
-		// block replacement
-
-		// ASK DAWN ABOUT THE DRAGON ORB CLASS, HOW TO CREATE ITEMS AND BLOCKS, AND IF
-
+		// Block Replacement
 		Block.redstoneWire = (BlockRedstoneWire) Block.replaceBlock(Block.redstoneWire.blockID,
 				BWRBlockRedstoneWire.class);
 
@@ -38,21 +35,25 @@ public class BWREngineDefs {
 		FCBetterThanWolves.fcPlanter = (FCBlockPlanter) Block.replaceBlock(FCBetterThanWolves.fcPlanter.blockID,
 				BWRBlockPlanter.class);
 
-		// item replacement
+		FCBetterThanWolves.fcAestheticOpaque = (FCBlockAestheticOpaque) Block
+				.replaceBlock(FCBetterThanWolves.fcAestheticOpaque.blockID, BWRBlockAestheticOpaque.class);
+
+		// Item Replacement
 		Item.replaceItem(282, BWRItemBreedingHarness.class);
 		Item.itemsList[Block.tallGrass.blockID] = (new ItemColored(Block.tallGrass.blockID - 256, true))
 				.setBlockNames(new String[] { "shrub", "grass", "fern" });
 
-		// entity replacement
+		// Entity Replacement
 		EntityList.replaceExistingMappingSafe(BWREntityXPOrb.class, "XPOrb");
 		EntityList.replaceExistingMappingSafe(BWREntityBlaze.class, "Blaze");
-		EntityList.replaceExistingMappingSafe(BWREntityVillager.class, "addonVillagerPriest");
 		EntityList.replaceExistingMappingSafe(BWREntitySheep.class, "Sheep");
 		EntityList.replaceExistingMappingSafe(BWREntityPig.class, "Pig");
 		EntityList.replaceExistingMappingSafe(BWREntityCow.class, "Cow");
 		EntityList.replaceExistingMappingSafe(BWREntityWolf.class, "Wolf");
 		EntityList.replaceExistingMappingSafe(BWREntityMooshroom.class, "MushroomCow");
 		EntityList.replaceExistingMappingSafe(BWREntityOcelot.class, "Ozelot");
+
+		// Villager Trades
 
 	}
 

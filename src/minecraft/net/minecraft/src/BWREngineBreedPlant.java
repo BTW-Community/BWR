@@ -172,7 +172,7 @@ public class BWREngineBreedPlant {
 		// making it more important to plan, and cuts down on the performance
 		// cost cross-breed checks.
 		if (world.rand.nextInt(480) != 0)
-		return false;
+			return false;
 
 		// Look at neighboring blocks and determine the probabilities of each type
 		// of florum to grow based on its evolutionary neighbors.

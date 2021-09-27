@@ -1,23 +1,35 @@
+MAKE A CHANGELOG
+
+Before full release, remove all penis-printing code.
+
 Known/Suspected Broken Features:
-	-FC added a new dung block to replace the old, therefore anything referencing the old Dung block will be broken
-		- Soul Press (Dragon Orbs dont combine, and the dung doesnt become soulsand) 
-		(seems like this is caused by using the old Dung Block.	
+	- Soul press doesnt work until the xp orb is reloaded, Dawn and zhil are working on this
 		
 	- Lava creation doesnt work, because i changed the 
-	   to replace FCBlockOpaqueEArth to work with the new dung, 
+	   to replace FCBlockOpaqueEarth to work with the new dung, 
 	   but that class doesnt have hellfire blocks within it.
 	   this could be fixed by just creating a new class for dung 
 	   or a new class for hellfire blocks.
 	   
 	- Lossy Grinding (multi-ingredient recipes)
-	- Blaze breeding is possibly glitched, upon saving and exiting, all asexually produced blazes are removed
-	  the game doesnt save them as new entities
+
 	- Crossbreeding in planters no longer works
+	  Crossbreeding also needs an extensive rewrite for multiple reasons:
+		1) I do not understand how it currently works
+		2) certain crops such as fungi, melons, pumpkins, and saplings are not spawning
+		3) Exp is MIGHTY salty about it
+		
+	
 
 	
 Balance Issues
-	-Lossy Grinding Gold Balancing
+	-Lossy Grinding Gold Balancing: Hiracho had a wonderful idea to use gold dust instead of nuggets
 
+	- Animal Crossbreeding might be a little too good
+
+Remove Diamond deconstruction
+	- Diamond tools and equipment use diamond ingots now, so the deconstruction makes no sense to convert them into diamond
+	  if more diamonds are needed, you can synthesise more.
 
 Testing:
 	- Create a comprehensive feature test plan.
@@ -39,27 +51,31 @@ Mob Spawners
 	for mossy cobble gen, or BD's are out.
 	Ideas:
 	
-	- Probable Idea: Mob infront of block dispenser gets picked up,
-	  creates an "artificial" spawner (can be differentiated with NBT).
-	  This artificial spawner needs to be mechanically powered. 
-	  probably needs to be balanced still, but its a good start
 	
-	- Trap sufficient number of target mobs in a space, in-
-	  world build.
-	- Complex in-world build of expensive materials, type of
-	  mob spawned is random or evolves based on nearby.
-	- Make user-made spawners spawn useless mobs, e.g. ones
-	  that die immediately with no drops, so they're ONLY
-	  useable for cobblegen.
-	- Create an alternative to spawners for mossygen...?
-	  Maybe nether portals create mossy too, in some way.
-	- A device made of a companion cube surrounded by SFS.
-	  Apply redstone power atop each of the SFS blocks.
-	  Companion soul will be sent BACK to alternate
-	  dimension from which mobs come (turning it into wool),
-	  and mossy cobble radiation is emitted.  Creates an
-	  incentive to auto-farm companion cubes.
-	  - Catch-22 BD needed to make CC to make Mossy for BD!?
+	
+		{ PRE HARDCORE EVERYTHING:
+			- Probable Idea: Mob infront of block dispenser gets picked up,
+				creates an "artificial" spawner (can be differentiated with NBT).
+				This artificial spawner needs to be mechanically powered. 
+				probably needs to be balanced still, but its a good start
+	
+			- Trap sufficient number of target mobs in a space, in-
+				world build.
+			- Complex in-world build of expensive materials, type of
+				mob spawned is random or evolves based on nearby.
+			- Make user-made spawners spawn useless mobs, e.g. ones
+				that die immediately with no drops, so they're ONLY
+				useable for cobblegen.
+			- Create an alternative to spawners for mossygen...?
+				Maybe nether portals create mossy too, in some way.
+			- A device made of a companion cube surrounded by SFS.
+				Apply redstone power atop each of the SFS blocks.
+				Companion soul will be sent BACK to alternate
+				dimension from which mobs come (turning it into wool),
+				and mossy cobble radiation is emitted.  Creates an
+				incentive to auto-farm companion cubes.
+			- Catch-22 BD needed to make CC to make Mossy for BD!? 
+		}
 
 End Portal
 	- Endstone as a prereq, as it can now be gathered from
