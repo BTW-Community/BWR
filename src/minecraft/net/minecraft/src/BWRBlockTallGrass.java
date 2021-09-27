@@ -44,7 +44,7 @@ public class BWRBlockTallGrass extends FCBlockTallGrass {
 				ItemStack stack = item.getEntityItem();
 				if (stack.stackSize < 1)
 					continue;
-				if (stack.itemID == Item.wheat.itemID)
+				if (stack.itemID == FCBetterThanWolves.fcItemWheat.itemID)
 					animal = new FCEntitySheep(world);
 				else if (stack.itemID == Item.carrot.itemID)
 					animal = new FCEntityPig(world);

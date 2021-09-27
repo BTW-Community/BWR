@@ -26,6 +26,7 @@ public class BWREntityXPOrb extends EntityXPOrb {
 	// if the entity is trapped inside solid blocks, and should be
 	// pushed out in any direction.
 	protected boolean pushOutOfBlocks(double x, double y, double z) {
+
 		// Detect if this XP orb is not destroyed, and trapped
 		// inside a sand block that's surrounded by suitable blocks
 		// to form a "press."

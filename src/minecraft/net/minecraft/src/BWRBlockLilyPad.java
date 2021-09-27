@@ -39,6 +39,11 @@ public class BWRBlockLilyPad extends FCBlockLilyPad {
 		return true;
 	}
 
+	/*
+	 * public void onNeighborBlockChange(World world, int i, int j, int k, int
+	 * iBlockID) { updateTick(world, i, j, k, new Random()); }
+	 */
+
 	// Called randomly by World.
 	public void updateTick(World world, int x, int y, int z, Random r) {
 		super.updateTick(world, x, y, z, r);
