@@ -4,6 +4,8 @@ package net.minecraft.src;
 public class BWREntityMooshroom extends EntityMooshroom {
 	public BWREntityMooshroom(World world) {
 		super(world);
+		if (world.isRemote)
+			return;
 	}
 
 	public void onLivingUpdate() {

@@ -3,7 +3,7 @@ package net.minecraft.src;
 import java.util.List;
 
 // Replacement monster class for blazes that supports asexual reproduction.
-public class BWREntityBlaze extends EntityBlaze {
+public class BWREntityBlaze extends FCEntityBlaze {
 	// Keep track of whether this is a "domestic" blaze or not, for determining
 	// whether it will despawn or not. Artificial blazes cost a whole block of
 	// gold, so they should probably not despawn on their own.
@@ -14,8 +14,9 @@ public class BWREntityBlaze extends EntityBlaze {
 
 	public BWREntityBlaze(World world) {
 		super(world);
+		if (world.isRemote)
+			return;
 		this.isArtificial = false;
-
 		// Newly-spawned blazes cannot reproduce for a while.
 		this.breedDelay = 6000;
 	}
@@ -100,9 +101,11 @@ public class BWREntityBlaze extends EntityBlaze {
 				this.worldObj.setBlockAndMetadataWithNotify(x, y, z, 0, 0);
 
 				// Create a new blaze where the fire block was.
-				BWREntityBlaze blaze = new BWREntityBlaze(this.worldObj);
+				BWREntityBlaze blaze = (BWREntityBlaze) EntityList.createEntityOfType(BWREntityBlaze.class,
+						this.worldObj);
 				blaze.isArtificial = this.isArtificial;
 				blaze.setLocationAndAngles(x + 0.5D, y, z + 0.5D, this.rotationYaw, this.rotationPitch);
+				blaze.SpawnerInitCreature();
 				this.worldObj.spawnEntityInWorld(blaze);
 
 				// Play sound and visual effects.

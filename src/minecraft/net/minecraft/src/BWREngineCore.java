@@ -7,9 +7,10 @@ public class BWREngineCore extends FCAddOn {
 	public static final String BWR_PRODUCT = "Better With Renewables";
 	public static final String BWR_ABBREV = "BWR";
 	public static final String BWR_COPYRIGHT = "(C)2021, MIT License.  https://github.com/btw-community/BWR";
+	public static final String BWR_VERSION = "0.28 DEV";
 
 	public BWREngineCore() {
-		super(BWR_PRODUCT, BWRVersionInfo.BWR_VERSION, BWR_ABBREV);
+		super(BWR_PRODUCT, BWR_VERSION, BWR_ABBREV);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -35,7 +36,7 @@ public class BWREngineCore extends FCAddOn {
 			return;
 		isInitialized_ = true;
 
-		BWREngineRecipes.getInstance().addRecipes();
+		// BWREngineRecipes.getInstance().addRecipes();
 		BWREngineDefs.getInstance().addDefinitions();
 		BWREngineDefs.getInstance().addReplacements();
 
