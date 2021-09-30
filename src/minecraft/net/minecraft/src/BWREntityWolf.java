@@ -11,6 +11,8 @@ public class BWREntityWolf extends FCEntityWolf {
 
 	public BWREntityWolf(World world) {
 		super(world);
+		if (world.isRemote)
+			return;
 		this.onDrugsTime = 0;
 	}
 

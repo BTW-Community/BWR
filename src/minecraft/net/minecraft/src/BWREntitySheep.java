@@ -4,6 +4,8 @@ package net.minecraft.src;
 public class BWREntitySheep extends FCEntitySheep {
 	public BWREntitySheep(World world) {
 		super(world);
+		if (world.isRemote)
+			return;
 	}
 
 	public void onLivingUpdate() {

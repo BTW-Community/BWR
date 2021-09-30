@@ -1,3 +1,18 @@
+v 0.28
+	Changes
+		- Updated the addon to use CE v1.1.0
+		- Changed grinding to use gold dust instead of gold nuggets
+		- Changed the way the Addon handles villagers
+		- Added a particle effect and sound to tell if lava is actually being made from hellfire, 
+		  along side the effects that happen when the process is complete
+		- Removed the diamond recovery recipes as FC already added something similar
+	
+	Bugs:
+		- Fixed the soul press and made it use sand instead of dung
+		- Fixed the issue with clay washing
+		- Fixed the issue with lava creation using hellfire blocks
+		- Fixed asexual blaze breeding
+
 v0.27
 	- Updated the mod BTW-CE
 	

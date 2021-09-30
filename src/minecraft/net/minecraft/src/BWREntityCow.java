@@ -4,6 +4,8 @@ package net.minecraft.src;
 public class BWREntityCow extends FCEntityCow {
 	public BWREntityCow(World world) {
 		super(world);
+		if (world.isRemote)
+			return;
 	}
 
 	public void onLivingUpdate() {

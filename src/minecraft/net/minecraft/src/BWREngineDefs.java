@@ -40,20 +40,26 @@ public class BWREngineDefs {
 
 		// Item Replacement
 		Item.replaceItem(282, BWRItemBreedingHarness.class);
+
 		Item.itemsList[Block.tallGrass.blockID] = (new ItemColored(Block.tallGrass.blockID - 256, true))
 				.setBlockNames(new String[] { "shrub", "grass", "fern" });
 
 		// Entity Replacement
 		EntityList.replaceExistingMappingSafe(BWREntityXPOrb.class, "XPOrb");
-		EntityList.replaceExistingMappingSafe(BWREntityBlaze.class, "Blaze");
-		EntityList.replaceExistingMappingSafe(BWREntitySheep.class, "Sheep");
-		EntityList.replaceExistingMappingSafe(BWREntityPig.class, "Pig");
-		EntityList.replaceExistingMappingSafe(BWREntityCow.class, "Cow");
-		EntityList.replaceExistingMappingSafe(BWREntityWolf.class, "Wolf");
-		EntityList.replaceExistingMappingSafe(BWREntityMooshroom.class, "MushroomCow");
-		EntityList.replaceExistingMappingSafe(BWREntityOcelot.class, "Ozelot");
 
-		// Villager Trades
+		EntityList.replaceExistingMappingSafe(BWREntityBlaze.class, "Blaze");
+
+		EntityList.replaceExistingMappingSafe(BWREntitySheep.class, "Sheep");
+
+		EntityList.replaceExistingMappingSafe(BWREntityPig.class, "Pig");
+
+		EntityList.replaceExistingMappingSafe(BWREntityCow.class, "Cow");
+
+		EntityList.replaceExistingMappingSafe(BWREntityWolf.class, "Wolf");
+
+		EntityList.replaceExistingMappingSafe(BWREntityMooshroom.class, "MushroomCow");
+
+		EntityList.replaceExistingMappingSafe(BWREntityOcelot.class, "Ozelot");
 
 	}
 

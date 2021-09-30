@@ -4,6 +4,8 @@ package net.minecraft.src;
 public class BWREntityPig extends FCEntityPig {
 	public BWREntityPig(World world) {
 		super(world);
+		if (world.isRemote)
+			return;
 	}
 
 	public void onLivingUpdate() {

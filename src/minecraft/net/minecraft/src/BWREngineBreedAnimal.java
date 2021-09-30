@@ -99,14 +99,19 @@ public class BWREngineBreedAnimal {
 
 	// Helper function to add probability to a map of weighted probabilties.
 	private void addProb(Map<Integer, Integer> map, int key, int val) {
-		Integer i = map.get(new Integer(key));
-		map.put(key, (i != null) ? (i + val) : new Integer(val));
+		Integer i = map.get(key);
+		map.put(key, (i != null) ? (i + val) : val);
 	}
 
 	// Do all cross-breeding checks. Called by EntityUpdate on all animal
 	// entities that are capable of cross-breeding.
 	public boolean tryBreed(EntityAnimal self) {
 		// ########## STEP 1: DETERMINE IF CROSS-BREEDING HAPPENS
+
+		World world = self.worldObj;
+
+		if (world.isRemote)
+			return false;
 
 		// Animal trying to cross-breed must be in love, and reaching the
 		// end of the "in love" period (i.e. "desperate").
@@ -118,7 +123,7 @@ public class BWREngineBreedAnimal {
 		int bx = MathHelper.floor_double(self.posX);
 		int by = MathHelper.floor_double(self.posY);
 		int bz = MathHelper.floor_double(self.posZ);
-		World world = self.worldObj;
+
 		if (world.getBlockLightValue(bx, by, bz) >= 8)
 			return false;
 

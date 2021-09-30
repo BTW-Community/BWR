@@ -1,9 +1,11 @@
 package net.minecraft.src;
 
 // Replacement animal class that supports cross-breeding.
-public class BWREntityOcelot extends EntityOcelot {
+public class BWREntityOcelot extends FCEntityOcelot {
 	public BWREntityOcelot(World world) {
 		super(world);
+		if (world.isRemote)
+			return;
 	}
 
 	public void onLivingUpdate() {

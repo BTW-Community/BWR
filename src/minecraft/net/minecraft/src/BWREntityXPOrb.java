@@ -7,11 +7,15 @@ import java.util.List;
 public class BWREntityXPOrb extends EntityXPOrb {
 	public static boolean[] soulPressBlocksAllowed = null;
 
-	public BWREntityXPOrb(World world) {
-		super(world);
+	public BWREntityXPOrb(World world, double par2, double par4, double par6, int par8, boolean bNotPlayerOwned) {
+		super(world, par2, par4, par6, par8, bNotPlayerOwned);
 		// On first instance, create, and cache, a list of all
 		// block ID's that are allowed as materials in the press
 		// mechanism.
+
+		if (world.isRemote)
+			return;
+
 		if (soulPressBlocksAllowed == null) {
 			boolean[] allow = new boolean[Block.blocksList.length];
 			for (int idx = 0; idx < Block.blocksList.length; idx++) {
@@ -20,6 +24,15 @@ public class BWREntityXPOrb extends EntityXPOrb {
 			}
 			soulPressBlocksAllowed = allow;
 		}
+	}
+
+	// useless piece of fucking garbage i fucking hate everything ever made
+	public BWREntityXPOrb(World world, double par2, double par4, double par6, int par8) {
+		super(world, par2, par4, par6, par8);
+
+		if (world.isRemote)
+			return;
+
 	}
 
 	// Called by Entity superclass on each update cycle to determine
