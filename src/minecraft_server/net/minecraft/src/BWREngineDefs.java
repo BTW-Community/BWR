@@ -42,7 +42,6 @@ public class BWREngineDefs {
 				BWRBlockAestheticOpaque.class);
 
 		// Item Replacement
-		Item.replaceItem(282, BWRItemBreedingHarness.class);
 
 		Item.itemsList[Block.tallGrass.blockID] = (new ItemColored(Block.tallGrass.blockID - 256, true))
 				.setBlockNames(new String[] { "shrub", "grass", "fern" });
