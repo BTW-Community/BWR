@@ -38,14 +38,8 @@ public class BWREngineDefs {
 
 		FCBetterThanWolves.fcPlanter = Block.replaceBlock(FCBetterThanWolves.fcPlanter.blockID, BWRBlockPlanter.class);
 
-		if (DecoDefs.instance != null) {
-			FCBetterThanWolves.fcAestheticOpaque = Block.replaceBlock(FCBetterThanWolves.fcAestheticOpaque.blockID,
-					BWRDecoBlockAestheticOpaque.class);
-
-		} else {
-			FCBetterThanWolves.fcAestheticOpaque = Block.replaceBlock(FCBetterThanWolves.fcAestheticOpaque.blockID,
-					BWRBlockAestheticOpaque.class);
-		}
+		FCBetterThanWolves.fcAestheticOpaque = Block.replaceBlock(FCBetterThanWolves.fcAestheticOpaque.blockID,
+				BWRDecoBlockAestheticOpaque.class);
 
 		// Item Replacement
 
