@@ -29,7 +29,6 @@ src/minecraft/net/minecraft/*
 !src/minecraft/net/minecraft/src
 src/minecraft/net/minecraft/src/*
 !src/minecraft/net/minecraft/src/BWR*
-!src/minecraft/net/minecraft/src/BlockCake.java
 
 src/minecraft_server/*
 !src/minecraft_server/net
