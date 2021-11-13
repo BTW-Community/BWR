@@ -7,7 +7,7 @@ public class BWREngineCore extends FCAddOn {
 	public static final String BWR_PRODUCT = "Better With Renewables";
 	public static final String BWR_ABBREV = "BWR";
 	public static final String BWR_COPYRIGHT = "(C)2021, MIT License.  https://github.com/btw-community/BWR";
-	public static final String BWR_VERSION = "0.28 DEV";
+	public static final String BWR_VERSION = "0.29.1 DEV";
 
 	public BWREngineCore() {
 		super(BWR_PRODUCT, BWR_VERSION, BWR_ABBREV);

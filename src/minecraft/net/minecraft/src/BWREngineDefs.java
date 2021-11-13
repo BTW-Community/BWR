@@ -42,8 +42,13 @@ public class BWREngineDefs {
 		FCBetterThanWolves.fcPlanter = Block.replaceBlock(FCBetterThanWolves.fcPlanter.blockID, BWRBlockPlanter.class,
 				bwrEngineCore);
 
+		if(FCAddOnHandler.isModInstalled("Deco Addon")) {
 		FCBetterThanWolves.fcAestheticOpaque = Block.replaceBlock(FCBetterThanWolves.fcAestheticOpaque.blockID,
-				BWRBlockAestheticOpaque.class, bwrEngineCore);
+				BWRDecoBlockAestheticOpaque.class, new String[] { "Deco Addon" }, bwrEngineCore);
+		}else {
+			FCBetterThanWolves.fcAestheticOpaque = Block.replaceBlock(FCBetterThanWolves.fcAestheticOpaque.blockID,
+					BWRBlockAestheticOpaque.class, bwrEngineCore);
+		}
 
 		// Item Replacement
 
