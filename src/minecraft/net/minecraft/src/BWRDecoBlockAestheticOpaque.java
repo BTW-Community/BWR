@@ -1,10 +1,45 @@
 package net.minecraft.src;
 
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Random;
 
 public class BWRDecoBlockAestheticOpaque extends FCBlockAestheticOpaque {
 
+	private static boolean soundsInstalled;
+	private static StepSound stepSoundBone;
+	
+	public void getDecoAddon() {
+		if (FCAddOnHandler.isModInstalled("Deco Addon")) {
+			try {
+				FCAddOn deco = FCAddOnHandler.getModByName("Deco Addon");
+				Field decoDefsField = deco.getClass().getDeclaredField("decoDefs");
+				Method method = deco.getClass().getDeclaredMethod("getNewSoundsInstalled");
+				soundsInstalled = (Boolean) method.invoke(deco);
+				
+				Object decoDefs = decoDefsField.get(deco);
+				Field stepSoundBoneField = decoDefs.getClass().getDeclaredField("stepSoundBone");
+				stepSoundBone = (StepSound) stepSoundBoneField.get(decoDefs);
+
+			} catch (NoSuchFieldException e) {
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public BWRDecoBlockAestheticOpaque(int id) {
 		super(id);
 		this.setTickRandomly(true);
@@ -16,7 +51,7 @@ public class BWRDecoBlockAestheticOpaque extends FCBlockAestheticOpaque {
 		case 1:
 			return FCBetterThanWolves.fcStepSoundSquish;
 		case 15:
-			return DecoManager.getNewSoundsInstalled() ? DecoDefs.stepSoundBone : soundGravelFootstep;
+			return soundsInstalled ? stepSoundBone : soundGravelFootstep;
 		default:
 			return this.stepSound;
 		}

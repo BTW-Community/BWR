@@ -80,7 +80,7 @@ public class BWREngineBreedPlant {
 				new int[] { Block.melonStem.blockID, -1 },
 
 				// 6: Sugarcane
-				new int[] { Block.reed.blockID, -1 },
+				new int[] { FCBetterThanWolves.fcBlockReedRoots.blockID, -1 },
 				// 7: Cactus
 				new int[] { Block.cactus.blockID, -1 },
 
@@ -107,7 +107,7 @@ public class BWREngineBreedPlant {
 				// 17: Potatoes
 				new int[] { Block.potato.blockID, -1 },
 				// 18: Carrots
-				new int[] { Block.carrot.blockID, -1 }, };
+				new int[] { FCBetterThanWolves.fcBlockCarrot.blockID, -1 }, };
 		fungusTypes = new int[][] {
 				// 0: Brown Mushroom
 				new int[] { Block.mushroomBrown.blockID, -1 },

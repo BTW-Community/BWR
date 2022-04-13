@@ -27,6 +27,15 @@ public class BWREngineCore extends FCAddOn {
 	public void log(String message) {
 		FCAddOnHandler.LogMessage(BWR_ABBREV + ": " + message);
 	}
+	
+//	public FCAddOnHandler.DependencyType getDependencyForAddon(FCAddOn addon) {
+//	    if (addon.getName().equals("Deco Addon")) {
+//	        return FCAddOnHandler.DependencyType.LOAD_AFTER;
+//	    }
+//
+//	    return super.getDependencyForAddon(addon);
+//	}
+	
 
 	@Override
 	public void Initialize() {
@@ -36,12 +45,17 @@ public class BWREngineCore extends FCAddOn {
 		isInitialized_ = true;
 
 		BWREngineRecipes.getInstance().addRecipes();
+		log("Recipes Loaded");
 		BWREngineDefs.getInstance().addDefinitions();
+		log("Definitions Loaded");
 		BWREngineDefs.getInstance().addReplacements();
+		log("Replacements Loaded");
 
 		// Initialize the plant/fungus and animal cross-breeding engines.
 		BWREngineBreedAnimal.getInstance().initialize();
+		log("Animeal Crossbreeding Loaded");
 		BWREngineBreedPlant.getInstance().initialize();
+		log("Plant Crossbreeding Loaded");
 	}
 
 }
